@@ -362,6 +362,10 @@
     display: block;
   }
 
+  #feedback:not(:empty) {
+    display: block;
+  }
+
   #feedback.correct {
     border-color: rgba(29,122,79,0.2);
     background: var(--ok-soft);
@@ -646,6 +650,238 @@
 
     .topic-row .score {
       text-align: left;
+    }
+  }
+
+  @media (max-width: 760px) {
+    html,
+    body {
+      height: auto;
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    body {
+      min-height: 100dvh;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      min-height: var(--nav-h);
+      gap: 10px;
+      padding: 0 max(12px, env(safe-area-inset-left)) 0 max(12px, env(safe-area-inset-right));
+    }
+
+    header b {
+      min-width: 0;
+      font-size: 0.98rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #timer {
+      min-width: auto;
+      padding: 7px 10px;
+      font-size: 0.9rem;
+      flex: 0 0 auto;
+    }
+
+    .screen {
+      width: 100%;
+      height: auto;
+      min-height: calc(100dvh - var(--nav-h));
+      padding: 10px;
+    }
+
+    .start {
+      align-items: start;
+      padding-top: 10px;
+    }
+
+    .start .panel {
+      width: 100%;
+      max-width: 760px;
+      justify-self: stretch;
+    }
+
+    .start h1 {
+      font-size: clamp(2rem, 12vw, 2.7rem);
+      letter-spacing: 0;
+      overflow-wrap: break-word;
+    }
+
+    .start p {
+      font-size: 0.96rem;
+      line-height: 1.55;
+    }
+
+    .download-link,
+    .start .btn {
+      width: 100%;
+    }
+
+    .layout {
+      height: auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .question-panel {
+      height: auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+    }
+
+    .qscroll {
+      overflow: visible;
+      padding: 14px 12px 10px;
+    }
+
+    .stem {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .code {
+      max-width: 100%;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 0.82rem;
+    }
+
+    .option {
+      display: grid;
+      grid-template-columns: 22px 24px minmax(0,1fr);
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .option input {
+      grid-column: 1;
+      margin-top: 4px;
+    }
+
+    .option .letter,
+    .option b {
+      grid-column: 2;
+    }
+
+    .option .text,
+    .option span {
+      grid-column: 3;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .actions {
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      padding: 10px;
+      padding-bottom: max(10px, env(safe-area-inset-bottom));
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .actions > div {
+      gap: 8px;
+    }
+
+    .actions .btn {
+      flex: 1 1 0;
+      min-width: 0;
+      padding-inline: 10px;
+    }
+
+    .side {
+      height: auto;
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      grid-template-rows: auto;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+    }
+
+    .side h2 {
+      display: none;
+    }
+
+    .nav-scroll {
+      min-width: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .numbers {
+      display: flex;
+      width: max-content;
+      gap: 6px;
+    }
+
+    .num {
+      width: 36px;
+      min-height: 36px;
+      flex: 0 0 36px;
+      border-radius: 9px;
+    }
+
+    .sidefoot {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .summary {
+      display: none;
+    }
+
+    .results {
+      display: block;
+      padding: 10px;
+    }
+
+    .results > .panel {
+      padding: 18px 14px;
+    }
+
+    #topics {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      min-width: 430px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .actions {
+      gap: 8px;
+    }
+
+    .actions > div {
+      flex-wrap: wrap;
+    }
+
+    .actions .btn {
+      font-size: 0.92rem;
+    }
+
+    .btn {
+      padding-inline: 10px;
     }
   }
 </style></head><body><header><b>Oracle SQL Mock Exam</b><span id="timer"></span></header>
