@@ -1,7 +1,655 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Oracle SQL Mock Exam</title><style>
 :root{--bg:#eef1f5;--card:#fff;--ink:#20242b;--muted:#667085;--line:#d9dee7;--brand:#315f89;--accent:#d66a2d;--ok:#237a45;--bad:#b42318;--nav-h:64px}*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden;font-family:Arial,Segoe UI,sans-serif;color:var(--ink);background:var(--bg)}button,input{font:inherit}header{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:var(--brand);color:#fff}header b{font-size:18px}#timer{font-variant-numeric:tabular-nums}.screen{height:calc(100dvh - var(--nav-h));padding:12px}.panel{background:var(--card);border:1px solid var(--line);border-radius:10px}.hidden{display:none!important}.start{height:100%;display:grid;place-items:center}.start .panel{max-width:720px;padding:28px;text-align:center}.start h1{margin:0 0 10px;color:var(--brand);font-size:clamp(26px,5vw,40px)}.start p{color:var(--muted);line-height:1.55}.btn{border:1px solid var(--line);border-radius:7px;padding:10px 14px;background:#fff;cursor:pointer;font-weight:700}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.soft{background:#edf4fa;color:var(--brand)}.btn.danger{color:var(--bad);border-color:#f0b8b4}.layout{height:100%;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:12px}.question-panel{height:100%;display:grid;grid-template-rows:auto 1fr auto;min-height:0}.qhead{padding:14px 16px;border-bottom:1px solid var(--line)}.meta{display:flex;flex-wrap:wrap;gap:7px}.chip{font-size:12px;font-weight:700;color:var(--brand);background:#eaf1f7;border-radius:99px;padding:5px 8px}.progress{height:5px;background:#e5e7eb;margin-top:12px;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:var(--accent)}.qscroll{overflow:auto;padding:18px 18px 8px;min-height:0;overscroll-behavior:contain}.stem{font-size:clamp(17px,2vw,21px);line-height:1.45;font-weight:650;margin-bottom:14px}.code{white-space:pre-wrap;margin:0 0 15px;background:#18212d;color:#f3f4f6;border-radius:7px;padding:13px;font:clamp(12px,1.6vw,14px)/1.42 Consolas,monospace;overflow:auto}.option{display:grid;grid-template-columns:24px 22px 1fr;gap:7px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:11px;margin:8px 0;cursor:pointer;background:#fff}.option:hover,.option.selected{border-color:var(--brand);background:#f2f7fb}.option input{margin:2px 0}.feedback{border-left:4px solid var(--brand);background:#f4f8fb;padding:12px;margin-top:14px;line-height:1.45}.good{color:var(--ok);font-weight:800}.bad{color:var(--bad);font-weight:800}.actions{display:flex;justify-content:space-between;gap:8px;padding:11px 14px;border-top:1px solid var(--line)}.actions div{display:flex;gap:7px}.side{height:100%;display:grid;grid-template-rows:auto 1fr auto;min-height:0;padding:13px}.side h2{font-size:15px;margin:0 0 8px}.nav-scroll{overflow-y:auto;min-height:0;padding-right:3px;overscroll-behavior:contain}.numbers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.num{height:34px;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;font-size:12px}.num.answered{background:#dceafa;border-color:#7da7ce}.num.flagged{box-shadow:inset 0 -4px #e59b27}.num.current{outline:2px solid var(--accent);outline-offset:1px}.sidefoot{border-top:1px solid var(--line);padding-top:9px}.summary{font-size:12px;color:var(--muted);margin:0 0 8px}.results{height:100%;overflow:auto;padding:16px}.results .panel{max-width:1050px;margin:auto;padding:20px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{text-align:center;background:#f6f8fa;padding:13px;border-radius:8px}.stat strong{display:block;color:var(--brand);font-size:25px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left}.review{border:1px solid var(--line);border-radius:8px;padding:13px;margin:11px 0}.review .code{font-size:12px}@media(max-width:760px){:root{--nav-h:54px}header{padding:0 12px}header b{font-size:15px}.screen{padding:7px}.layout{grid-template-columns:1fr;grid-template-rows:1fr 86px;gap:7px}.side{grid-row:2;padding:7px;grid-template-columns:auto 1fr auto;grid-template-rows:1fr;align-items:center;gap:7px}.side h2{display:none}.nav-scroll{overflow-x:auto;overflow-y:hidden;padding:1px}.numbers{display:flex;gap:5px;width:max-content}.num{width:32px;flex:0 0 32px}.sidefoot{border:0;padding:0;display:flex;align-items:center;gap:6px}.summary{display:none}.sidefoot .btn{padding:9px 10px}.qhead{padding:10px 12px}.qscroll{padding:12px}.actions{padding:8px}.btn{padding:9px 10px}.actions .flagtext{display:none}.stats{grid-template-columns:1fr}.results{padding:7px}.results .panel{padding:14px}.option{padding:10px;margin:7px 0}}
+  :root {
+    --bg: #f3f6fb;
+    --bg-2: #eaf0f7;
+    --card: rgba(255,255,255,0.9);
+    --card-strong: #ffffff;
+    --ink: #17212f;
+    --muted: #58657a;
+    --line: #dfe7f1;
+    --brand: #183b5b;
+    --brand-2: #225a91;
+    --brand-soft: #edf5ff;
+    --accent: #d66a2d;
+    --accent-soft: #fff1e9;
+    --ok: #1d7a4f;
+    --ok-soft: #eafaf0;
+    --bad: #b42318;
+    --bad-soft: #fdeceb;
+    --shadow: 0 18px 40px rgba(18, 41, 64, 0.12);
+    --nav-h: 72px;
+    --radius-xl: 20px;
+    --radius-lg: 14px;
+    --radius-md: 10px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(34,90,145,0.08), transparent 34%),
+      linear-gradient(180deg, var(--bg) 0%, #edf3fb 100%);
+    color: var(--ink);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  button, input {
+    font: inherit;
+  }
+
+  header {
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 26px;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.16);
+    box-shadow: 0 8px 24px rgba(24,59,91,0.2);
+  }
+
+  header b {
+    font-size: clamp(1.1rem, 1.5vw, 1.45rem);
+    letter-spacing: 0.01em;
+  }
+
+  #timer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 122px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+
+  .screen {
+    height: calc(100dvh - var(--nav-h));
+    padding: 18px;
+  }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(4px);
+  }
+
+  .hidden { display: none !important; }
+
+  .start {
+    display: grid;
+    place-items: center;
+    min-height: 100%;
+  }
+
+  .start .panel {
+    width: min(760px, 100%);
+    padding: 34px 30px 26px;
+    text-align: center;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.94), rgba(244,248,252,0.95));
+  }
+
+  .start h1 {
+    margin: 0 0 14px;
+    color: var(--brand);
+    font-size: clamp(2.2rem, 5vw, 3.25rem);
+    letter-spacing: -0.04em;
+  }
+
+  .start p {
+    margin: 0 0 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 1.02rem;
+  }
+
+  .start p:last-of-type {
+    margin-bottom: 22px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brand);
+  }
+
+  .start .panel > div {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .reviewer-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+
+  .download-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 10px;
+    padding: 10px 16px;
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    color: var(--brand);
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .download-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(23, 33, 47, 0.08);
+  }
+
+  .btn {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 18px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--ink);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 4px 10px rgba(23, 33, 47, 0.04);
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(23, 33, 47, 0.08);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn.primary {
+    background: linear-gradient(135deg, var(--accent) 0%, #e3833f 100%);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .btn.soft {
+    background: var(--brand-soft);
+    color: var(--brand);
+    border-color: #cfe3ff;
+  }
+
+  .btn.danger {
+    color: var(--bad);
+    border-color: #f0c5c1;
+    background: var(--bad-soft);
+  }
+
+  .layout {
+    height: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 16px;
+  }
+
+  .question-panel {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background: rgba(255,255,255,0.88);
+    overflow: hidden;
+  }
+
+  .qhead {
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(245,249,255,0.9), rgba(255,255,255,0.82));
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 6px 10px;
+    background: var(--brand-soft);
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .progress {
+    height: 8px;
+    background: #edf1f6;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 14px;
+  }
+
+  .progress i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, #f0a15d 100%);
+    border-radius: inherit;
+  }
+
+  .qscroll {
+    overflow: auto;
+    padding: 24px 22px 8px;
+    min-height: 0;
+    overscroll-behavior: contain;
+  }
+
+  .stem {
+    margin: 0 0 18px;
+    font-size: clamp(1.12rem, 1.6vw, 1.55rem);
+    line-height: 1.6;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .code {
+    margin: 0 0 18px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #1a2430, #0f1726);
+    color: #e8f0ff;
+    border: 1px solid rgba(255,255,255,0.06);
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 0.92rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  #options {
+    display: grid;
+    gap: 12px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    margin: 0;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .option:hover {
+    border-color: rgba(34,90,145,0.4);
+    background: #f9fbff;
+  }
+
+  .option.selected {
+    border-color: var(--brand-2);
+    background: linear-gradient(180deg, rgba(238,246,255,0.9), rgba(255,255,255,1));
+    box-shadow: inset 0 0 0 1px rgba(34,90,145,0.15);
+  }
+
+  .option .letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #eef3f9;
+    color: var(--brand);
+    font-weight: 800;
+    font-size: 0.92rem;
+  }
+
+  .option.selected .letter {
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .option .text {
+    flex: 1;
+    line-height: 1.5;
+    font-size: 1rem;
+  }
+
+  #feedback {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: #f8fafb;
+    color: var(--ink);
+    line-height: 1.6;
+    display: none;
+  }
+
+  #feedback.show {
+    display: block;
+  }
+
+  #feedback.correct {
+    border-color: rgba(29,122,79,0.2);
+    background: var(--ok-soft);
+    color: var(--ok);
+  }
+
+  #feedback.incorrect {
+    border-color: rgba(180,35,24,0.2);
+    background: var(--bad-soft);
+    color: var(--bad);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px 18px;
+    border-top: 1px solid var(--line);
+    background: rgba(255,255,255,0.9);
+  }
+
+  .actions > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .side {
+    display: grid;
+    grid-template-rows: auto minmax(0,1fr) auto;
+    min-height: 0;
+    padding: 14px 14px 12px;
+    background: rgba(255,255,255,0.9);
+  }
+
+  .side h2 {
+    margin: 4px 0 12px;
+    font-size: 1.15rem;
+    color: var(--brand);
+  }
+
+  .nav-scroll {
+    min-height: 0;
+    overflow: auto;
+    padding-right: 4px;
+  }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    align-content: start;
+  }
+
+  .num {
+    display: grid;
+    place-items: center;
+    min-height: 42px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #f8fafc;
+    color: var(--ink);
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.18s ease;
+  }
+
+  .num:hover {
+    border-color: rgba(34,90,145,0.38);
+  }
+
+  .num.current {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(24,59,91,0.16);
+  }
+
+  .num.flagged {
+    position: relative;
+  }
+
+  .num.flagged::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.8);
+  }
+
+  .num.answered {
+    background: rgba(29,122,79,0.09);
+    border-color: rgba(29,122,79,0.2);
+    color: var(--ok);
+  }
+
+  .num.wrong {
+    background: rgba(180,35,24,0.06);
+    border-color: rgba(180,35,24,0.18);
+    color: var(--bad);
+  }
+
+  .sidefoot {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  .summary {
+    margin: 0 0 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-size: 0.92rem;
+  }
+
+  .results {
+    display: grid;
+    place-items: center;
+    padding: 26px;
+  }
+
+  .results > .panel {
+    width: min(820px, 100%);
+    padding: 26px 24px 18px;
+  }
+
+  .results h1 {
+    margin: 0 0 18px;
+    color: var(--brand);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .stat {
+    padding: 16px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, #ffffff, #f9fbff);
+    text-align: center;
+  }
+
+  .stat strong {
+    display: block;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--brand);
+    margin-bottom: 6px;
+  }
+
+  .results h2 {
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-size: 1.2rem;
+  }
+
+  #topics {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .topic-row {
+    display: grid;
+    grid-template-columns: 150px 1fr 70px;
+    gap: 10px;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: #fff;
+  }
+
+  .topic-row .title {
+    font-weight: 700;
+    color: var(--brand);
+  }
+
+  .topic-bar {
+    height: 10px;
+    background: #edf1f6;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .topic-bar > i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--ok) 0%, #7cc798 100%);
+    border-radius: inherit;
+  }
+
+  .topic-row .score {
+    text-align: right;
+    font-weight: 800;
+    color: var(--muted);
+  }
+
+  .results p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 18px;
+  }
+
+  #review {
+    display: grid;
+    gap: 10px;
+  }
+
+  .review-card {
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  .review-card h3 {
+    margin: 0 0 8px;
+    color: var(--brand);
+    font-size: 1rem;
+  }
+
+  .review-card p {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--muted);
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto;
+    }
+
+    .side {
+      padding-bottom: 14px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .screen {
+      padding: 12px;
+    }
+
+    .start .panel {
+      padding: 24px 18px 20px;
+    }
+
+    .actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .actions > div {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .numbers {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .stats {
+      grid-template-columns: 1fr;
+    }
+
+    .topic-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .topic-row .score {
+      text-align: left;
+    }
+  }
 </style></head><body><header><b>Oracle SQL Mock Exam</b><span id="timer"></span></header>
-<section id="start" class="screen start"><div class="panel"><h1>100 Questions</h1><p>Each take randomizes the question order and answer choices. The website covers the complete reviewer syllabus and uses single-answer and select-all-that-apply items.</p><p>Goodluck!</p><div><button class="btn primary" onclick="begin('exam')">Mock Exam</button> <button class="btn soft" onclick="begin('practice')">Practice Mode</button></div></div></section>
+<section id="start" class="screen start"><div class="panel"><h1>100 Questions</h1><p>Each take randomizes the question order and answer choices. The website covers the complete reviewer syllabus and uses single-answer and select-all-that-apply items.</p><p>Goodluck!</p><div><button class="btn primary" onclick="begin('exam')">Mock Exam</button> <button class="btn soft" onclick="begin('practice')">Practice Mode</button></div><div class="reviewer-links"><a class="download-link" href="./reviewers/Oracle SQL First-Half Exam Reviewer.pdf" download>Download Reviewer 1</a><a class="download-link" href="./reviewers/Oracle SQL Final-Half Exam Reviewer.pdf" download>Download Reviewer 2</a></div></div></section>
 <section id="exam" class="screen hidden"><div class="layout"><main class="panel question-panel"><div class="qhead"><div class="meta"><span id="qnum" class="chip"></span><span id="topic" class="chip"></span><span id="kind" class="chip"></span></div><div class="progress"><i id="bar"></i></div></div><div class="qscroll"><div id="stem" class="stem"></div><pre id="code" class="code hidden"></pre><div id="options"></div><div id="feedback"></div></div><div class="actions"><button class="btn" onclick="move(-1)">Previous</button><div><button class="btn soft" onclick="flag()">Flag <span class="flagtext">question</span></button><button id="next" class="btn primary" onclick="nextAction()">Next</button></div></div></main><aside class="panel side"><h2>Questions</h2><div class="nav-scroll"><div id="numbers" class="numbers"></div></div><div class="sidefoot"><p id="summary" class="summary"></p><button class="btn danger" onclick="submitExam()">Submit</button></div></aside></div></section>
 <section id="results" class="screen results hidden"><div class="panel"><h1>Results</h1><div class="stats"><div class="stat"><strong id="score"></strong>Score</div><div class="stat"><strong id="correct"></strong>Correct</div><div class="stat"><strong id="unanswered"></strong>Unanswered</div></div><h2>Topic performance</h2><div id="topics"></div><p><button class="btn primary" onclick="newTake()">New randomized take</button> <button class="btn soft" onclick="reviewWrong()">Review missed items</button></p><div id="review"></div></div></section>
 <script>const BANK=[{"id": 1, "topic": "Relational Concepts", "stem": "Which statement is true about a relational database?", "options": [{"id": "A", "text": "Rows are always returned in insertion order."}, {"id": "B", "text": "Logical design is independent of the physical access path."}, {"id": "C", "text": "Every foreign key must be NOT NULL."}, {"id": "D", "text": "A primary key and an index are identical."}], "correct": ["B"], "explanation": "Logical design is independent of the physical access path.", "review": "First-Half Module 1", "type": "single", "code": ""}, {"id": 2, "topic": "Relational Concepts", "stem": "Which object is primarily an optional physical access path?", "options": [{"id": "A", "text": "Primary key"}, {"id": "B", "text": "Foreign key"}, {"id": "C", "text": "Index"}, {"id": "D", "text": "Column alias"}], "correct": ["C"], "explanation": "Logical design is independent of the physical access path.", "review": "First-Half Module 1", "type": "single", "code": ""}, {"id": 3, "topic": "Relational Concepts", "stem": "Which ERD component normally maps to a table column?", "options": [{"id": "A", "text": "Entity"}, {"id": "B", "text": "Attribute"}, {"id": "C", "text": "Relationship line"}, {"id": "D", "text": "Data block"}], "correct": ["B"], "explanation": "Logical design is independent of the physical access path.", "review": "First-Half Module 1", "type": "single", "code": ""}, {"id": 4, "topic": "Relational Concepts", "stem": "Which statements are true?", "options": [{"id": "A", "text": "An entity normally maps to a table."}, {"id": "B", "text": "An attribute normally maps to a column."}, {"id": "C", "text": "ORDER BY is part of an ERD."}, {"id": "D", "text": "A relationship can be represented by a foreign key."}], "correct": ["A", "B", "D"], "explanation": "Logical design is independent of the physical access path.", "review": "First-Half Module 1", "type": "multi", "code": ""}, {"id": 5, "topic": "SELECT and Expressions", "stem": "Which statement correctly creates an alias containing a space?", "options": [{"id": "A", "text": "SELECT salary AS 'Annual Salary' FROM employees;"}, {"id": "B", "text": "SELECT salary AS \"Annual Salary\" FROM employees;"}, {"id": "C", "text": "SELECT salary = \"Annual Salary\" FROM employees;"}, {"id": "D", "text": "SELECT salary Annual Salary FROM employees;"}], "correct": ["B"], "explanation": "Aliases affect headings; DISTINCT applies to the complete result row; NULL arithmetic returns NULL.", "review": "First-Half Module 2", "type": "single", "code": ""}, {"id": 6, "topic": "SELECT and Expressions", "stem": "SELECT DISTINCT department_id, job_id removes duplicate:", "options": [{"id": "A", "text": "department_id values only"}, {"id": "B", "text": "job_id values only"}, {"id": "C", "text": "department_id and job_id combinations"}, {"id": "D", "text": "source rows before SELECT"}], "correct": ["C"], "explanation": "Aliases affect headings; DISTINCT applies to the complete result row; NULL arithmetic returns NULL.", "review": "First-Half Module 2", "type": "single", "code": ""}, {"id": 7, "topic": "SELECT and Expressions", "stem": "SALARY is 5000 and COMMISSION_PCT is NULL. What is salary + salary * commission_pct?", "options": [{"id": "A", "text": "5000"}, {"id": "B", "text": "0"}, {"id": "C", "text": "NULL"}, {"id": "D", "text": "Syntax error"}], "correct": ["C"], "explanation": "Aliases affect headings; DISTINCT applies to the complete result row; NULL arithmetic returns NULL.", "review": "First-Half Module 2", "type": "single", "code": ""}, {"id": 8, "topic": "SELECT and Expressions", "stem": "Which statements are true about aliases?", "options": [{"id": "A", "text": "They rename stored columns."}, {"id": "B", "text": "They change displayed headings."}, {"id": "C", "text": "They can normally be used in ORDER BY."}, {"id": "D", "text": "They can normally be used in same-block WHERE."}], "correct": ["B", "C"], "explanation": "Aliases affect headings; DISTINCT applies to the complete result row; NULL arithmetic returns NULL.", "review": "First-Half Module 2", "type": "multi", "code": ""}, {"id": 9, "topic": "Filtering and Sorting", "stem": "Which condition includes both 5000 and 10000?", "options": [{"id": "A", "text": "salary > 5000 AND salary < 10000"}, {"id": "B", "text": "salary BETWEEN 5000 AND 10000"}, {"id": "C", "text": "salary IN (5000,10000)"}, {"id": "D", "text": "salary >= 5000 OR salary <= 10000"}], "correct": ["B"], "explanation": "BETWEEN is inclusive; AND precedes OR; use IS NULL; DESC defaults NULLS FIRST.", "review": "First-Half Module 3", "type": "single", "code": ""}, {"id": 10, "topic": "Filtering and Sorting", "stem": "How is A OR B AND C evaluated?", "options": [{"id": "A", "text": "(A OR B) AND C"}, {"id": "B", "text": "A OR (B AND C)"}, {"id": "C", "text": "(A AND B) OR C"}, {"id": "D", "text": "Invalid without parentheses"}], "correct": ["B"], "explanation": "BETWEEN is inclusive; AND precedes OR; use IS NULL; DESC defaults NULLS FIRST.", "review": "First-Half Module 3", "type": "single", "code": ""}, {"id": 11, "topic": "Filtering and Sorting", "stem": "Which predicate correctly checks for a missing commission?", "options": [{"id": "A", "text": "commission_pct = NULL"}, {"id": "B", "text": "commission_pct IS NULL"}, {"id": "C", "text": "commission_pct = 'NULL'"}, {"id": "D", "text": "commission_pct <> NULL"}], "correct": ["B"], "explanation": "BETWEEN is inclusive; AND precedes OR; use IS NULL; DESC defaults NULLS FIRST.", "review": "First-Half Module 3", "type": "single", "code": ""}, {"id": 12, "topic": "Filtering and Sorting", "stem": "What order is returned?", "options": [{"id": "A", "text": "BEN, CARL, DINA, ANA"}, {"id": "B", "text": "CARL, DINA, ANA, BEN"}, {"id": "C", "text": "ANA, DINA, CARL, BEN"}, {"id": "D", "text": "BEN, ANA, DINA, CARL"}], "correct": ["A"], "explanation": "BETWEEN is inclusive; AND precedes OR; use IS NULL; DESC defaults NULLS FIRST.", "review": "First-Half Module 3", "type": "single", "code": "ENAME  MGR\nANA    100\nBEN    NULL\nCARL   200\nDINA   150\n\nSELECT ename FROM emp ORDER BY mgr DESC;"}, {"id": 13, "topic": "Substitution and Row Limiting", "stem": "Which syntax prompts once and defines the substitution variable for reuse?", "options": [{"id": "A", "text": "&dept"}, {"id": "B", "text": "&&dept"}, {"id": "C", "text": ":dept"}, {"id": "D", "text": "@dept"}], "correct": ["B"], "explanation": "&& defines and reuses a substitution variable; VERIFY shows substitution; sorting should precede top-N intent.", "review": "First-Half Module 3", "type": "single", "code": ""}, {"id": 14, "topic": "Substitution and Row Limiting", "stem": "What does SET VERIFY ON show?", "options": [{"id": "A", "text": "Execution plan"}, {"id": "B", "text": "Old and new SQL text after substitution"}, {"id": "C", "text": "Committed rows"}, {"id": "D", "text": "Constraint status"}], "correct": ["B"], "explanation": "&& defines and reuses a substitution variable; VERIFY shows substitution; sorting should precede top-N intent.", "review": "First-Half Module 3", "type": "single", "code": ""}, {"id": 15, "topic": "Substitution and Row Limiting", "stem": "Which query most deterministically returns the five highest salaries?", "options": [{"id": "A", "text": "FETCH FIRST 5 ROWS ONLY"}, {"id": "B", "text": "ORDER BY salary DESC FETCH FIRST 5 ROWS ONLY"}, {"id": "C", "text": "ORDER BY salary DESC, employee_id FETCH FIRST 5 ROWS ONLY"}, {"id": "D", "text": "WHERE ROWNUM=5"}], "correct": ["C"], "explanation": "&& defines and reuses a substitution variable; VERIFY shows substitution; sorting should precede top-N intent.", "review": "First-Half Module 3", "type": "single", "code": ""}, {"id": 16, "topic": "Substitution and Row Limiting", "stem": "Which statements are true?", "options": [{"id": "A", "text": "&name performs text substitution."}, {"id": "B", "text": "&&name defines a value for reuse."}, {"id": "C", "text": "VERIFY grants privileges."}, {"id": "D", "text": "Without ORDER BY, a top-N business result is not deterministic."}], "correct": ["A", "B", "D"], "explanation": "&& defines and reuses a substitution variable; VERIFY shows substitution; sorting should precede top-N intent.", "review": "First-Half Module 3", "type": "multi", "code": ""}, {"id": 17, "topic": "Character Functions", "stem": "What does SUBSTR('ORACLE DATABASE',8,4) return?", "options": [{"id": "A", "text": "ORAC"}, {"id": "B", "text": "DATA"}, {"id": "C", "text": "BASE"}, {"id": "D", "text": "DATAB"}], "correct": ["B"], "explanation": "SUBSTR extracts text; INSTR returns a position; LIKE wildcards have distinct meanings.", "review": "First-Half Module 4", "type": "single", "code": ""}, {"id": 18, "topic": "Character Functions", "stem": "What does INSTR('DATABASE','A') return?", "options": [{"id": "A", "text": "The text A"}, {"id": "B", "text": "The first A position"}, {"id": "C", "text": "The string length"}, {"id": "D", "text": "Boolean TRUE"}], "correct": ["B"], "explanation": "SUBSTR extracts text; INSTR returns a position; LIKE wildcards have distinct meanings.", "review": "First-Half Module 4", "type": "single", "code": ""}, {"id": 19, "topic": "Character Functions", "stem": "Which pattern finds names whose second character is A?", "options": [{"id": "A", "text": "'A%'"}, {"id": "B", "text": "'_A%'"}, {"id": "C", "text": "'%A_'"}, {"id": "D", "text": "'%A%'"}], "correct": ["B"], "explanation": "SUBSTR extracts text; INSTR returns a position; LIKE wildcards have distinct meanings.", "review": "First-Half Module 4", "type": "single", "code": ""}, {"id": 20, "topic": "Character Functions", "stem": "Which statements are true?", "options": [{"id": "A", "text": "SUBSTR returns selected text."}, {"id": "B", "text": "INSTR returns a numeric position."}, {"id": "C", "text": "% means exactly one character."}, {"id": "D", "text": "_ means exactly one character."}], "correct": ["A", "B", "D"], "explanation": "SUBSTR extracts text; INSTR returns a position; LIKE wildcards have distinct meanings.", "review": "First-Half Module 4", "type": "multi", "code": ""}, {"id": 21, "topic": "Number and Date Functions", "stem": "Which pair is returned by ROUND(45.926,2), TRUNC(45.926,2)?", "options": [{"id": "A", "text": "45.92, 45.92"}, {"id": "B", "text": "45.93, 45.92"}, {"id": "C", "text": "45.93, 45.93"}, {"id": "D", "text": "46, 45"}], "correct": ["B"], "explanation": "ROUND rounds; TRUNC cuts; MOD returns remainder; DATE + n adds days.", "review": "First-Half Module 4", "type": "single", "code": ""}, {"id": 22, "topic": "Number and Date Functions", "stem": "What is MOD(11,4)?", "options": [{"id": "A", "text": "2"}, {"id": "B", "text": "3"}, {"id": "C", "text": "4"}, {"id": "D", "text": "7"}], "correct": ["B"], "explanation": "ROUND rounds; TRUNC cuts; MOD returns remainder; DATE + n adds days.", "review": "First-Half Module 4", "type": "single", "code": ""}, {"id": 23, "topic": "Number and Date Functions", "stem": "What does hire_date + 7 represent?", "options": [{"id": "A", "text": "Seven months later"}, {"id": "B", "text": "Seven days later"}, {"id": "C", "text": "Seven hours later"}, {"id": "D", "text": "Invalid arithmetic"}], "correct": ["B"], "explanation": "ROUND rounds; TRUNC cuts; MOD returns remainder; DATE + n adds days.", "review": "First-Half Module 4", "type": "single", "code": ""}, {"id": 24, "topic": "Number and Date Functions", "stem": "Which function moves a date six calendar months?", "options": [{"id": "A", "text": "hire_date + 180"}, {"id": "B", "text": "ADD_MONTHS(hire_date,6)"}, {"id": "C", "text": "MONTHS_BETWEEN(hire_date,6)"}, {"id": "D", "text": "MOD(hire_date,6)"}], "correct": ["B"], "explanation": "ROUND rounds; TRUNC cuts; MOD returns remainder; DATE + n adds days.", "review": "First-Half Module 4", "type": "single", "code": ""}, {"id": 25, "topic": "Conversion and Conditional", "stem": "Which comparison is least dependent on session date format?", "options": [{"id": "A", "text": "hire_date='10-SEP-2026'"}, {"id": "B", "text": "hire_date=TO_DATE('2026-09-10','YYYY-MM-DD')"}, {"id": "C", "text": "TO_CHAR(hire_date)='10-SEP-2026'"}, {"id": "D", "text": "hire_date='09/10/26'"}], "correct": ["B"], "explanation": "Explicit conversion reduces NLS dependence; COALESCE picks first non-NULL; NULLIF returns NULL when equal; CASE stops at first match.", "review": "First-Half Module 5", "type": "single", "code": ""}, {"id": 26, "topic": "Conversion and Conditional", "stem": "What does COALESCE(a,b,c,0) return?", "options": [{"id": "A", "text": "Largest value"}, {"id": "B", "text": "First non-NULL from left"}, {"id": "C", "text": "Zero always"}, {"id": "D", "text": "First NULL"}], "correct": ["B"], "explanation": "Explicit conversion reduces NLS dependence; COALESCE picks first non-NULL; NULLIF returns NULL when equal; CASE stops at first match.", "review": "First-Half Module 5", "type": "single", "code": ""}, {"id": 27, "topic": "Conversion and Conditional", "stem": "What does NULLIF(10,10) return?", "options": [{"id": "A", "text": "10"}, {"id": "B", "text": "0"}, {"id": "C", "text": "NULL"}, {"id": "D", "text": "Error"}], "correct": ["C"], "explanation": "Explicit conversion reduces NLS dependence; COALESCE picks first non-NULL; NULLIF returns NULL when equal; CASE stops at first match.", "review": "First-Half Module 5", "type": "single", "code": ""}, {"id": 28, "topic": "Conversion and Conditional", "stem": "CASE checks salary >= 5000 before salary >= 10000. What returns for 12000?", "options": [{"id": "A", "text": "First branch result"}, {"id": "B", "text": "Both results"}, {"id": "C", "text": "Overlap error"}, {"id": "D", "text": "NULL"}], "correct": ["A"], "explanation": "Explicit conversion reduces NLS dependence; COALESCE picks first non-NULL; NULLIF returns NULL when equal; CASE stops at first match.", "review": "First-Half Module 5", "type": "single", "code": ""}, {"id": 29, "topic": "Aggregation", "stem": "For 500, NULL, 700, NULL, what are COUNT(*), COUNT(value), AVG(value)?", "options": [{"id": "A", "text": "4,4,300"}, {"id": "B", "text": "4,2,600"}, {"id": "C", "text": "2,2,600"}, {"id": "D", "text": "4,2,300"}], "correct": ["B"], "explanation": "COUNT(*) counts rows; COUNT(expr) and AVG ignore NULL; nonaggregate columns must be grouped; HAVING filters groups.", "review": "First-Half Module 6", "type": "single", "code": ""}, {"id": 30, "topic": "Aggregation", "stem": "Which query is invalid?", "options": [{"id": "A", "text": "SELECT department_id,COUNT(*) FROM employees GROUP BY department_id"}, {"id": "B", "text": "SELECT department_id,employee_name,COUNT(*) FROM employees GROUP BY department_id"}, {"id": "C", "text": "SELECT COUNT(*) FROM employees"}, {"id": "D", "text": "SELECT MAX(hire_date) FROM employees"}], "correct": ["B"], "explanation": "COUNT(*) counts rows; COUNT(expr) and AVG ignore NULL; nonaggregate columns must be grouped; HAVING filters groups.", "review": "First-Half Module 6", "type": "single", "code": ""}, {"id": 31, "topic": "Aggregation", "stem": "Where should AVG(salary)>5000 restrict grouped departments?", "options": [{"id": "A", "text": "WHERE"}, {"id": "B", "text": "HAVING"}, {"id": "C", "text": "FROM"}, {"id": "D", "text": "DISTINCT"}], "correct": ["B"], "explanation": "COUNT(*) counts rows; COUNT(expr) and AVG ignore NULL; nonaggregate columns must be grouped; HAVING filters groups.", "review": "First-Half Module 6", "type": "single", "code": ""}, {"id": 32, "topic": "Aggregation", "stem": "Which statements are true?", "options": [{"id": "A", "text": "COUNT(*) counts rows."}, {"id": "B", "text": "COUNT(column) counts NULL."}, {"id": "C", "text": "AVG(column) ignores NULL."}, {"id": "D", "text": "GROUP BY guarantees sorted output."}], "correct": ["A", "C"], "explanation": "COUNT(*) counts rows; COUNT(expr) and AVG ignore NULL; nonaggregate columns must be grouped; HAVING filters groups.", "review": "First-Half Module 6", "type": "multi", "code": ""}, {"id": 33, "topic": "Joins", "stem": "EMP has 4 rows and DEPT has 3 rows. CROSS JOIN returns:", "options": [{"id": "A", "text": "3"}, {"id": "B", "text": "4"}, {"id": "C", "text": "7"}, {"id": "D", "text": "12"}], "correct": ["D"], "explanation": "Inner joins keep matches; left joins preserve left rows; cross joins multiply; self-joins use aliases.", "review": "Final-Half Module 7", "type": "single", "code": ""}, {"id": 34, "topic": "Joins", "stem": "Which join preserves every EMP row?", "options": [{"id": "A", "text": "EMP INNER JOIN DEPT"}, {"id": "B", "text": "EMP LEFT JOIN DEPT"}, {"id": "C", "text": "EMP CROSS JOIN DEPT"}, {"id": "D", "text": "DEPT LEFT JOIN EMP"}], "correct": ["B"], "explanation": "Inner joins keep matches; left joins preserve left rows; cross joins multiply; self-joins use aliases.", "review": "Final-Half Module 7", "type": "single", "code": ""}, {"id": 35, "topic": "Joins", "stem": "A self-join uses:", "options": [{"id": "A", "text": "Two physical table copies"}, {"id": "B", "text": "One table with different aliases"}, {"id": "C", "text": "UNION"}, {"id": "D", "text": "Temporary tables only"}], "correct": ["B"], "explanation": "Inner joins keep matches; left joins preserve left rows; cross joins multiply; self-joins use aliases.", "review": "Final-Half Module 7", "type": "single", "code": ""}, {"id": 36, "topic": "Joins", "stem": "Which statements are true?", "options": [{"id": "A", "text": "INNER JOIN returns matching combinations."}, {"id": "B", "text": "FULL OUTER JOIN preserves unmatched rows from both sides."}, {"id": "C", "text": "CROSS JOIN returns only matching keys."}, {"id": "D", "text": "A non-equijoin can use BETWEEN."}], "correct": ["A", "B", "D"], "explanation": "Inner joins keep matches; left joins preserve left rows; cross joins multiply; self-joins use aliases.", "review": "Final-Half Module 7", "type": "multi", "code": ""}, {"id": 37, "topic": "Outer Join Filters", "stem": "Why can WHERE d.status='OPEN' remove unmatched rows after a LEFT JOIN?", "options": [{"id": "A", "text": "Unmatched d.status is NULL and fails the predicate."}, {"id": "B", "text": "LEFT JOIN becomes CROSS JOIN."}, {"id": "C", "text": "WHERE creates a key."}, {"id": "D", "text": "It cannot remove them."}], "correct": ["A"], "explanation": "A WHERE predicate on the nullable side may reject NULL-extended rows.", "review": "Final-Half Module 7", "type": "single", "code": ""}, {"id": 38, "topic": "Outer Join Filters", "stem": "Where can a right-table filter be placed to retain unmatched left rows while limiting matched right rows?", "options": [{"id": "A", "text": "In the ON condition"}, {"id": "B", "text": "Only in ORDER BY"}, {"id": "C", "text": "Only after COMMIT"}, {"id": "D", "text": "In a primary key"}], "correct": ["A"], "explanation": "A WHERE predicate on the nullable side may reject NULL-extended rows.", "review": "Final-Half Module 7", "type": "single", "code": ""}, {"id": 39, "topic": "Outer Join Filters", "stem": "A LEFT JOIN unmatched row contains what for right-side columns?", "options": [{"id": "A", "text": "Zero"}, {"id": "B", "text": "Empty strings only"}, {"id": "C", "text": "NULL"}, {"id": "D", "text": "Previous row values"}], "correct": ["C"], "explanation": "A WHERE predicate on the nullable side may reject NULL-extended rows.", "review": "Final-Half Module 7", "type": "single", "code": ""}, {"id": 40, "topic": "Outer Join Filters", "stem": "Which statements are true?", "options": [{"id": "A", "text": "LEFT JOIN preserves left rows."}, {"id": "B", "text": "A restrictive right-side WHERE predicate can remove unmatched rows."}, {"id": "C", "text": "FULL OUTER JOIN is a Cartesian product."}, {"id": "D", "text": "Outer joins can produce NULL columns."}], "correct": ["A", "B", "D"], "explanation": "A WHERE predicate on the nullable side may reject NULL-extended rows.", "review": "Final-Half Module 7", "type": "multi", "code": ""}, {"id": 41, "topic": "Subqueries", "stem": "A scalar subquery used with = returns two rows. What happens?", "options": [{"id": "A", "text": "First row chosen"}, {"id": "B", "text": "Single-row subquery error"}, {"id": "C", "text": "Rows concatenated"}, {"id": "D", "text": "= becomes IN"}], "correct": ["B"], "explanation": "Scalar operators need at most one row; IN accepts sets; EXISTS checks existence; NOT IN is NULL-sensitive.", "review": "Final-Half Module 8", "type": "single", "code": ""}, {"id": 42, "topic": "Subqueries", "stem": "Which operator accepts a multi-row one-column membership result?", "options": [{"id": "A", "text": "="}, {"id": "B", "text": "IN"}, {"id": "C", "text": "IS NULL"}, {"id": "D", "text": "BETWEEN only"}], "correct": ["B"], "explanation": "Scalar operators need at most one row; IN accepts sets; EXISTS checks existence; NOT IN is NULL-sensitive.", "review": "Final-Half Module 8", "type": "single", "code": ""}, {"id": 43, "topic": "Subqueries", "stem": "NOT IN subquery returns a NULL. What may happen?", "options": [{"id": "A", "text": "NULL is ignored."}, {"id": "B", "text": "Predicate becomes UNKNOWN and no rows qualify."}, {"id": "C", "text": "It always equals NOT EXISTS."}, {"id": "D", "text": "NULL becomes zero."}], "correct": ["B"], "explanation": "Scalar operators need at most one row; IN accepts sets; EXISTS checks existence; NOT IN is NULL-sensitive.", "review": "Final-Half Module 8", "type": "single", "code": ""}, {"id": 44, "topic": "Subqueries", "stem": "Which statements are true?", "options": [{"id": "A", "text": "EXISTS tests row existence."}, {"id": "B", "text": "A correlated subquery can reference the outer row."}, {"id": "C", "text": "A scalar comparison accepts unlimited rows."}, {"id": "D", "text": "IN can accept multiple rows."}], "correct": ["A", "B", "D"], "explanation": "Scalar operators need at most one row; IN accepts sets; EXISTS checks existence; NOT IN is NULL-sensitive.", "review": "Final-Half Module 8", "type": "multi", "code": ""}, {"id": 45, "topic": "Set Operators", "stem": "Which operator returns common rows?", "options": [{"id": "A", "text": "UNION ALL"}, {"id": "B", "text": "MINUS"}, {"id": "C", "text": "INTERSECT"}, {"id": "D", "text": "CROSS JOIN"}], "correct": ["C"], "explanation": "UNION removes duplicates; UNION ALL retains; INTERSECT finds common; MINUS is first minus second.", "review": "Final-Half Module 9", "type": "single", "code": ""}, {"id": 46, "topic": "Set Operators", "stem": "Which statement about UNION ALL is true?", "options": [{"id": "A", "text": "Removes duplicates"}, {"id": "B", "text": "Retains duplicates"}, {"id": "C", "text": "Allows different column counts"}, {"id": "D", "text": "Sorts automatically"}], "correct": ["B"], "explanation": "UNION removes duplicates; UNION ALL retains; INTERSECT finds common; MINUS is first minus second.", "review": "Final-Half Module 9", "type": "single", "code": ""}, {"id": 47, "topic": "Set Operators", "stem": "MINUS returns:", "options": [{"id": "A", "text": "First-result rows absent from second"}, {"id": "B", "text": "Common rows"}, {"id": "C", "text": "All rows"}, {"id": "D", "text": "Second-result rows absent from first"}], "correct": ["A"], "explanation": "UNION removes duplicates; UNION ALL retains; INTERSECT finds common; MINUS is first minus second.", "review": "Final-Half Module 9", "type": "single", "code": ""}, {"id": 48, "topic": "Set Operators", "stem": "Which statements are required?", "options": [{"id": "A", "text": "Same number of columns."}, {"id": "B", "text": "Identical column names."}, {"id": "C", "text": "Compatible type groups by position."}, {"id": "D", "text": "GROUP BY in every component."}], "correct": ["A", "C"], "explanation": "UNION removes duplicates; UNION ALL retains; INTERSECT finds common; MINUS is first minus second.", "review": "Final-Half Module 9", "type": "multi", "code": ""}, {"id": 49, "topic": "DML and Transactions", "stem": "DELETE FROM employees; does what?", "options": [{"id": "A", "text": "Fails without WHERE"}, {"id": "B", "text": "Targets all rows but keeps the table"}, {"id": "C", "text": "Drops the table"}, {"id": "D", "text": "Deletes NULL rows only"}], "correct": ["B"], "explanation": "DML is transactional; DELETE without WHERE targets all rows; ROLLBACK TO is partial; failed statements are atomic.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 50, "topic": "DML and Transactions", "stem": "INSERT, SAVEPOINT S, UPDATE, ROLLBACK TO S, COMMIT leaves:", "options": [{"id": "A", "text": "Nothing"}, {"id": "B", "text": "Insert committed, update undone"}, {"id": "C", "text": "Update committed, insert undone"}, {"id": "D", "text": "Both undone"}], "correct": ["B"], "explanation": "DML is transactional; DELETE without WHERE targets all rows; ROLLBACK TO is partial; failed statements are atomic.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 51, "topic": "DML and Transactions", "stem": "A multitable INSERT fails a target constraint. What happens?", "options": [{"id": "A", "text": "Successful target rows remain"}, {"id": "B", "text": "Statement fails atomically"}, {"id": "C", "text": "Constraint ignored"}, {"id": "D", "text": "Only SELECT rolls back"}], "correct": ["B"], "explanation": "DML is transactional; DELETE without WHERE targets all rows; ROLLBACK TO is partial; failed statements are atomic.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 52, "topic": "DML and Transactions", "stem": "Which statements are true?", "options": [{"id": "A", "text": "ROLLBACK reverses uncommitted work."}, {"id": "B", "text": "ROLLBACK TO ends the whole transaction."}, {"id": "C", "text": "COMMIT erases savepoints."}, {"id": "D", "text": "DDL can affect transaction boundaries."}], "correct": ["A", "C", "D"], "explanation": "DML is transactional; DELETE without WHERE targets all rows; ROLLBACK TO is partial; failed statements are atomic.", "review": "Final-Half Module 10", "type": "multi", "code": ""}, {"id": 53, "topic": "Multitable INSERT and MERGE", "stem": "INSERT FIRST has two true WHEN branches for one source row. It executes:", "options": [{"id": "A", "text": "Both"}, {"id": "B", "text": "First matching branch only"}, {"id": "C", "text": "Neither"}, {"id": "D", "text": "A UNION"}], "correct": ["B"], "explanation": "INSERT ALL executes all matching branches; INSERT FIRST stops at first match; MERGE branches on match status.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 54, "topic": "Multitable INSERT and MERGE", "stem": "MERGE WHEN MATCHED commonly performs:", "options": [{"id": "A", "text": "UPDATE"}, {"id": "B", "text": "CREATE TABLE"}, {"id": "C", "text": "GRANT"}, {"id": "D", "text": "Automatic COMMIT"}], "correct": ["A"], "explanation": "INSERT ALL executes all matching branches; INSERT FIRST stops at first match; MERGE branches on match status.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 55, "topic": "Multitable INSERT and MERGE", "stem": "MERGE WHEN NOT MATCHED commonly performs:", "options": [{"id": "A", "text": "INSERT"}, {"id": "B", "text": "ROLLBACK"}, {"id": "C", "text": "DROP"}, {"id": "D", "text": "TRUNCATE"}], "correct": ["A"], "explanation": "INSERT ALL executes all matching branches; INSERT FIRST stops at first match; MERGE branches on match status.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 56, "topic": "Multitable INSERT and MERGE", "stem": "Which statements are true?", "options": [{"id": "A", "text": "INSERT ALL can execute multiple matching INTO clauses."}, {"id": "B", "text": "INSERT FIRST stops after first match."}, {"id": "C", "text": "MERGE commits every row automatically."}, {"id": "D", "text": "MERGE is DML."}], "correct": ["A", "B", "D"], "explanation": "INSERT ALL executes all matching branches; INSERT FIRST stops at first match; MERGE branches on match status.", "review": "Final-Half Module 10", "type": "multi", "code": ""}, {"id": 57, "topic": "Indexes, Synonyms, Sequences", "stem": "Which statement about indexes is true?", "options": [{"id": "A", "text": "Every available index is used."}, {"id": "B", "text": "Indexes can improve access but add storage and DML maintenance."}, {"id": "C", "text": "Every index is unique."}, {"id": "D", "text": "Dropping an index drops the table."}], "correct": ["B"], "explanation": "Indexes are optional access paths; synonyms do not grant access; sequence values can gap; CURRVAL requires NEXTVAL in the session.", "review": "Final-Half Module 11", "type": "single", "code": ""}, {"id": 58, "topic": "Indexes, Synonyms, Sequences", "stem": "A synonym without SELECT privilege allows:", "options": [{"id": "A", "text": "Query anyway"}, {"id": "B", "text": "Name resolution but no authorization bypass"}, {"id": "C", "text": "Object ownership"}, {"id": "D", "text": "Automatic index creation"}], "correct": ["B"], "explanation": "Indexes are optional access paths; synonyms do not grant access; sequence values can gap; CURRVAL requires NEXTVAL in the session.", "review": "Final-Half Module 11", "type": "single", "code": ""}, {"id": 59, "topic": "Indexes, Synonyms, Sequences", "stem": "CURRVAL before NEXTVAL in a new session is:", "options": [{"id": "A", "text": "Always 1"}, {"id": "B", "text": "Not yet defined"}, {"id": "C", "text": "Maximum value"}, {"id": "D", "text": "NULL silently"}], "correct": ["B"], "explanation": "Indexes are optional access paths; synonyms do not grant access; sequence values can gap; CURRVAL requires NEXTVAL in the session.", "review": "Final-Half Module 11", "type": "single", "code": ""}, {"id": 60, "topic": "Indexes, Synonyms, Sequences", "stem": "A rolled-back INSERT used NEXTVAL. The number is:", "options": [{"id": "A", "text": "Restored"}, {"id": "B", "text": "Consumed, so a gap may remain"}, {"id": "C", "text": "Converted to NULL"}, {"id": "D", "text": "Committed with the row"}], "correct": ["B"], "explanation": "Indexes are optional access paths; synonyms do not grant access; sequence values can gap; CURRVAL requires NEXTVAL in the session.", "review": "Final-Half Module 11", "type": "single", "code": ""}, {"id": 61, "topic": "DDL and Tables", "stem": "TRUNCATE TABLE employees:", "options": [{"id": "A", "text": "Accepts WHERE"}, {"id": "B", "text": "Removes all rows and retains the table"}, {"id": "C", "text": "Drops the table definition"}, {"id": "D", "text": "Is ordinary rollback-able DELETE"}], "correct": ["B"], "explanation": "TRUNCATE removes all rows but retains the table; SET UNUSED hides a column; GTT rows are temporary; external tables expose external data.", "review": "Final-Half Module 12", "type": "single", "code": ""}, {"id": 62, "topic": "DDL and Tables", "stem": "ALTER TABLE t SET UNUSED(c) primarily:", "options": [{"id": "A", "text": "Renames c"}, {"id": "B", "text": "Makes c inaccessible for later cleanup"}, {"id": "C", "text": "Indexes c"}, {"id": "D", "text": "Sets values to NULL"}], "correct": ["B"], "explanation": "TRUNCATE removes all rows but retains the table; SET UNUSED hides a column; GTT rows are temporary; external tables expose external data.", "review": "Final-Half Module 12", "type": "single", "code": ""}, {"id": 63, "topic": "DDL and Tables", "stem": "ON COMMIT DELETE ROWS means:", "options": [{"id": "A", "text": "Drop the temporary table"}, {"id": "B", "text": "Clear its temporary rows at commit"}, {"id": "C", "text": "Preserve rows permanently"}, {"id": "D", "text": "Make rows public"}], "correct": ["B"], "explanation": "TRUNCATE removes all rows but retains the table; SET UNUSED hides a column; GTT rows are temporary; external tables expose external data.", "review": "Final-Half Module 12", "type": "single", "code": ""}, {"id": 64, "topic": "DDL and Tables", "stem": "An external table primarily provides:", "options": [{"id": "A", "text": "Internal heap storage"}, {"id": "B", "text": "SQL access to external file data through metadata"}, {"id": "C", "text": "Automatic UPDATE of all files"}, {"id": "D", "text": "A sequence"}], "correct": ["B"], "explanation": "TRUNCATE removes all rows but retains the table; SET UNUSED hides a column; GTT rows are temporary; external tables expose external data.", "review": "Final-Half Module 12", "type": "single", "code": ""}, {"id": 65, "topic": "Constraints", "stem": "A composite primary key (order_id,line_no) permits:", "options": [{"id": "A", "text": "NULL line_no"}, {"id": "B", "text": "Same order_id with different line_no"}, {"id": "C", "text": "Duplicate pairs"}, {"id": "D", "text": "A second primary key"}], "correct": ["B"], "explanation": "Primary keys are unique and non-NULL; foreign keys may be NULL; UNIQUE and NOT NULL are separate; composite keys apply to combinations.", "review": "Final-Half Module 12", "type": "single", "code": ""}, {"id": 66, "topic": "Constraints", "stem": "Which statement about a nullable foreign key is true?", "options": [{"id": "A", "text": "It may contain NULL."}, {"id": "B", "text": "It must match zero."}, {"id": "C", "text": "It prevents duplicates."}, {"id": "D", "text": "It is the primary key."}], "correct": ["A"], "explanation": "Primary keys are unique and non-NULL; foreign keys may be NULL; UNIQUE and NOT NULL are separate; composite keys apply to combinations.", "review": "Final-Half Module 12", "type": "single", "code": ""}, {"id": 67, "topic": "Constraints", "stem": "A UNIQUE column without NOT NULL generally:", "options": [{"id": "A", "text": "Rejects NULL automatically"}, {"id": "B", "text": "Rejects duplicate non-NULL keys while allowing NULL"}, {"id": "C", "text": "Allows every duplicate"}, {"id": "D", "text": "Becomes the primary key"}], "correct": ["B"], "explanation": "Primary keys are unique and non-NULL; foreign keys may be NULL; UNIQUE and NOT NULL are separate; composite keys apply to combinations.", "review": "Final-Half Module 12", "type": "single", "code": ""}, {"id": 68, "topic": "Constraints", "stem": "Which statements are true?", "options": [{"id": "A", "text": "PRIMARY KEY is unique and non-NULL."}, {"id": "B", "text": "A table can have multiple primary-key constraints."}, {"id": "C", "text": "A table can have several foreign keys."}, {"id": "D", "text": "NOT NULL prevents duplicates."}], "correct": ["A", "C"], "explanation": "Primary keys are unique and non-NULL; foreign keys may be NULL; UNIQUE and NOT NULL are separate; composite keys apply to combinations.", "review": "Final-Half Module 12", "type": "multi", "code": ""}, {"id": 69, "topic": "Views", "stem": "Which view is normally not directly updatable?", "options": [{"id": "A", "text": "Simple one-table projection"}, {"id": "B", "text": "GROUP BY aggregate view"}, {"id": "C", "text": "Simple filtered view"}, {"id": "D", "text": "Simple key-preserved view"}], "correct": ["B"], "explanation": "Views store query definitions; aggregation restricts DML; CHECK OPTION preserves predicate visibility; READ ONLY prevents DML.", "review": "Final-Half Module 13", "type": "single", "code": ""}, {"id": 70, "topic": "Views", "stem": "WITH CHECK OPTION prevents:", "options": [{"id": "A", "text": "SELECT"}, {"id": "B", "text": "A change that makes a row fail the view predicate"}, {"id": "C", "text": "Creating the view"}, {"id": "D", "text": "ORDER BY"}], "correct": ["B"], "explanation": "Views store query definitions; aggregation restricts DML; CHECK OPTION preserves predicate visibility; READ ONLY prevents DML.", "review": "Final-Half Module 13", "type": "single", "code": ""}, {"id": 71, "topic": "Views", "stem": "WITH READ ONLY means:", "options": [{"id": "A", "text": "Queryable but not modified through DML"}, {"id": "B", "text": "Base table dropped"}, {"id": "C", "text": "Separate data copy"}, {"id": "D", "text": "Owner-only SELECT"}], "correct": ["A"], "explanation": "Views store query definitions; aggregation restricts DML; CHECK OPTION preserves predicate visibility; READ ONLY prevents DML.", "review": "Final-Half Module 13", "type": "single", "code": ""}, {"id": 72, "topic": "Views", "stem": "Which statements are true?", "options": [{"id": "A", "text": "A normal view is always a copied table."}, {"id": "B", "text": "Dropping a view drops base tables."}, {"id": "C", "text": "Aggregate views are generally not directly updatable."}, {"id": "D", "text": "Views can restrict exposed columns."}], "correct": ["C", "D"], "explanation": "Views store query definitions; aggregation restricts DML; CHECK OPTION preserves predicate visibility; READ ONLY prevents DML.", "review": "Final-Half Module 13", "type": "multi", "code": ""}, {"id": 73, "topic": "Privileges and Dictionary", "stem": "CREATE SESSION is a:", "options": [{"id": "A", "text": "System privilege"}, {"id": "B", "text": "Object privilege"}, {"id": "C", "text": "Synonym"}, {"id": "D", "text": "Constraint"}], "correct": ["A"], "explanation": "CREATE SESSION is system privilege; SELECT ON is object privilege; roles group privileges; USER_* covers owned objects.", "review": "Final-Half Modules 14-15", "type": "single", "code": ""}, {"id": 74, "topic": "Privileges and Dictionary", "stem": "SELECT ON hr.employees is a:", "options": [{"id": "A", "text": "System privilege"}, {"id": "B", "text": "Object privilege"}, {"id": "C", "text": "Role only"}, {"id": "D", "text": "Data type"}], "correct": ["B"], "explanation": "CREATE SESSION is system privilege; SELECT ON is object privilege; roles group privileges; USER_* covers owned objects.", "review": "Final-Half Modules 14-15", "type": "single", "code": ""}, {"id": 75, "topic": "Privileges and Dictionary", "stem": "Which prefix describes objects owned by the current user?", "options": [{"id": "A", "text": "USER_"}, {"id": "B", "text": "ALL_ only"}, {"id": "C", "text": "DBA_ only"}, {"id": "D", "text": "SYSFILE_"}], "correct": ["A"], "explanation": "CREATE SESSION is system privilege; SELECT ON is object privilege; roles group privileges; USER_* covers owned objects.", "review": "Final-Half Modules 14-15", "type": "single", "code": ""}, {"id": 76, "topic": "Privileges and Dictionary", "stem": "Which statements are true?", "options": [{"id": "A", "text": "Roles can contain privileges."}, {"id": "B", "text": "Synonyms grant object privileges."}, {"id": "C", "text": "GRANT OPTION applies to forwarding object privileges."}, {"id": "D", "text": "ADMIN OPTION can apply to roles or system privileges."}], "correct": ["A", "C", "D"], "explanation": "CREATE SESSION is system privilege; SELECT ON is object privilege; roles group privileges; USER_* covers owned objects.", "review": "Final-Half Modules 14-15", "type": "multi", "code": ""}, {"id": 77, "topic": "Time Zones and Intervals", "stem": "CURRENT_TIMESTAMP returns:", "options": [{"id": "A", "text": "DATE without zone"}, {"id": "B", "text": "TIMESTAMP WITH TIME ZONE in session time zone"}, {"id": "C", "text": "INTERVAL"}, {"id": "D", "text": "NUMBER"}], "correct": ["B"], "explanation": "CURRENT_TIMESTAMP includes zone; LOCALTIMESTAMP does not; YEAR TO MONTH and DAY TO SECOND are different interval families.", "review": "Final-Half Module 16", "type": "single", "code": ""}, {"id": 78, "topic": "Time Zones and Intervals", "stem": "LOCALTIMESTAMP returns:", "options": [{"id": "A", "text": "TIMESTAMP without zone component"}, {"id": "B", "text": "TIMESTAMP WITH TIME ZONE"}, {"id": "C", "text": "DATE only"}, {"id": "D", "text": "INTERVAL"}], "correct": ["A"], "explanation": "CURRENT_TIMESTAMP includes zone; LOCALTIMESTAMP does not; YEAR TO MONTH and DAY TO SECOND are different interval families.", "review": "Final-Half Module 16", "type": "single", "code": ""}, {"id": 79, "topic": "Time Zones and Intervals", "stem": "Which interval models 2 years and 3 months?", "options": [{"id": "A", "text": "INTERVAL YEAR TO MONTH"}, {"id": "B", "text": "INTERVAL DAY TO SECOND"}, {"id": "C", "text": "DATE"}, {"id": "D", "text": "NUMBER"}], "correct": ["A"], "explanation": "CURRENT_TIMESTAMP includes zone; LOCALTIMESTAMP does not; YEAR TO MONTH and DAY TO SECOND are different interval families.", "review": "Final-Half Module 16", "type": "single", "code": ""}, {"id": 80, "topic": "Time Zones and Intervals", "stem": "Which statements are true?", "options": [{"id": "A", "text": "CURRENT_DATE returns DATE in session time zone."}, {"id": "B", "text": "LOCALTIMESTAMP includes a zone component."}, {"id": "C", "text": "CURRENT_TIMESTAMP includes zone information."}, {"id": "D", "text": "DATE stores a zone region."}], "correct": ["A", "C"], "explanation": "CURRENT_TIMESTAMP includes zone; LOCALTIMESTAMP does not; YEAR TO MONTH and DAY TO SECOND are different interval families.", "review": "Final-Half Module 16", "type": "multi", "code": ""}, {"id": 81, "topic": "Advanced Mixed Review", "stem": "Which query safely avoids division by zero by returning NULL for zero quantity?", "options": [{"id": "A", "text": "amount/quantity"}, {"id": "B", "text": "amount/NVL(quantity,0)"}, {"id": "C", "text": "amount/NULLIF(quantity,0)"}, {"id": "D", "text": "amount/MOD(quantity,0)"}], "correct": ["C"], "explanation": "Apply processing order, NULL, constraints, and statement-type rules together.", "review": "Combined Review", "type": "single", "code": ""}, {"id": 82, "topic": "Advanced Mixed Review", "stem": "Which option requires department 10 or 20 and salary above 5000?", "options": [{"id": "A", "text": "department_id=10 OR department_id=20 AND salary>5000"}, {"id": "B", "text": "(department_id=10 OR department_id=20) AND salary>5000"}, {"id": "C", "text": "department_id IN(10,20) OR salary>5000"}, {"id": "D", "text": "department_id BETWEEN 10 AND 20"}], "correct": ["B"], "explanation": "Apply processing order, NULL, constraints, and statement-type rules together.", "review": "Combined Review", "type": "single", "code": ""}, {"id": 83, "topic": "Advanced Mixed Review", "stem": "Which statements are true?", "options": [{"id": "A", "text": "IS NULL tests missing values."}, {"id": "B", "text": "COUNT(column) ignores NULL."}, {"id": "C", "text": "UNION ALL removes duplicates."}, {"id": "D", "text": "A left join preserves left rows."}], "correct": ["A", "B", "D"], "explanation": "Apply processing order, NULL, constraints, and statement-type rules together.", "review": "Combined Review", "type": "multi", "code": ""}, {"id": 84, "topic": "Advanced Mixed Review", "stem": "Which statements are true?", "options": [{"id": "A", "text": "COMMIT makes work permanent."}, {"id": "B", "text": "A synonym grants SELECT."}, {"id": "C", "text": "Sequence values may have gaps."}, {"id": "D", "text": "An available index is always used."}], "correct": ["A", "C"], "explanation": "Apply processing order, NULL, constraints, and statement-type rules together.", "review": "Combined Review", "type": "multi", "code": ""}, {"id": 85, "topic": "Advanced Scenario Review", "stem": "Which statement is true about this query?", "options": [{"id": "A", "text": "Maximum-priced rows get sort key 1 and appear first when other prices are positive."}, {"id": "B", "text": "Maximum-priced rows always appear last."}, {"id": "C", "text": "pname DESC is ignored."}, {"id": "D", "text": "CASE is invalid in ORDER BY."}], "correct": ["A"], "explanation": "Evaluate generated sort keys and combined Oracle rules.", "review": "Combined Review", "type": "single", "code": "SELECT p_id,pname,price\nFROM product\nORDER BY CASE WHEN price=(SELECT MAX(price) FROM product) THEN 1 ELSE price END, pname DESC;"}, {"id": 86, "topic": "Advanced Scenario Review", "stem": "Which statements about a failed DML statement are true?", "options": [{"id": "A", "text": "It leaves partial successful target changes."}, {"id": "B", "text": "Its own changes are atomic."}, {"id": "C", "text": "A preceding committed transaction is undone."}, {"id": "D", "text": "Constraints may cause the statement to fail."}], "correct": ["B", "D"], "explanation": "Evaluate generated sort keys and combined Oracle rules.", "review": "Combined Review", "type": "multi", "code": ""}, {"id": 87, "topic": "Advanced Scenario Review", "stem": "Which statements about a function-based index are true?", "options": [{"id": "A", "text": "It can index UPPER(last_name)."}, {"id": "B", "text": "It guarantees optimizer use."}, {"id": "C", "text": "It adds maintenance cost."}, {"id": "D", "text": "It changes stored LAST_NAME values."}], "correct": ["A", "C"], "explanation": "Evaluate generated sort keys and combined Oracle rules.", "review": "Combined Review", "type": "multi", "code": ""}, {"id": 88, "topic": "Advanced Scenario Review", "stem": "Which statements about GROUP BY and joins are true?", "options": [{"id": "A", "text": "GROUP BY guarantees sorting."}, {"id": "B", "text": "A one-to-many join can multiply parent rows."}, {"id": "C", "text": "HAVING filters groups."}, {"id": "D", "text": "CROSS JOIN returns matching keys only."}], "correct": ["B", "C"], "explanation": "Evaluate generated sort keys and combined Oracle rules.", "review": "Combined Review", "type": "multi", "code": ""}, {"id": 89, "topic": "Transaction Scenarios", "stem": "What does ROLLBACK TO savepoint_s do?", "options": [{"id": "A", "text": "Commits all work"}, {"id": "B", "text": "Reverses work after the savepoint"}, {"id": "C", "text": "Drops the table"}, {"id": "D", "text": "Ends the session"}], "correct": ["B"], "explanation": "Savepoints divide transaction work; COMMIT saves surviving work; DDL can create transaction boundaries.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 90, "topic": "Transaction Scenarios", "stem": "Which operation makes current transaction changes permanent?", "options": [{"id": "A", "text": "SAVEPOINT"}, {"id": "B", "text": "COMMIT"}, {"id": "C", "text": "SELECT"}, {"id": "D", "text": "DESCRIBE"}], "correct": ["B"], "explanation": "Savepoints divide transaction work; COMMIT saves surviving work; DDL can create transaction boundaries.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 91, "topic": "Transaction Scenarios", "stem": "Which statements are true?", "options": [{"id": "A", "text": "COMMIT ends the current transaction."}, {"id": "B", "text": "ROLLBACK TO always ends the transaction."}, {"id": "C", "text": "DDL can affect pending DML through implicit commit behavior."}, {"id": "D", "text": "SAVEPOINT is a permanent database object."}], "correct": ["A", "C"], "explanation": "Savepoints divide transaction work; COMMIT saves surviving work; DDL can create transaction boundaries.", "review": "Final-Half Module 10", "type": "multi", "code": ""}, {"id": 92, "topic": "Transaction Scenarios", "stem": "An UPDATE occurs before SAVEPOINT S and a DELETE after S. ROLLBACK TO S reverses:", "options": [{"id": "A", "text": "Both operations"}, {"id": "B", "text": "Only the DELETE"}, {"id": "C", "text": "Only the UPDATE"}, {"id": "D", "text": "Neither operation"}], "correct": ["B"], "explanation": "Savepoints divide transaction work; COMMIT saves surviving work; DDL can create transaction boundaries.", "review": "Final-Half Module 10", "type": "single", "code": ""}, {"id": 93, "topic": "Sequence and Index Scenarios", "stem": "Which statement initializes CURRVAL for a session?", "options": [{"id": "A", "text": "SELECT seq.CURRVAL first"}, {"id": "B", "text": "Reference seq.NEXTVAL"}, {"id": "C", "text": "ROLLBACK"}, {"id": "D", "text": "CREATE SYNONYM"}], "correct": ["B"], "explanation": "Sequences generate values independently of transactions; composite and function-based indexes depend on indexed expressions and column order.", "review": "Final-Half Module 11", "type": "single", "code": ""}, {"id": 94, "topic": "Sequence and Index Scenarios", "stem": "Which index best supports WHERE UPPER(last_name)='SMITH'?", "options": [{"id": "A", "text": "Index on employee_id"}, {"id": "B", "text": "Index on UPPER(last_name)"}, {"id": "C", "text": "Sequence on last_name"}, {"id": "D", "text": "Synonym on employees"}], "correct": ["B"], "explanation": "Sequences generate values independently of transactions; composite and function-based indexes depend on indexed expressions and column order.", "review": "Final-Half Module 11", "type": "single", "code": ""}, {"id": 95, "topic": "Sequence and Index Scenarios", "stem": "An index on (department_id,salary) most directly begins with which leading column?", "options": [{"id": "A", "text": "salary"}, {"id": "B", "text": "department_id"}, {"id": "C", "text": "employee_name"}, {"id": "D", "text": "hire_date"}], "correct": ["B"], "explanation": "Sequences generate values independently of transactions; composite and function-based indexes depend on indexed expressions and column order.", "review": "Final-Half Module 11", "type": "single", "code": ""}, {"id": 96, "topic": "Sequence and Index Scenarios", "stem": "Which statements are true?", "options": [{"id": "A", "text": "Sequence values can gap."}, {"id": "B", "text": "Rollback restores NEXTVAL."}, {"id": "C", "text": "Composite-index column order matters."}, {"id": "D", "text": "Indexes consume no storage."}], "correct": ["A", "C"], "explanation": "Sequences generate values independently of transactions; composite and function-based indexes depend on indexed expressions and column order.", "review": "Final-Half Module 11", "type": "multi", "code": ""}, {"id": 97, "topic": "Metadata and Time Scenarios", "stem": "Which view family lists objects accessible to the user, including objects not owned by the user?", "options": [{"id": "A", "text": "USER_"}, {"id": "B", "text": "ALL_"}, {"id": "C", "text": "DBA_ only"}, {"id": "D", "text": "LOCAL_"}], "correct": ["B"], "explanation": "Dictionary scope and datetime result types must be identified exactly.", "review": "Final-Half Modules 15-16", "type": "single", "code": ""}, {"id": 98, "topic": "Metadata and Time Scenarios", "stem": "Which view family generally requires elevated privileges for broad database metadata?", "options": [{"id": "A", "text": "USER_"}, {"id": "B", "text": "ALL_"}, {"id": "C", "text": "DBA_"}, {"id": "D", "text": "SESSION_ only"}], "correct": ["C"], "explanation": "Dictionary scope and datetime result types must be identified exactly.", "review": "Final-Half Modules 15-16", "type": "single", "code": ""}, {"id": 99, "topic": "Metadata and Time Scenarios", "stem": "Which function returns DATE in the session time zone?", "options": [{"id": "A", "text": "CURRENT_DATE"}, {"id": "B", "text": "CURRENT_TIMESTAMP"}, {"id": "C", "text": "LOCALTIMESTAMP"}, {"id": "D", "text": "INTERVAL"}], "correct": ["A"], "explanation": "Dictionary scope and datetime result types must be identified exactly.", "review": "Final-Half Modules 15-16", "type": "single", "code": ""}, {"id": 100, "topic": "Metadata and Time Scenarios", "stem": "Which statements are true?", "options": [{"id": "A", "text": "TIMESTAMP can store fractional seconds."}, {"id": "B", "text": "DATE stores a named time-zone region."}, {"id": "C", "text": "INTERVAL DAY TO SECOND models elapsed day/time components."}, {"id": "D", "text": "INTERVAL YEAR TO MONTH models hours."}], "correct": ["A", "C"], "explanation": "Dictionary scope and datetime result types must be identified exactly.", "review": "Final-Half Modules 15-16", "type": "multi", "code": ""}];let state={};function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}function prep(q){return{...q,options:shuffle(q.options).map((o,i)=>({...o,display:String.fromCharCode(65+i)}))}}function show(x){['start','exam','results'].forEach(y=>document.getElementById(y).classList.toggle('hidden',x!==y))}function begin(mode){state={mode,index:0,questions:shuffle(BANK).map(prep),answers:{},flags:{},confirmed:{},start:Date.now(),finished:false};save();show('exam');render()}function cur(){return state.questions[state.index]}function esc(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}function render(){let q=cur(),chosen=state.answers[q.id]||[];qnum.textContent=`Question ${state.index+1} of 100`;topic.textContent=q.topic;kind.textContent=q.type==='multi'?'Select all that apply':'Choose one';bar.style.width=(state.index+1)+'%';stem.textContent=q.stem;code.textContent=q.code||'';code.classList.toggle('hidden',!q.code);options.innerHTML=q.options.map(o=>`<label class="option ${chosen.includes(o.id)?'selected':''}"><input type="${q.type==='multi'?'checkbox':'radio'}" name="answer" value="${o.id}" ${chosen.includes(o.id)?'checked':''} ${state.mode==='practice'&&state.confirmed[q.id]?'disabled':''}><b>${o.display}.</b><span>${esc(o.text)}</span></label>`).join('');document.querySelectorAll('#options input').forEach(x=>x.onchange=select);feedback.innerHTML=state.mode==='practice'&&state.confirmed[q.id]?feedbackHTML(q):'';next.textContent=state.mode==='practice'&&!state.confirmed[q.id]?'Confirm':state.index===99?'Finish':'Next';renderNums();save()}function select(e){let q=cur(),a=state.answers[q.id]||[];state.answers[q.id]=q.type==='single'?[e.target.value]:(e.target.checked?[...a,e.target.value]:a.filter(v=>v!==e.target.value));render()}function nextAction(){let q=cur();if(state.mode==='practice'&&!state.confirmed[q.id]){if(!(state.answers[q.id]||[]).length)return alert('Select an answer first.');state.confirmed[q.id]=true;return render()}if(state.index===99)submitExam();else move(1)}function move(n){state.index=Math.max(0,Math.min(99,state.index+n));render()}function go(i){state.index=i;render()}function flag(){state.flags[cur().id]=!state.flags[cur().id];render()}function renderNums(){numbers.innerHTML=state.questions.map((q,i)=>`<button class="num ${(state.answers[q.id]||[]).length?'answered':''} ${state.flags[q.id]?'flagged':''} ${i===state.index?'current':''}" onclick="go(${i})">${i+1}</button>`).join('');let a=Object.values(state.answers).filter(x=>x.length).length;summary.textContent=`Answered ${a}/100 · Flagged ${Object.values(state.flags).filter(Boolean).length}`;document.querySelector('.num.current')?.scrollIntoView({block:'nearest',inline:'nearest'})}function same(a,b){a=[...a].sort();b=[...b].sort();return a.length===b.length&&a.every((x,i)=>x===b[i])}function correctText(q){return q.correct.map(id=>{let o=q.options.find(x=>x.id===id);return `${o.display}. ${o.text}`}).join('; ')}function feedbackHTML(q){let ok=same(state.answers[q.id]||[],q.correct);return `<div class="feedback"><div class="${ok?'good':'bad'}">${ok?'Correct':'Incorrect'}</div><p><b>Correct answer:</b> ${esc(correctText(q))}</p><p>${esc(q.explanation)}</p><p><b>Review:</b> ${esc(q.review)}</p></div>`}function submitExam(){if(state.mode==='exam'){let u=state.questions.filter(q=>!(state.answers[q.id]||[]).length).length;if(u&&!confirm(`${u} questions are unanswered. Submit anyway?`))return}state.finished=true;state.score=state.questions.filter(q=>same(state.answers[q.id]||[],q.correct)).length;save();show('results');score.textContent=state.score+'%';correct.textContent=state.score+'/100';unanswered.textContent=state.questions.filter(q=>!(state.answers[q.id]||[]).length).length;let s={};state.questions.forEach(q=>{s[q.topic]??={c:0,t:0};s[q.topic].t++;if(same(state.answers[q.id]||[],q.correct))s[q.topic].c++});topics.innerHTML='<table><tr><th>Topic</th><th>Correct</th><th>Rate</th></tr>'+Object.entries(s).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${v.c}/${v.t}</td><td>${Math.round(100*v.c/v.t)}%</td></tr>`).join('')+'</table>';review.innerHTML=''}function reviewWrong(){let bad=state.questions.filter(q=>!same(state.answers[q.id]||[],q.correct));review.innerHTML='<h2>Missed items</h2>'+bad.map(q=>`<div class="review"><b>${esc(q.topic)}: ${esc(q.stem)}</b>${q.code?`<pre class="code">${esc(q.code)}</pre>`:''}${feedbackHTML(q)}</div>`).join('')||'<p class="good">Perfect score.</p>'}function newTake(){localStorage.removeItem('oracleMockStateV2');state={};show('start')}function save(){localStorage.setItem('oracleMockStateV2',JSON.stringify(state))}setInterval(()=>{if(state.start&&!state.finished){let x=Math.floor((Date.now()-state.start)/1000);timer.textContent=`${Math.floor(x/60)}:${String(x%60).padStart(2,'0')}`}},1000);onload=()=>{try{let x=JSON.parse(localStorage.getItem('oracleMockStateV2'));if(x?.questions?.length===100){state=x;if(state.finished)submitExam();else{show('exam');render()}}}catch(e){}};</script></body></html>
