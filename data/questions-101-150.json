@@ -1,0 +1,3896 @@
+{
+  "schemaVersion": "1.0.0",
+  "title": "Oracle SQL Reviewer Question Bank 101-150",
+  "description": "Official scoring follows the document-highlighted answers.",
+  "sourceFiles": [
+    "101-150.xlsx"
+  ],
+  "range": {
+    "start": 101,
+    "end": 150
+  },
+  "questionCount": 50,
+  "availableCount": 50,
+  "scorableCount": 50,
+  "settings": {
+    "practiceOrder": "original",
+    "mockQuestionCount": 63,
+    "scoreUsing": "document-highlighted answers",
+    "shufflePracticeChoices": false,
+    "shuffleMockChoices": true
+  },
+  "questions": [
+    {
+      "id": 101,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the SALES table and the statement below. Which two statements are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [
+        {
+          "title": "SALES table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "PRODUCT_ID",
+              "NOT NULL",
+              "NUMBER(10)"
+            ],
+            [
+              "CUSTOMER_ID",
+              "NOT NULL",
+              "NUMBER(10)"
+            ],
+            [
+              "TIME_ID",
+              "NOT NULL",
+              "DATE"
+            ],
+            [
+              "CHANNEL_ID",
+              "NOT NULL",
+              "NUMBER(5)"
+            ],
+            [
+              "PROMO_ID",
+              "NOT NULL",
+              "NUMBER(5)"
+            ],
+            [
+              "QUANTITY_SOLD",
+              "NOT NULL",
+              "NUMBER(10,2)"
+            ],
+            [
+              "PRICE",
+              "NOT NULL",
+              "NUMBER(10,2)"
+            ],
+            [
+              "AMOUNT_SOLD",
+              "NOT NULL",
+              "NUMBER(10,2)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [
+        {
+          "title": "SQL statement",
+          "language": "sql",
+          "code": "CREATE TABLE sales1 (\nprod_id, cust_id, quantity_sold, price\n)\nAS\nSELECT product_id, customer_id, quantity_sold, price\nFROM sales\nWHERE 1 = 1;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "SALES1 is created with 1 row.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The condition 1 = 1 is true for all 55,000 source rows, not just one row."
+        },
+        {
+          "id": "B",
+          "text": "SALES1 is created with no rows.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The query does not contain a false condition such as WHERE 1 = 0."
+        },
+        {
+          "id": "C",
+          "text": "SALES1 is created with 55,000 rows.",
+          "format": "text",
+          "correct": true,
+          "explanation": "All rows from the SALES table satisfy the condition and are copied into SALES1."
+        },
+        {
+          "id": "D",
+          "text": "SALES1 has NOT NULL constraints on any selected columns that had those constraints in the SALES table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The selected source columns are direct column references, so their explicitly defined NOT NULL properties are carried into the new table."
+        },
+        {
+          "id": "E",
+          "text": "SALES1 has a primary key and unique constraints on selected columns that had those constraints in the SALES table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A CREATE TABLE AS SELECT operation does not copy primary-key or unique constraints from the source table."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "All rows from the SALES table satisfy the condition and are copied into SALES1. The selected source columns are direct column references, so their explicitly defined NOT NULL properties are carried into the new table.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 101,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 102,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the EMP table and the query below. What is the result?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [
+        {
+          "title": "EMP table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "EMPNO",
+              "NOT NULL",
+              "NUMBER(4)"
+            ],
+            [
+              "ENAME",
+              "",
+              "VARCHAR2(10)"
+            ],
+            [
+              "SAL",
+              "",
+              "NUMBER(7,2)"
+            ],
+            [
+              "DEPTNO",
+              "",
+              "NUMBER(2)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [
+        {
+          "title": "Query",
+          "language": "sql",
+          "code": "SELECT deptno AS \"departments\",\nSUM(sal) AS \"salary\"\nFROM emp\nGROUP BY 1\nHAVING SUM(sal) > 3000;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "Only departments where the total salary is greater than 3000, ordered by department.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The query does not contain an ORDER BY clause. More importantly, the positional reference in GROUP BY 1 is not accepted by the Oracle version targeted by this question."
+        },
+        {
+          "id": "B",
+          "text": "An error.",
+          "format": "text",
+          "correct": true,
+          "explanation": "In the Oracle SQL version covered by this reviewer, a select-list position cannot replace the grouping expression in GROUP BY. It should use GROUP BY deptno."
+        },
+        {
+          "id": "C",
+          "text": "All departments and a sum of the employees with a salary greater than 3000.",
+          "format": "text",
+          "correct": false,
+          "explanation": "HAVING SUM(sal) > 3000 filters department groups based on total salary. It does not filter individual employees whose salary exceeds 3000."
+        },
+        {
+          "id": "D",
+          "text": "Only departments where the total salary is greater than 3000, returned in no particular order.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This would describe the intended result if the query used GROUP BY deptno, but the displayed query produces an error."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "answerExplanation": "In the Oracle SQL version covered by this reviewer, a select-list position cannot replace the grouping expression in GROUP BY. It should use GROUP BY deptno.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 102,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 103,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the EMPLOYEES table and the failing statement below. Which clause causes the error?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [
+        {
+          "title": "EMPLOYEES table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "EMPNO",
+              "NOT NULL",
+              "NUMBER(4)"
+            ],
+            [
+              "LAST_NAME",
+              "",
+              "VARCHAR2(10)"
+            ],
+            [
+              "DEPT_NO",
+              "NOT NULL",
+              "NUMBER(5)"
+            ],
+            [
+              "SALARY",
+              "",
+              "NUMBER(6,2)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [
+        {
+          "title": "Failing statement",
+          "language": "sql",
+          "code": "SELECT dept_no AS department_id,\nMAX(salary) AS max_sal\nFROM employees\nWHERE salary > 10000\nGROUP BY department_id\nORDER BY max_sal;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Selecting the department number and an aggregate value is valid when the department expression is grouped correctly."
+        },
+        {
+          "id": "B",
+          "text": "ORDER BY",
+          "format": "text",
+          "correct": false,
+          "explanation": "A select-list alias such as max_sal can be referenced in the ORDER BY clause."
+        },
+        {
+          "id": "C",
+          "text": "GROUP BY",
+          "format": "text",
+          "correct": true,
+          "explanation": "The query uses the select-list alias department_id in GROUP BY. In this Oracle SQL context, it must use the underlying column: GROUP BY dept_no."
+        },
+        {
+          "id": "D",
+          "text": "WHERE",
+          "format": "text",
+          "correct": false,
+          "explanation": "Filtering individual employee rows with WHERE salary > 10000 before grouping is valid."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "answerExplanation": "The query uses the select-list alias department_id in GROUP BY. In this Oracle SQL context, it must use the underlying column: GROUP BY dept_no.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 103,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 104,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the statement that returns the name of each employee and the employee’s manager. You want to extend the query to include managers who have no employees. What must you add before JOIN?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Existing query",
+          "content": "SELECT e.last_name AS emp,\nThe current inner join returns only rows with matching employee and manager records. [ncn | Word]"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "m.last_name AS mgr"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "FROM employees e JOIN managers m"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "ON e.manager_id = m.manager_id"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "ORDER BY emp;"
+        },
+        {
+          "type": "text",
+          "title": "Required behavior",
+          "content": "Include every row from MANAGERS, even when a manager has no matching employee row.\nBecause MANAGERS appears on the right side of the join, the query must preserve the right-side rows."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "LEFT OUTER",
+          "format": "text",
+          "correct": false,
+          "explanation": "A left outer join preserves every employee row from the left side, not every manager row from the right side."
+        },
+        {
+          "id": "B",
+          "text": "FULL OUTER",
+          "format": "text",
+          "correct": false,
+          "explanation": "A full outer join preserves unmatched rows from both sides. That is broader than the stated requirement."
+        },
+        {
+          "id": "C",
+          "text": "RIGHT OUTER",
+          "format": "text",
+          "correct": true,
+          "explanation": "A right outer join preserves every manager row, including managers with no matching employees."
+        },
+        {
+          "id": "D",
+          "text": "CROSS",
+          "format": "text",
+          "correct": false,
+          "explanation": "A cross join produces every possible employee-manager combination and does not use the relationship to identify the correct manager."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "answerExplanation": "A right outer join preserves every manager row, including managers with no matching employees.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 104,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 105,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "The ORDER_ITEMS table contains ORDER_ID, UNIT_PRICE, and QUANTITY, all with the NUMBER data type. Examine the two statements below. Which two statements are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [
+        {
+          "type": "text",
+          "title": "ORDER_ITEMS columns",
+          "content": "ORDER_ID │ NUMBER\n[ncn | Word]"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "UNIT_PRICE │ NUMBER"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "QUANTITY │ NUMBER"
+        },
+        {
+          "type": "text",
+          "title": "Statement 1",
+          "content": "SELECT MAX(unit_price * quantity) \"Maximum Order\"\nThis applies MAX to all qualifying rows as one group because there is no GROUP BY clause."
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "FROM order_items;"
+        },
+        {
+          "type": "text",
+          "title": "Statement 2",
+          "content": "SELECT MAX(unit_price * quantity) \"Maximum Order\"\nThis creates one group for each distinct order ID and calculates a maximum for each group."
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "FROM order_items"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "GROUP BY order_id;"
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Statement 1 returns only one row of output.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Without GROUP BY, the aggregate function treats all rows as one group and returns one maximum value."
+        },
+        {
+          "id": "B",
+          "text": "Statement 2 returns only one row of output.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Statement 2 can return one row for every distinct ORDER_ID."
+        },
+        {
+          "id": "C",
+          "text": "Both statements give the same output.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Statement 1 returns an overall maximum, while Statement 2 returns a maximum for each order."
+        },
+        {
+          "id": "D",
+          "text": "Statement 2 may return multiple rows of output.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Each distinct order ID forms a separate group, so multiple order IDs produce multiple result rows."
+        },
+        {
+          "id": "E",
+          "text": "Both statements will return NULL if either UNIT_PRICE or QUANTITY contains NULL.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A null multiplication result is ignored by MAX when other non-null expression results exist. MAX returns null only when all evaluated values in the relevant group are null."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "answerExplanation": "Without GROUP BY, the aggregate function treats all rows as one group and returns one maximum value. Each distinct order ID forms a separate group, so multiple order IDs produce multiple result rows.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 105,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 106,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine this list of queries. Which two statements are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Query 1",
+          "content": "SELECT ROUND(TRUNC(15.193, 1)) \"Results\" FROM dual;\nTRUNC(15.193, 1) returns 15.1. ROUND(15.1) then returns 15."
+        },
+        {
+          "type": "text",
+          "title": "Query 2",
+          "content": "SELECT ROUND(15.193, -1) \"Results\" FROM dual;\nA precision of -1 rounds to the nearest ten, producing 20."
+        },
+        {
+          "type": "text",
+          "title": "Query 3",
+          "content": "SELECT TRUNC(15.193, -1) \"Results\" FROM dual;\nA precision of -1 truncates the ones digit and lower positions, producing 10."
+        },
+        {
+          "type": "text",
+          "title": "Query 4",
+          "content": "SELECT TRUNC(ROUND(15.193, 1)) \"Results\" FROM dual;\nROUND(15.193, 1) returns 15.2. TRUNC(15.2) then returns 15."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Query 2 returns the value 20.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Rounding 15.193 to the nearest ten produces 20."
+        },
+        {
+          "id": "B",
+          "text": "Queries 2 and 3 give the same result.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Query 2 returns 20, while Query 3 returns 10."
+        },
+        {
+          "id": "C",
+          "text": "Queries 1 and 4 give the same result.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Both expressions ultimately return 15."
+        },
+        {
+          "id": "D",
+          "text": "Queries 1 and 4 give different results.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Both queries return the same numeric value, 15."
+        },
+        {
+          "id": "E",
+          "text": "Query 3 returns an error.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The query is valid and returns 10."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "answerExplanation": "Rounding 15.193 to the nearest ten produces 20. Both expressions ultimately return 15.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 106,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 107,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the PRODUCT_INFORMATION table. Which query retrieves the number of products with a null list price?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [
+        {
+          "title": "PRODUCT_INFORMATION table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "PROD_ID",
+              "NOT NULL",
+              "NUMBER(2)"
+            ],
+            [
+              "PROD_NAME",
+              "",
+              "VARCHAR2(18)"
+            ],
+            [
+              "LIST_PRICE",
+              "",
+              "NUMBER(6,2)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT COUNT(list_price)\nFROM product_information\nWHERE list_price = NULL;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Null values must be tested with IS NULL, not = NULL. In addition, COUNT(list_price) does not count null values."
+        },
+        {
+          "id": "B",
+          "text": "SELECT COUNT(NVL(list_price, 0))\nFROM product_information\nWHERE list_price IS NULL;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "The WHERE clause selects rows with null list prices. NVL converts each null to zero, allowing COUNT to count every selected row."
+        },
+        {
+          "id": "C",
+          "text": "SELECT COUNT(DISTINCT list_price)\nFROM product_information\nWHERE list_price IS NULL;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "COUNT(DISTINCT list_price) excludes nulls, so it returns zero for rows selected by LIST_PRICE IS NULL."
+        },
+        {
+          "id": "D",
+          "text": "SELECT COUNT(list_price)\nFROM product_information\nWHERE list_price IS NULL;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Although the filter correctly selects null list prices, COUNT(list_price) ignores those null values and returns zero."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "answerExplanation": "The WHERE clause selects rows with null list prices. NVL converts each null to zero, allowing COUNT to count every selected row.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 107,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 108,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "The SYSDATE function displays the current Oracle server date as 21-MAY-19. You want to display the date as MONDAY, 21 MAY, 2019. Which statement will do this?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Current display",
+          "content": "2019-05-21 00:00:00\nThis is the current date displayed using the existing date format."
+        },
+        {
+          "type": "text",
+          "title": "Required display",
+          "content": "MONDAY, 21 MAY, 2019\nThe output requires the complete day name, two-digit day, full uppercase month name, and four-digit year."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT TO_CHAR(SYSDATE, 'FMDAY DDTH MONTH, YYYY') FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "DDTH adds an ordinal suffix, such as 21ST, which is not part of the required output."
+        },
+        {
+          "id": "B",
+          "text": "SELECT TO_CHAR(SYSDATE, 'FMDAY, DD MONTH, YYYY') FROM dual;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "DAY returns the day name, DD returns the day number, MONTH returns the complete month name, and YYYY returns the four-digit year. FM removes unwanted blank padding."
+        },
+        {
+          "id": "C",
+          "text": "SELECT TO_DATE(SYSDATE, 'FMDAY, DD MONTH, YYYY') FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "TO_DATE converts character data to a date. It is not used to format a date for display."
+        },
+        {
+          "id": "D",
+          "text": "SELECT TO_CHAR(SYSDATE, 'FMDAY, DAY MONTH, YYYY') FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The second DAY returns another day name instead of the numeric day of the month."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "answerExplanation": "DAY returns the day name, DD returns the day number, MONTH returns the complete month name, and YYYY returns the four-digit year. FM removes unwanted blank padding.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 108,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 109,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine this SQL statement. Which two statements are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "SQL statement",
+          "language": "sql",
+          "code": "DELETE FROM employees e\nWHERE EXISTS\n(SELECT 'dummy'\nFROM emp_history\nWHERE employee_id = e.employee_id);"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "The DELETE statement executes successfully even if the subquery selects multiple rows.",
+          "format": "text",
+          "correct": true,
+          "explanation": "EXISTS checks only whether at least one matching row exists. It does not require the subquery to return exactly one row."
+        },
+        {
+          "id": "B",
+          "text": "The subquery is executed before the DELETE statement is executed.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The correlated subquery is evaluated in relation to each candidate row processed by the outer statement."
+        },
+        {
+          "id": "C",
+          "text": "The subquery is executed for every row in the EMPLOYEES table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Because the subquery references the current employee row, the matching condition is evaluated for each candidate row in EMPLOYEES."
+        },
+        {
+          "id": "D",
+          "text": "All existing rows in the EMPLOYEES table are deleted.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Only employees with at least one corresponding EMP_HISTORY row are deleted."
+        },
+        {
+          "id": "E",
+          "text": "The subquery is not a correlated subquery.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The reference to e.employee_id correlates the subquery with the outer EMPLOYEES row."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "answerExplanation": "EXISTS checks only whether at least one matching row exists. It does not require the subquery to return exactly one row. Because the subquery references the current employee row, the matching condition is evaluated for each candidate row in EMPLOYEES.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 109,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 110,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements execute successfully?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT TO_CHAR(TO_DATE('2019-DEC-25 03:30', 'YYYY-MON-DD HH12:MI')) FROM dual;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "The input uses a 12-hour time value of 03:30, which is compatible with HH12:MI. TO_DATE converts it to a date, and TO_CHAR converts the result to character output."
+        },
+        {
+          "id": "B",
+          "text": "SELECT TO_DATE(TO_CHAR('2019-DEC-25 03:30', 'YYYY-MON-DD HH12:MI')) FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "TO_CHAR is being applied to a character literal with a date format model. Oracle cannot directly treat that character value as the required date input in this expression."
+        },
+        {
+          "id": "C",
+          "text": "SELECT TO_CHAR('2019-DEC-25 15:30', 'YYYY-MON-DD HH24:MI') FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The first argument is a character literal, not a date or timestamp value. It must first be converted using TO_DATE."
+        },
+        {
+          "id": "D",
+          "text": "SELECT TO_DATE('2019-DEC-25 15:30', 'YYYY-MON-DD HH24:MI', 'NLS_DATE_LANGUAGE = AMERICAN') FROM dual;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "The date string matches the format model, 15 is valid with HH24, and the NLS parameter specifies the language used to interpret DEC."
+        },
+        {
+          "id": "E",
+          "text": "SELECT TO_CHAR('2019-DEC-25 15:30', 'YYYY-MON-DD HH24:MI', 'NLS_DATE_LANGUAGE = AMERICAN') FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "TO_CHAR does not convert the displayed character literal into a date. The input must first be a date or timestamp value."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "answerExplanation": "The input uses a 12-hour time value of 03:30, which is compatible with HH12:MI. TO_DATE converts it to a date, and TO_CHAR converts the result to character output. The date string matches the format model, 15 is valid with HH24, and the NLS parameter specifies the language used to interpret DEC.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 110,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 111,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which three statements are true about single-row functions?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "The argument can be a column name, variable, literal, or an expression.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A single-row function can accept different kinds of expressions as arguments, including columns, literals, variables, and calculated expressions."
+        },
+        {
+          "id": "B",
+          "text": "They can accept only one argument.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Some single-row functions accept one argument, while others accept two or more arguments."
+        },
+        {
+          "id": "C",
+          "text": "They return a single result row per table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A single-row function returns one result for each row processed, not one result for the entire table."
+        },
+        {
+          "id": "D",
+          "text": "The data type returned can be different from the data type of the argument.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A conversion function can accept one data type and return another, such as TO_CHAR converting a date or number into character data."
+        },
+        {
+          "id": "E",
+          "text": "They can be nested to any level.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The output of one single-row function can be supplied as the argument of another function."
+        },
+        {
+          "id": "F",
+          "text": "They can be used only in the WHERE clause of SELECT statements.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Single-row functions can be used in several clauses, including SELECT, WHERE, and ORDER BY."
+        }
+      ],
+      "correct": [
+        "A",
+        "D",
+        "E"
+      ],
+      "answerExplanation": "A single-row function can accept different kinds of expressions as arguments, including columns, literals, variables, and calculated expressions. A conversion function can accept one data type and return another, such as TO_CHAR converting a date or number into character data. The output of one single-row function can be supplied as the argument of another function.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 111,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 112,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which three statements are true about an ORDER BY clause?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "By default, an ORDER BY clause sorts rows in descending order.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The default sorting direction is ascending. Descending order requires the DESC keyword."
+        },
+        {
+          "id": "B",
+          "text": "An ORDER BY clause can perform a binary sort.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Character values can be ordered according to their binary character values."
+        },
+        {
+          "id": "C",
+          "text": "By default, an ORDER BY clause sorts rows in ascending order.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle uses ascending order when neither ASC nor DESC is specified."
+        },
+        {
+          "id": "D",
+          "text": "An ORDER BY clause can perform a linguistic sort.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle can sort character data using linguistic rules determined by applicable globalization settings or functions."
+        },
+        {
+          "id": "E",
+          "text": "An ORDER BY clause always sorts null values last.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Null placement depends on the sorting direction. It can also be controlled explicitly with NULLS FIRST or NULLS LAST."
+        },
+        {
+          "id": "F",
+          "text": "An ORDER BY clause will always precede a HAVING clause if both are used in the same top-level query.",
+          "format": "text",
+          "correct": false,
+          "explanation": "HAVING appears before ORDER BY in SQL statement syntax."
+        }
+      ],
+      "correct": [
+        "B",
+        "C",
+        "D"
+      ],
+      "answerExplanation": "Character values can be ordered according to their binary character values. Oracle uses ascending order when neither ASC nor DESC is specified. Oracle can sort character data using linguistic rules determined by applicable globalization settings or functions.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 112,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 113,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the data in the ORDERS and INVOICES tables and the query below. Which three rows will be returned?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [
+        {
+          "title": "ORDERS table",
+          "columns": [
+            "ORDER_ID",
+            "ORDER_DATE"
+          ],
+          "rows": [
+            [
+              "1",
+              "NULL"
+            ],
+            [
+              "2",
+              "NULL"
+            ],
+            [
+              "3",
+              "01-JAN-2019"
+            ],
+            [
+              "4",
+              "01-FEB-2019"
+            ],
+            [
+              "5",
+              "01-MAR-2019"
+            ],
+            [
+              "INVOICE_ID",
+              "ORDER_ID",
+              "ORDER_DATE"
+            ],
+            [
+              "1",
+              "1",
+              "NULL"
+            ],
+            [
+              "2",
+              "2",
+              "01-JAN-2019"
+            ],
+            [
+              "3",
+              "3",
+              "NULL"
+            ],
+            [
+              "4",
+              "4",
+              "01-FEB-2019"
+            ],
+            [
+              "5",
+              "5",
+              "NULL"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [
+        {
+          "title": "Query",
+          "language": "sql",
+          "code": "SELECT order_id, order_date\nFROM orders\nMINUS\nSELECT order_id, order_date\nFROM invoices;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "4, 01-FEB-2019",
+          "format": "text",
+          "correct": false,
+          "explanation": "The same complete row appears in both tables, so MINUS removes it."
+        },
+        {
+          "id": "B",
+          "text": "5, 01-MAR-2019",
+          "format": "text",
+          "correct": true,
+          "explanation": "INVOICES has a null date for order 5, not 01-MAR-2019, so the ORDERS row remains."
+        },
+        {
+          "id": "C",
+          "text": "3, 01-JAN-2019",
+          "format": "text",
+          "correct": true,
+          "explanation": "INVOICES has a null date for order 3, so the complete ORDERS row does not have a match."
+        },
+        {
+          "id": "D",
+          "text": "5, NULL",
+          "format": "text",
+          "correct": false,
+          "explanation": "This row appears only in the second query. MINUS does not return rows unique to the second query."
+        },
+        {
+          "id": "E",
+          "text": "3, NULL",
+          "format": "text",
+          "correct": false,
+          "explanation": "This row appears only in INVOICES and therefore cannot be returned from ORDERS MINUS INVOICES."
+        },
+        {
+          "id": "F",
+          "text": "2, NULL",
+          "format": "text",
+          "correct": true,
+          "explanation": "INVOICES contains order 2 with 01-JAN-2019, not a null date, so the complete row remains."
+        },
+        {
+          "id": "G",
+          "text": "1, NULL",
+          "format": "text",
+          "correct": false,
+          "explanation": "The same complete row appears in both tables and is removed by MINUS."
+        }
+      ],
+      "correct": [
+        "B",
+        "C",
+        "F"
+      ],
+      "answerExplanation": "INVOICES has a null date for order 5, not 01-MAR-2019, so the ORDERS row remains. INVOICES has a null date for order 3, so the complete ORDERS row does not have a match. INVOICES contains order 2 with 01-JAN-2019, not a null date, so the complete row remains.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 113,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 114,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "verified_from_user_image",
+      "topic": "Oracle SQL",
+      "stem": "Examine the descriptions of the ORDERS and INVOICES tables. Which three statements execute successfully?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [
+        {
+          "title": "ORDERS table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "ORDER_ID",
+              "",
+              "NUMBER(38)"
+            ],
+            [
+              "ORDER_DATE",
+              "",
+              "DATE"
+            ],
+            [
+              "COLUMN",
+              "NULL?",
+              "DATA TYPE"
+            ],
+            [
+              "INVOICE_ID",
+              "",
+              "NUMBER(38)"
+            ],
+            [
+              "INVOICE_DATE",
+              "",
+              "DATE"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT * FROM orders ORDER BY order_id\nUNION\nSELECT * FROM invoices;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This statement is not highlighted as successful in the source image."
+        },
+        {
+          "id": "B",
+          "text": "SELECT order_id, invoice_id, order_date FROM orders\nMINUS\nSELECT invoice_id, invoice_date FROM invoices ORDER BY invoice_id;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This statement is not highlighted as successful in the source image."
+        },
+        {
+          "id": "C",
+          "text": "SELECT order_id, invoice_id FROM orders\nUNION ALL\nSELECT invoice_id, invoice_date FROM invoices ORDER BY order_id;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "This statement is highlighted as successful in the source image."
+        },
+        {
+          "id": "D",
+          "text": "(SELECT * FROM orders ORDER BY order_id)\nUNION ALL\nSELECT * FROM invoices) ORDER BY order_id;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This statement is not highlighted as successful in the source image."
+        },
+        {
+          "id": "E",
+          "text": "SELECT * FROM orders ORDER BY order_id\nINTERSECT\nSELECT * FROM invoices ORDER BY order_id;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This statement is not highlighted as successful in the source image."
+        },
+        {
+          "id": "F",
+          "text": "SELECT order_id, invoice_id FROM orders\nINTERSECT\nSELECT invoice_id, invoice_date FROM invoices ORDER BY order_id;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "This statement is highlighted as successful in the source image."
+        },
+        {
+          "id": "G",
+          "text": "SELECT * FROM orders\nMINUS\nSELECT * FROM invoices ORDER BY 1;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "This statement is highlighted as successful in the source image."
+        }
+      ],
+      "correct": [
+        "C",
+        "F",
+        "G"
+      ],
+      "answerExplanation": "This statement is highlighted as successful in the source image. This statement is highlighted as successful in the source image. This statement is highlighted as successful in the source image.",
+      "technicalNote": "The source image clearly highlights choices C, F, and G. The query text is preserved as visible in the source image, including column references that appear inconsistent with the displayed table definitions.",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 114,
+        "verification": "user-provided image"
+      }
+    },
+    {
+      "id": 115,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the sequence of statements below. Which three statements are true?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Statements executed",
+          "content": "CREATE TABLE product (\nThe first COMMIT permanently saves the inserts and the update of code 1 to 10. The rollback to savepoint B reverses the later code-3 update and the deletion of code 10."
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "pcode NUMBER(2),\n pname VARCHAR2(20)"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": ");"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "INSERT INTO product VALUES (1, 'pen');"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "INSERT INTO product VALUES (2, 'pencil');"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "INSERT INTO product VALUES (3, 'fountain pen');"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "SAVEPOINT a;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "UPDATE product SET pcode = 10 WHERE pcode = 1;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "COMMIT;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "DELETE FROM product WHERE pcode = 2;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "SAVEPOINT b;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "UPDATE product SET pcode = 30 WHERE pcode = 3;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "SAVEPOINT c;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "DELETE FROM product WHERE pcode = 10;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "ROLLBACK TO SAVEPOINT b;"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "COMMIT;"
+        },
+        {
+          "type": "text",
+          "title": "Final PRODUCT rows",
+          "content": "PCODE │ PNAME\nThe row with code 2 and name pencil remains deleted because that deletion occurred before savepoint B."
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "10 │ pen"
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "3 │ fountain pen"
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "There is no row containing pen.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The deletion of the row with code 10 occurs after savepoint B and is reversed by ROLLBACK TO SAVEPOINT b."
+        },
+        {
+          "id": "B",
+          "text": "There is no row containing fountain pen.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The rollback reverses the update from code 3 to code 30, restoring the fountain-pen row with code 3."
+        },
+        {
+          "id": "C",
+          "text": "The code for pen is 1.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The update from code 1 to code 10 was committed before savepoint B was established."
+        },
+        {
+          "id": "D",
+          "text": "The code for fountain pen is 3.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The later update to code 30 is undone by the rollback to savepoint B."
+        },
+        {
+          "id": "E",
+          "text": "The code for pen is 10.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The update to code 10 was committed, and the later deletion of that row was rolled back."
+        },
+        {
+          "id": "F",
+          "text": "There is no row containing pencil.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The pencil row was deleted before savepoint B. Rolling back to B does not reverse changes made before that savepoint."
+        }
+      ],
+      "correct": [
+        "D",
+        "E",
+        "F"
+      ],
+      "answerExplanation": "The later update to code 30 is undone by the rollback to savepoint B. The update to code 10 was committed, and the later deletion of that row was rolled back. The pencil row was deleted before savepoint B. Rolling back to B does not reverse changes made before that savepoint.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 115,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 116,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements are true about TRUNCATE and DELETE?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "The result of a TRUNCATE can be undone by issuing a ROLLBACK.",
+          "format": "text",
+          "correct": false,
+          "explanation": "TRUNCATE is a DDL statement that causes an implicit commit. Its result cannot normally be reversed with ROLLBACK."
+        },
+        {
+          "id": "B",
+          "text": "TRUNCATE leaves any indexes on the table in an UNUSABLE state.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Indexes associated with a truncated table remain usable. Oracle removes the index data while preserving the index definitions."
+        },
+        {
+          "id": "C",
+          "text": "The result of a DELETE can be undone by issuing a ROLLBACK.",
+          "format": "text",
+          "correct": true,
+          "explanation": "DELETE is a DML statement. Its uncommitted changes can be reversed using ROLLBACK."
+        },
+        {
+          "id": "D",
+          "text": "TRUNCATE can use a WHERE clause to determine which rows should be removed.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "TRUNCATE removes all rows from the table and does not support a WHERE clause. Use DELETE to remove selected rows."
+        },
+        {
+          "id": "E",
+          "text": "DELETE can use a WHERE clause to determine which rows should be removed.",
+          "format": "sql",
+          "correct": true,
+          "explanation": "A WHERE clause allows DELETE to remove only rows satisfying the specified condition. Without WHERE, all rows are deleted."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "DELETE is a DML statement. Its uncommitted changes can be reversed using ROLLBACK. A WHERE clause allows DELETE to remove only rows satisfying the specified condition. Without WHERE, all rows are deleted.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 116,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 117,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements are true about the WHERE and HAVING clauses in a SELECT statement?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Logical processing",
+          "content": "WHERE filters individual rows before grouping.\nThis distinction determines whether a condition operates on individual rows or aggregated results."
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "HAVING filters groups after grouping."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "The WHERE clause can be used to exclude rows before dividing them into groups.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle applies the WHERE condition to individual rows before processing GROUP BY."
+        },
+        {
+          "id": "B",
+          "text": "Aggregating functions and columns used in HAVING clauses must be specified in the SELECT clause of a query.",
+          "format": "text",
+          "correct": false,
+          "explanation": "An aggregate expression can be used in HAVING even when that expression is not displayed in the select list."
+        },
+        {
+          "id": "C",
+          "text": "The HAVING clause can be used with aggregating functions in subqueries.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A subquery may contain grouping and a HAVING clause that filters its aggregate results."
+        },
+        {
+          "id": "D",
+          "text": "The WHERE clause can be used to exclude rows after dividing them into groups.",
+          "format": "text",
+          "correct": false,
+          "explanation": "WHERE operates before grouping. Grouped results are filtered with HAVING."
+        },
+        {
+          "id": "E",
+          "text": "WHERE and HAVING clauses can be used in the same statement only if applied to different columns.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Both clauses may reference the same column when appropriate. Their distinction is based on processing stage, not whether they reference different columns."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "answerExplanation": "Oracle applies the WHERE condition to individual rows before processing GROUP BY. A subquery may contain grouping and a HAVING clause that filters its aggregate results.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 117,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 118,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the TRANSACTION table. Which two SQL statements execute successfully?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [
+        {
+          "title": "TRANSACTION table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "TRANSACTION_ID",
+              "NOT NULL",
+              "VARCHAR2(6)"
+            ],
+            [
+              "TRANSACTION_DATE",
+              "",
+              "DATE"
+            ],
+            [
+              "AMOUNT",
+              "",
+              "NUMBER(10,2)"
+            ],
+            [
+              "CUSTOMER_ID",
+              "",
+              "VARCHAR2(6)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT customer_id AS 'CUSTOMER-ID', transaction_date AS DATE, amount + 100 'DUES' FROM transactions;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Single quotation marks create character literals, not column aliases in this context. An alias containing a hyphen must use double quotation marks."
+        },
+        {
+          "id": "B",
+          "text": "SELECT customer_id CUSTID, transaction_date TRANS_DATE, amount + 100 DUES FROM transactions;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "These are valid unquoted aliases. Each alias uses permitted identifier characters and follows its corresponding expression."
+        },
+        {
+          "id": "C",
+          "text": "SELECT customer_id AS \"CUSTOMER-ID\", transaction_date AS TRANS_DATE, amount + 100 \"DUES AMOUNT\" FROM transactions;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "Double quotation marks correctly delimit aliases containing a hyphen or space. The ordinary alias TRANS_DATE is also valid."
+        },
+        {
+          "id": "D",
+          "text": "SELECT customer_id AS \"CUSTOMER-ID\", transaction_date AS DATE, amount + 100 'DUES' FROM transactions;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Although \"CUSTOMER-ID\" is valid, 'DUES' uses single quotation marks and is not a valid alias declaration."
+        },
+        {
+          "id": "E",
+          "text": "SELECT customer_id AS \"CUSTOMER-ID\", transaction_date AS \"DATE\", amount + 100 DUES FROM transactions;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The quoted alias \"DATE\" and the other aliases are syntactically valid. However, the source reviewer highlights B and C as its expected answers."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "answerExplanation": "These are valid unquoted aliases. Each alias uses permitted identifier characters and follows its corresponding expression. Double quotation marks correctly delimit aliases containing a hyphen or space. The ordinary alias TRANS_DATE is also valid.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 118,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 119,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which statement is true about aggregate functions?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "The MAX and MIN functions can be used on columns with character data types.",
+          "format": "text",
+          "correct": true,
+          "explanation": "MAX and MIN can evaluate character values according to the applicable character sorting rules."
+        },
+        {
+          "id": "B",
+          "text": "The AVG function implicitly converts nulls to zero.",
+          "format": "text",
+          "correct": false,
+          "explanation": "AVG ignores null values. It does not include them as zero when calculating the average."
+        },
+        {
+          "id": "C",
+          "text": "Aggregate functions can be used in any clause of a SELECT statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Aggregate functions cannot normally be used directly in clauses such as WHERE. Aggregate conditions belong in HAVING."
+        },
+        {
+          "id": "D",
+          "text": "Aggregate functions can be nested to any number of levels.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Aggregate-function nesting is subject to SQL syntax and query-level restrictions. It is not unlimited."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "answerExplanation": "MAX and MIN can evaluate character values according to the applicable character sorting rules.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 119,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 120,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which three statements are true about the MERGE statement?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "It can update, insert, or delete rows conditionally in multiple tables.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The source reviewer highlights this statement. However, a standard Oracle MERGE has one target table, so the phrase “in multiple tables” makes the wording technically questionable."
+        },
+        {
+          "id": "B",
+          "text": "It can merge rows only from tables.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The USING source may be a table, view, or subquery rather than only a base table."
+        },
+        {
+          "id": "C",
+          "text": "It can combine rows from multiple tables conditionally to insert into a single table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The source reviewer does not select this choice. A source subquery can nevertheless join multiple tables, so the wording may be interpreted as technically possible."
+        },
+        {
+          "id": "D",
+          "text": "It can use subqueries to produce source rows.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The USING clause can contain a subquery whose result supplies the source rows for the merge."
+        },
+        {
+          "id": "E",
+          "text": "It can update the same row of the target table multiple times.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A deterministic MERGE operation cannot update the same target row more than once within one statement."
+        },
+        {
+          "id": "F",
+          "text": "It can use views to produce source rows.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A view can be used as the source row set in the USING clause."
+        }
+      ],
+      "correct": [
+        "A",
+        "D",
+        "F"
+      ],
+      "answerExplanation": "The source reviewer highlights this statement. However, a standard Oracle MERGE has one target table, so the phrase “in multiple tables” makes the wording technically questionable. The USING clause can contain a subquery whose result supplies the source rows for the merge. A view can be used as the source row set in the USING clause.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 120,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 121,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which is the default column or columns for sorting output from compound queries using INTERSECT in a SQL statement?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "The first column in the last SELECT of the compound query",
+          "format": "text",
+          "correct": false,
+          "explanation": "The output column definitions, including the names used by the final ORDER BY, come from the first SELECT."
+        },
+        {
+          "id": "B",
+          "text": "The first NUMBER column in the first SELECT of the compound query",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle does not automatically select the first numeric column as the sorting column."
+        },
+        {
+          "id": "C",
+          "text": "The first VARCHAR2 column in the first SELECT of the compound query",
+          "format": "text",
+          "correct": false,
+          "explanation": "The data type does not determine the default sorting column."
+        },
+        {
+          "id": "D",
+          "text": "The first NUMBER or VARCHAR2 column in the last SELECT of the compound query",
+          "format": "text",
+          "correct": false,
+          "explanation": "The last component query does not determine the compound query’s default output column definitions."
+        },
+        {
+          "id": "E",
+          "text": "The first column in the first SELECT of the compound query",
+          "format": "text",
+          "correct": true,
+          "explanation": "The compound query’s output columns are determined by the first SELECT. In the context of this question, the first output column is the expected sorting column."
+        }
+      ],
+      "correct": [
+        "E"
+      ],
+      "answerExplanation": "The compound query’s output columns are determined by the first SELECT. In the context of this question, the first output column is the expected sorting column.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 121,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 122,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which statement is true about the INTERSECT operator used in compound queries?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "INTERSECT has lower precedence than UNION or UNION ALL.",
+          "format": "text",
+          "correct": false,
+          "explanation": "In the Oracle SQL behavior covered by this reviewer, set operators have equal precedence and are evaluated from left to right unless parentheses alter the evaluation order."
+        },
+        {
+          "id": "B",
+          "text": "It ignores nulls.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Null values participate in set comparisons. Corresponding null values can be considered equal during a set operation."
+        },
+        {
+          "id": "C",
+          "text": "Multiple INTERSECT operators are not possible in the same SQL statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Multiple set operators, including multiple INTERSECT operators, can be used in one compound query."
+        },
+        {
+          "id": "D",
+          "text": "It processes nulls in the selected columns.",
+          "format": "text",
+          "correct": true,
+          "explanation": "INTERSECT compares complete selected rows, including corresponding null values, to identify rows common to both query results."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "answerExplanation": "INTERSECT compares complete selected rows, including corresponding null values, to identify rows common to both query results.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 122,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 123,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "The ORDER table has an ORDER_DATE column with the DATE data type. The default date format is RR. Which two WHERE conditions demonstrate the correct use of conversion functions?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "WHERE order_date IN (TO_DATE('Oct 21 2018', 'Mon DD YYYY'), TO_CHAR('Nov 21 2018', 'Mon DD YYYY'))",
+          "format": "text",
+          "correct": false,
+          "explanation": "The first value is correctly converted to DATE, but TO_CHAR is incorrectly applied to a character literal and would produce character data rather than a proper date value."
+        },
+        {
+          "id": "B",
+          "text": "WHERE order_date > TO_DATE(ADD_MONTHS(SYSDATE, 6), 'MON DD YYYY')",
+          "format": "text",
+          "correct": false,
+          "explanation": "ADD_MONTHS(SYSDATE, 6) already returns a DATE. Applying TO_DATE to an existing date introduces an unnecessary implicit conversion and a possible format mismatch."
+        },
+        {
+          "id": "C",
+          "text": "WHERE TO_CHAR(order_date, 'MON DD YYYY') = 'JAN 20 2019'",
+          "format": "text",
+          "correct": true,
+          "explanation": "TO_CHAR explicitly converts ORDER_DATE into the specified character format before comparing it with the formatted character literal."
+        },
+        {
+          "id": "D",
+          "text": "WHERE order_date > TO_DATE('JUL 10 2018', 'MON DD YYYY')",
+          "format": "text",
+          "correct": true,
+          "explanation": "TO_DATE explicitly converts the character literal into a DATE using the matching date format."
+        },
+        {
+          "id": "E",
+          "text": "WHERE order_date > TO_CHAR(ADD_MONTHS(SYSDATE, 6), 'MON DD YYYY')",
+          "format": "text",
+          "correct": false,
+          "explanation": "TO_CHAR returns character data. Comparing that value with a DATE column requires an implicit conversion and is not the correct explicit-conversion approach."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "TO_CHAR explicitly converts ORDER_DATE into the specified character format before comparing it with the formatted character literal. TO_DATE explicitly converts the character literal into a DATE using the matching date format.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 123,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 124,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "You execute the following command. Which two statements are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "Command",
+          "language": "sql",
+          "code": "ALTER TABLE employees SET UNUSED (department_id);"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "A new column with the name DEPARTMENT_ID can be added to the EMPLOYEES table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "After the existing column is marked unused, its name can be reused for a newly added column."
+        },
+        {
+          "id": "B",
+          "text": "The storage space occupied by the DEPARTMENT_ID column is released only after a COMMIT is issued.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Committing the command does not physically reclaim the unused column’s storage."
+        },
+        {
+          "id": "C",
+          "text": "No updates can be made to the data in the DEPARTMENT_ID column.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not one of the answers marked as correct in the source document."
+        },
+        {
+          "id": "D",
+          "text": "The DEPARTMENT_ID column can be recovered from the recycle bin.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Marking a column unused does not place the column in the recycle bin."
+        },
+        {
+          "id": "E",
+          "text": "The DEPARTMENT_ID column is set to null for all rows in the table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "This is marked as correct in the source document."
+        },
+        {
+          "id": "F",
+          "text": "A query can display data from the DEPARTMENT_ID column.",
+          "format": "text",
+          "correct": false,
+          "explanation": "An unused column can no longer be referenced by its original name in ordinary SQL queries."
+        }
+      ],
+      "correct": [
+        "A",
+        "E"
+      ],
+      "answerExplanation": "After the existing column is marked unused, its name can be reused for a newly added column. This is marked as correct in the source document.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 124,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 125,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements are true about a conditional INSERT ALL statement?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "It cannot have an ELSE clause.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A conditional multitable insert can include an ELSE clause for source rows that do not satisfy any preceding WHEN condition."
+        },
+        {
+          "id": "B",
+          "text": "The total number of rows inserted is always equal to the number of rows returned by the subquery.",
+          "format": "text",
+          "correct": false,
+          "explanation": "With INSERT ALL, one source row may be inserted into multiple target tables, so the number of inserted rows can exceed the number of source rows."
+        },
+        {
+          "id": "C",
+          "text": "Each WHEN condition is tested for each row returned by the subquery.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle evaluates the conditional clauses separately for every row produced by the source subquery."
+        },
+        {
+          "id": "D",
+          "text": "Each row returned by the subquery can be inserted into only a single target table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A conditional INSERT ALL can insert the same source row into multiple target tables when multiple WHEN conditions evaluate to true."
+        },
+        {
+          "id": "E",
+          "text": "A single WHEN condition can be used for multiple INTO clauses.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Multiple INTO clauses can follow one WHEN condition, allowing a qualifying source row to be inserted into several target tables."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "Oracle evaluates the conditional clauses separately for every row produced by the source subquery. Multiple INTO clauses can follow one WHEN condition, allowing a qualifying source row to be inserted into several target tables.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 125,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 126,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "You need to calculate the number of days from January 1, 2019 until today. Dates are stored in the default format DD-MON-RR. Which two queries give the required output?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT TO_CHAR(SYSDATE, 'DD-MON-YYYY') - '01-JAN-2019' FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "TO_CHAR converts SYSDATE to character data. Date subtraction should be performed between date values, not formatted text."
+        },
+        {
+          "id": "B",
+          "text": "SELECT ROUND(SYSDATE - '01-JAN-2019') FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This depends on Oracle implicitly converting the character literal to a date using session settings rather than using an explicit conversion."
+        },
+        {
+          "id": "C",
+          "text": "SELECT SYSDATE - TO_DATE('01-JANUARY-2019') FROM dual;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "TO_DATE converts the character value to a date. Subtracting that date from SYSDATE returns the elapsed number of days."
+        },
+        {
+          "id": "D",
+          "text": "SELECT TO_DATE(SYSDATE, 'DD/MONTH/YYYY') - '01/JANUARY/2019' FROM dual;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "SYSDATE is already a date. Applying TO_DATE to it causes an unnecessary implicit conversion, and the other operand still relies on implicit conversion."
+        },
+        {
+          "id": "E",
+          "text": "SELECT ROUND(SYSDATE - TO_DATE('01/JANUARY/2019')) FROM dual;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "The starting date is explicitly converted, and ROUND returns the elapsed day difference as a whole number."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "TO_DATE converts the character value to a date. Subtracting that date from SYSDATE returns the elapsed number of days. The starting date is explicitly converted, and ROUND returns the elapsed day difference as a whole number.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 126,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 127,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements are true about queries using set operators such as UNION?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "All set operators are valid on columns of all data types.",
+          "format": "text",
+          "correct": true,
+          "explanation": "This is marked as correct in the source document."
+        },
+        {
+          "id": "B",
+          "text": "CHAR columns of different lengths used with a set operator return a VARCHAR2 whose length equals the longest VARCHAR2 value.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not marked as a correct statement in the document."
+        },
+        {
+          "id": "C",
+          "text": "An expression in the first SELECT list must have a column alias for the expression.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The document marks this as required when the compound query needs to reference the expression’s result, such as in a final ORDER BY clause."
+        },
+        {
+          "id": "D",
+          "text": "Queries using set operators do not perform implicit conversion across data-type groups, such as character and numeric data.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not one of the answers marked as correct in the document."
+        },
+        {
+          "id": "E",
+          "text": "In a query containing multiple set operators, INTERSECT always takes precedence over UNION and UNION ALL.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not marked as correct by the document."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "answerExplanation": "This is marked as correct in the source document. The document marks this as required when the compound query needs to reference the expression’s result, such as in a final ORDER BY clause.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 127,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 128,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements are true regarding non-equijoins?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "The SQL:1999-compliant ANSI join syntax must be used.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A non-equijoin is not restricted to ANSI join syntax. Other valid Oracle join forms may express non-equality conditions."
+        },
+        {
+          "id": "B",
+          "text": "Table aliases must be used.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Aliases improve readability and resolve ambiguity, but they are not universally mandatory."
+        },
+        {
+          "id": "C",
+          "text": "The Oracle join syntax can be used.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A non-equijoin can be written using Oracle join syntax with a non-equality condition between the tables."
+        },
+        {
+          "id": "D",
+          "text": "The USING clause can be used.",
+          "format": "text",
+          "correct": false,
+          "explanation": "USING creates equality comparisons between identically named columns. It is not used to define a non-equijoin condition."
+        },
+        {
+          "id": "E",
+          "text": "The ON clause can be used.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The ON clause supports range and non-equality operators such as <, >, BETWEEN, and >=."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "A non-equijoin can be written using Oracle join syntax with a non-equality condition between the tables. The ON clause supports range and non-equality operators such as <, >, BETWEEN, and >=.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 128,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 129,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the query below. What is the result?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Condition",
+          "content": "2 = 3\nThe condition is always false, so the Cartesian-product row is removed."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "Query",
+          "language": "sql",
+          "code": "SELECT 2\nFROM dual d1\nCROSS JOIN dual d2\nCROSS JOIN dual d3\nWHERE 2 = 3;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "3 rows",
+          "format": "text",
+          "correct": false,
+          "explanation": "The number of table aliases does not determine the row count. Each DUAL table has one row."
+        },
+        {
+          "id": "B",
+          "text": "8 rows",
+          "format": "text",
+          "correct": false,
+          "explanation": "Three one-row tables produce 1 × 1 × 1 = 1 row before filtering, not eight rows."
+        },
+        {
+          "id": "C",
+          "text": "No rows",
+          "format": "text",
+          "correct": true,
+          "explanation": "The only generated row fails the always-false condition 2 = 3."
+        },
+        {
+          "id": "D",
+          "text": "An error",
+          "format": "text",
+          "correct": false,
+          "explanation": "The query is syntactically valid. The false condition simply removes every row."
+        },
+        {
+          "id": "E",
+          "text": "6 rows",
+          "format": "text",
+          "correct": false,
+          "explanation": "The cross join does not produce six rows because each DUAL source contains only one row."
+        },
+        {
+          "id": "F",
+          "text": "1 row",
+          "format": "text",
+          "correct": false,
+          "explanation": "One row exists before the WHERE filter, but that row is removed because 2 = 3 is false."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "answerExplanation": "The only generated row fails the always-false condition 2 = 3.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 129,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 130,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the following statement. Which two statements are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Sort key for maximum-salary employees",
+          "content": "'A'\nEvery employee earning the maximum salary receives the same primary sort value."
+        },
+        {
+          "type": "text",
+          "title": "Sort key for all other employees",
+          "content": "LAST_NAME\nRemaining employees use their own last names as their primary ascending sort values."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "SQL statement",
+          "language": "sql",
+          "code": "SELECT last_name\nFROM employees\nORDER BY CASE\nWHEN salary = (SELECT MAX(salary)\nFROM employees)\nTHEN 'A'\nELSE last_name\nEND,\nlast_name DESC;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "All remaining employee names will appear in descending order.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The CASE expression has no DESC keyword, so its default direction is ascending for the remaining names."
+        },
+        {
+          "id": "B",
+          "text": "The names of employees earning the maximum salary will appear first in an unspecified order.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The query includes last_name DESC as a secondary key, so the order within the maximum-salary group is specified."
+        },
+        {
+          "id": "C",
+          "text": "All remaining employee names will appear in ascending order.",
+          "format": "text",
+          "correct": true,
+          "explanation": "For non-maximum earners, the primary sort value is last_name, and the default direction is ascending."
+        },
+        {
+          "id": "D",
+          "text": "The names of employees earning the maximum salary will appear first in ascending order.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Within the maximum-salary group, all primary keys equal 'A', so the secondary last_name DESC key determines descending order."
+        },
+        {
+          "id": "E",
+          "text": "The names of employees earning the maximum salary will appear first in descending order.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Maximum-salary employees share the primary value 'A' and are then ordered by last_name DESC."
+        },
+        {
+          "id": "F",
+          "text": "All remaining employee names will appear first.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The literal 'A' sorts before ordinary last names that begin with later characters, so the maximum-salary group appears first."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "For non-maximum earners, the primary sort value is last_name, and the default direction is ascending. Maximum-salary employees share the primary value 'A' and are then ordered by last_name DESC.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 130,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 131,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which statement is true about the ROUND, TRUNC, and MOD functions?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Evaluation",
+          "content": "MOD(25, 3) returns 1.\nBoth outer functions accept the result from MOD and return the same value."
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "ROUND(1, -1) returns 0."
+        },
+        {
+          "type": "text",
+          "title": "Context",
+          "content": "TRUNC(1, -1) returns 0."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "ROUND(MOD(25,3),-1) and TRUNC(MOD(25,3),-1) are both valid and give the same result.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Both expressions are valid and return 0. [wfewq | Word]"
+        },
+        {
+          "id": "B",
+          "text": "ROUND(MOD(25,3),-1) and TRUNC(MOD(25,3),-1) are both valid but give different results.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Both expressions return the same result because the value being rounded or truncated is 1."
+        },
+        {
+          "id": "C",
+          "text": "TRUNC(MOD(25,3),-1) is invalid.",
+          "format": "text",
+          "correct": true,
+          "explanation": "This choice is marked as correct in the source document. [wfewq | Word]"
+        },
+        {
+          "id": "D",
+          "text": "ROUND(MOD(25,3),-1) is invalid.",
+          "format": "text",
+          "correct": false,
+          "explanation": "ROUND can accept the numeric result returned by MOD."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "answerExplanation": "Both expressions are valid and return 0. [wfewq | Word] This choice is marked as correct in the source document. [wfewq | Word]",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 131,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 132,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which three actions can you perform on an existing table containing data?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Add a new column as the table’s first column.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A newly added column is normally appended after the existing columns rather than inserted as the first column."
+        },
+        {
+          "id": "B",
+          "text": "Define a default value that is automatically inserted into a column containing nulls.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Defining a default affects future inserts that omit the column. It does not automatically replace existing null values."
+        },
+        {
+          "id": "C",
+          "text": "Change the default value of a column.",
+          "format": "text",
+          "correct": true,
+          "explanation": "ALTER TABLE ... MODIFY can change the default value used for future inserted rows. [wfewq | Word]"
+        },
+        {
+          "id": "D",
+          "text": "Increase the width of a numeric column.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A numeric column can be modified to permit greater numeric precision when the modification is compatible with the existing data. [wfewq | Word]"
+        },
+        {
+          "id": "E",
+          "text": "Add a new NOT NULL column with a DEFAULT value.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The default value supplies a non-null value for existing rows, allowing the new column to be defined as NOT NULL. [wfewq | Word]"
+        },
+        {
+          "id": "F",
+          "text": "Change a DATE column containing data to a NUMBER data type.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle does not permit this direct incompatible data-type change while the column contains data."
+        }
+      ],
+      "correct": [
+        "C",
+        "D",
+        "E"
+      ],
+      "answerExplanation": "ALTER TABLE ... MODIFY can change the default value used for future inserted rows. [wfewq | Word] A numeric column can be modified to permit greater numeric precision when the modification is compatible with the existing data. [wfewq | Word] The default value supplies a non-null value for existing rows, allowing the new column to be defined as NOT NULL. [wfewq | Word]",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 132,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 133,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which three actions can you perform by using the ALTER TABLE command?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Drop pseudocolumns from a table.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Pseudocolumns are not stored table columns and therefore cannot be dropped from a table."
+        },
+        {
+          "id": "B",
+          "text": "Rename a table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An existing table can be renamed using an appropriate ALTER TABLE ... RENAME TO statement. [wfewq | Word]"
+        },
+        {
+          "id": "C",
+          "text": "Lock a set of rows in a table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Row locking is performed through transactional SQL, such as SELECT ... FOR UPDATE, rather than through ALTER TABLE."
+        },
+        {
+          "id": "D",
+          "text": "Enable or disable constraints on a table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "ALTER TABLE can enable or disable an existing table constraint. [wfewq | Word]"
+        },
+        {
+          "id": "E",
+          "text": "Restrict all DML statements on a table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A table can be changed to read-only mode, preventing DML operations that modify its data. [wfewq | Word]"
+        },
+        {
+          "id": "F",
+          "text": "Drop all columns simultaneously from a table.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "A table must retain at least one usable column and cannot have every column removed while the table remains defined."
+        }
+      ],
+      "correct": [
+        "B",
+        "D",
+        "E"
+      ],
+      "answerExplanation": "An existing table can be renamed using an appropriate ALTER TABLE ... RENAME TO statement. [wfewq | Word] ALTER TABLE can enable or disable an existing table constraint. [wfewq | Word] A table can be changed to read-only mode, preventing DML operations that modify its data. [wfewq | Word]",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 133,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 134,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements are true about the rules of precedence for operators?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "NULLs influence the precedence of operators in an expression.",
+          "format": "text",
+          "correct": true,
+          "explanation": "This statement is marked as correct in the source document. [wfewq | Word]"
+        },
+        {
+          "id": "B",
+          "text": "The binary operator has the highest precedence in an expression in a SQL statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle operator precedence is determined by the operator type, not merely by whether an operator is binary."
+        },
+        {
+          "id": "C",
+          "text": "The concatenation operator || is always evaluated before addition and subtraction in an expression.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Concatenation does not universally take precedence over arithmetic addition and subtraction as stated."
+        },
+        {
+          "id": "D",
+          "text": "Arithmetic operators with equal precedence are evaluated from left to right within an expression.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This choice is not marked as correct in the source document."
+        },
+        {
+          "id": "E",
+          "text": "Multiple parentheses can be used to override the default precedence of operators in an expression.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Parentheses can group expressions and explicitly control their evaluation order. [wfewq | Word]"
+        }
+      ],
+      "correct": [
+        "A",
+        "E"
+      ],
+      "answerExplanation": "This statement is marked as correct in the source document. [wfewq | Word] Parentheses can group expressions and explicitly control their evaluation order. [wfewq | Word]",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 134,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 135,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which three statements are true about a self-join?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "It must be an equijoin.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A self-join can use equality or another valid comparison condition."
+        },
+        {
+          "id": "B",
+          "text": "It can be an outer join.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An outer self-join can preserve rows from one reference to the table even when no matching row exists in the other reference. [wfewq | Word]"
+        },
+        {
+          "id": "C",
+          "text": "The query must use two different aliases for the table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Separate aliases allow Oracle to treat the two references to the same table as distinct row sources. [wfewq | Word]"
+        },
+        {
+          "id": "D",
+          "text": "It must be an inner join.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A self-join can be implemented as either an inner join or an outer join."
+        },
+        {
+          "id": "E",
+          "text": "The ON clause must be used.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A self-join can also be expressed using other valid join syntax, so ON is not universally mandatory."
+        },
+        {
+          "id": "F",
+          "text": "The ON clause can be used.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The relationship between the two aliases can be specified using an ON condition. [wfewq | Word]"
+        }
+      ],
+      "correct": [
+        "B",
+        "C",
+        "F"
+      ],
+      "answerExplanation": "An outer self-join can preserve rows from one reference to the table even when no matching row exists in the other reference. [wfewq | Word] Separate aliases allow Oracle to treat the two references to the same table as distinct row sources. [wfewq | Word] The relationship between the two aliases can be specified using an ON condition. [wfewq | Word]",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 135,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 136,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements about invisible indexes are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "You can create only one invisible index on the same column list.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle can permit multiple indexes on the same column list when their index characteristics differ, although only one can be visible at a time."
+        },
+        {
+          "id": "B",
+          "text": "You use ALTER INDEX to make an invisible index visible.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The index can be changed with ALTER INDEX index_name VISIBLE."
+        },
+        {
+          "id": "C",
+          "text": "An invisible index consumes no storage.",
+          "format": "text",
+          "correct": false,
+          "explanation": "An invisible index remains a physical database object and continues to use storage."
+        },
+        {
+          "id": "D",
+          "text": "The query optimizer never considers invisible indexes when determining execution plans.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Invisible indexes are normally ignored, but they can be considered when the relevant optimizer setting enables their use."
+        },
+        {
+          "id": "E",
+          "text": "All INSERT, UPDATE, and DELETE statements maintain entries in the index.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Invisible indexes continue to be maintained during DML operations even though they are normally excluded from optimizer plan selection."
+        }
+      ],
+      "correct": [
+        "B",
+        "E"
+      ],
+      "answerExplanation": "The index can be changed with ALTER INDEX index_name VISIBLE. Invisible indexes continue to be maintained during DML operations even though they are normally excluded from optimizer plan selection.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 136,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 137,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which statement is true about using functions in WHERE and HAVING?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Using aggregate functions in the HAVING clause requires a subquery.",
+          "format": "text",
+          "correct": true,
+          "explanation": "This statement is marked as correct in the source document."
+        },
+        {
+          "id": "B",
+          "text": "Using single-row functions in the HAVING clause requires a subquery.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A single-row function may be used in a HAVING expression when the expression is valid for the grouped query."
+        },
+        {
+          "id": "C",
+          "text": "Using aggregate functions in the WHERE clause requires a subquery.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not marked as correct in the source document."
+        },
+        {
+          "id": "D",
+          "text": "Using single-row functions in the WHERE clause requires a subquery.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Single-row functions can be applied directly to row values in a WHERE condition."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "answerExplanation": "This statement is marked as correct in the source document.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 137,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 138,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the following statement. Which statement is true?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "SQL statement",
+          "language": "sql",
+          "code": "SELECT SUBSTR(SYSDATE, 1, 5) \"Result\"\nFROM dual;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "It fails unless the expression is modified to SUBSTR(TO_CHAR(SYSDATE), 1, 5).",
+          "format": "text",
+          "correct": false,
+          "explanation": "The explicit conversion is safer, but Oracle can implicitly convert SYSDATE to character data."
+        },
+        {
+          "id": "B",
+          "text": "It fails unless the expression is modified to TO_CHAR(SUBSTR(SYSDATE, 1, 5)).",
+          "format": "text",
+          "correct": false,
+          "explanation": "The statement does not fail because of the missing outer TO_CHAR; SUBSTR already returns character data."
+        },
+        {
+          "id": "C",
+          "text": "It fails unless the expression is modified to SUBSTR(TO_CHAR(TRUNC(SYSDATE)), 1, 5).",
+          "format": "text",
+          "correct": false,
+          "explanation": "Applying TRUNC is unnecessary for extracting the first five characters of the implicitly formatted date."
+        },
+        {
+          "id": "D",
+          "text": "It executes successfully with an implicit data-type conversion.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle implicitly converts SYSDATE from DATE to character data using the session’s date format before applying SUBSTR."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "answerExplanation": "Oracle implicitly converts SYSDATE from DATE to character data using the session’s date format before applying SUBSTR.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 138,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 139,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements are true regarding the UNION and UNION ALL operators?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Duplicates are eliminated automatically by the UNION ALL operator.",
+          "format": "text",
+          "correct": false,
+          "explanation": "UNION ALL retains duplicate rows. UNION removes duplicates."
+        },
+        {
+          "id": "B",
+          "text": "The names of columns selected in each SELECT statement must be identical.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The column names may differ. The compound result uses the column names or aliases from the first SELECT."
+        },
+        {
+          "id": "C",
+          "text": "The output is sorted by the UNION ALL operator.",
+          "format": "text",
+          "correct": false,
+          "explanation": "UNION ALL does not guarantee sorted output. A final ORDER BY is required to guarantee order."
+        },
+        {
+          "id": "D",
+          "text": "The number of columns selected in each SELECT statement must be identical.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Each component query must return the same number of columns. Corresponding columns must also belong to compatible data-type groups."
+        },
+        {
+          "id": "E",
+          "text": "NULLs are not ignored during duplicate checking.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Corresponding null values are considered when Oracle checks complete rows for duplicates in a UNION operation."
+        }
+      ],
+      "correct": [
+        "D",
+        "E"
+      ],
+      "answerExplanation": "Each component query must return the same number of columns. Corresponding columns must also belong to compatible data-type groups. Corresponding null values are considered when Oracle checks complete rows for duplicates in a UNION operation.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 139,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 140,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "You must find the number of employees whose salary is lower than employee 110. Which statement fails to do this?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT COUNT(*)\nFROM employees e\nWHERE e.salary < (\nSELECT e.salary\n FROM employees a\n WHERE e.employee_id = 110\n);",
+          "format": "sql",
+          "correct": true,
+          "explanation": "Inside the subquery, e.salary and e.employee_id reference the outer query alias instead of alias a. For every outer row other than employee 110, the subquery returns no row. For employee 110, the comparison becomes that employee’s salary against itself."
+        },
+        {
+          "id": "B",
+          "text": "SELECT COUNT(*)\nFROM employees e\nJOIN (\nSELECT salary\n FROM employees\n WHERE employee_id = 110\n) a\nON e.salary < a.salary;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The inline view returns employee 110’s salary, and the join counts employees with lower salaries."
+        },
+        {
+          "id": "C",
+          "text": "SELECT COUNT(*)\nFROM employees e\nJOIN employees a\nON e.salary < a.salary\nWHERE a.employee_id = 110;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Alias a is restricted to employee 110, and the join condition selects employees earning less than that employee."
+        },
+        {
+          "id": "D",
+          "text": "SELECT COUNT(*)\nFROM employees\nWHERE salary < (\nSELECT salary\n FROM employees\n WHERE employee_id = 110\n);",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The scalar subquery returns employee 110’s salary, which is compared with every employee’s salary."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "answerExplanation": "Inside the subquery, e.salary and e.employee_id reference the outer query alias instead of alias a. For every outer row other than employee 110, the subquery returns no row. For employee 110, the comparison becomes that employee’s salary against itself.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 140,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 141,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the EMPLOYEES table and the query below. Which line produces an error?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Line 1",
+          "content": "SELECT e.last_name,\nValid. The outer query can select LAST_NAME from alias e."
+        },
+        {
+          "type": "text",
+          "title": "Line 2",
+          "content": "e.salary,\nValid. The outer query can select SALARY from alias e."
+        },
+        {
+          "type": "text",
+          "title": "Line 3",
+          "content": "a.avg_sal\nError according to the document. The source marks Line 3 as the line that produces the error."
+        },
+        {
+          "type": "text",
+          "title": "Line 4",
+          "content": "FROM employees e\nValid. This defines e as the alias for the outer EMPLOYEES table."
+        },
+        {
+          "type": "text",
+          "title": "Line 5",
+          "content": "WHERE e.salary > (\nValid as the beginning of a scalar-subquery comparison."
+        },
+        {
+          "type": "text",
+          "title": "Line 6",
+          "content": "SELECT AVG(salary) AS avg_sal\nThe subquery calculates an average salary and assigns the alias AVG_SAL."
+        },
+        {
+          "type": "text",
+          "title": "Line 7",
+          "content": "FROM employees\nValid source table for the scalar subquery."
+        },
+        {
+          "type": "text",
+          "title": "Line 8",
+          "content": "WHERE a.department_id = e.department_id)\nThe displayed query attempts to reference alias a inside the subquery."
+        },
+        {
+          "type": "text",
+          "title": "Line 9",
+          "content": "ORDER BY e.last_name;\nValid if the preceding query references are corrected."
+        }
+      ],
+      "tables": [
+        {
+          "title": "EMPLOYEES table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "EMPLOYEE_ID",
+              "NOT NULL",
+              "NUMBER(4)"
+            ],
+            [
+              "LAST_NAME",
+              "NOT NULL",
+              "VARCHAR2(100)"
+            ],
+            [
+              "SALARY",
+              "NOT NULL",
+              "NUMBER(6,2)"
+            ],
+            [
+              "DEPARTMENT_ID",
+              "NOT NULL",
+              "NUMBER(4)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Line 7",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not the line marked in the document."
+        },
+        {
+          "id": "B",
+          "text": "Line 8",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not the line marked in the document."
+        },
+        {
+          "id": "C",
+          "text": "Line 3",
+          "format": "text",
+          "correct": true,
+          "explanation": "The document identifies Line 3 as the source of the error."
+        },
+        {
+          "id": "D",
+          "text": "Line 5",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not the line marked in the document."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "answerExplanation": "The document identifies Line 3 as the source of the error.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 141,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 142,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the EMP table and the query below. What is the result?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [
+        {
+          "title": "EMP table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "EMPNO",
+              "NOT NULL",
+              "NUMBER(4)"
+            ],
+            [
+              "ENAME",
+              "",
+              "VARCHAR2(10)"
+            ],
+            [
+              "SAL",
+              "",
+              "NUMBER(7,2)"
+            ],
+            [
+              "DEPTNO",
+              "",
+              "NUMBER(2)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [
+        {
+          "title": "Query",
+          "language": "sql",
+          "code": "SELECT deptno AS \"departments\",\nSUM(sal) AS \"salary\"\nFROM emp\nGROUP BY 1\nHAVING SUM(sal) > 3000;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "Only departments where the total salary is greater than 3000, returned in no particular order",
+          "format": "text",
+          "correct": false,
+          "explanation": "This is not the answer marked in the document."
+        },
+        {
+          "id": "B",
+          "text": "Only departments where the total salary is greater than 3000, ordered by department",
+          "format": "text",
+          "correct": false,
+          "explanation": "The statement has no ORDER BY clause, and this is not the marked answer."
+        },
+        {
+          "id": "C",
+          "text": "All departments and a sum of the salaries of employees with a salary greater than 3000",
+          "format": "text",
+          "correct": false,
+          "explanation": "HAVING SUM(sal) > 3000 filters department groups based on their total salary. It does not filter individual employees whose salary is above 3000."
+        },
+        {
+          "id": "D",
+          "text": "An error",
+          "format": "text",
+          "correct": true,
+          "explanation": "The document indicates that the query results in an error."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "answerExplanation": "The document indicates that the query results in an error.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 142,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 143,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the CREATE TABLE statement below. On which two columns will an index be created automatically?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "SQL statement",
+          "language": "sql",
+          "code": "CREATE TABLE orders\n(\nserial_no NUMBER UNIQUE,\norder_id NUMBER PRIMARY KEY,\norder_date DATE NOT NULL,\nstatus VARCHAR2(10) CHECK (\nstatus IN ('CREDIT', 'CASH')\n),\nproduct_id NUMBER REFERENCES products(product_id),\norder_total NUMBER\n);"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "ORDER_TOTAL",
+          "format": "text",
+          "correct": false,
+          "explanation": "No unique or primary-key constraint is defined on this column."
+        },
+        {
+          "id": "B",
+          "text": "ORDER_DATE",
+          "format": "text",
+          "correct": false,
+          "explanation": "A NOT NULL constraint does not automatically require an index."
+        },
+        {
+          "id": "C",
+          "text": "SERIAL_NO",
+          "format": "text",
+          "correct": true,
+          "explanation": "The UNIQUE constraint normally causes Oracle to create or use a unique index on SERIAL_NO."
+        },
+        {
+          "id": "D",
+          "text": "STATUS",
+          "format": "text",
+          "correct": false,
+          "explanation": "A CHECK constraint does not automatically create an index."
+        },
+        {
+          "id": "E",
+          "text": "ORDER_ID",
+          "format": "text",
+          "correct": true,
+          "explanation": "The PRIMARY KEY constraint normally causes Oracle to create or use a unique index on ORDER_ID."
+        },
+        {
+          "id": "F",
+          "text": "PRODUCT_ID",
+          "format": "text",
+          "correct": false,
+          "explanation": "A foreign key does not automatically cause Oracle to create an index on the child-table column."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "The UNIQUE constraint normally causes Oracle to create or use a unique index on SERIAL_NO. The PRIMARY KEY constraint normally causes Oracle to create or use a unique index on ORDER_ID.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 143,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 144,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the PRODUCT_STATUS table. The STATUS column contains either IN STOCK or OUT OF STOCK for each row. Which two queries execute successfully?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [
+        {
+          "title": "PRODUCT_STATUS table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "PROD_ID",
+              "NOT NULL",
+              "NUMBER(2)"
+            ],
+            [
+              "STATUS",
+              "NOT NULL",
+              "VARCHAR2(15)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT prod_id || 'CURRENT AVAILABILITY' || q'[s not available]'\nFROM product_status\nWHERE status = 'OUT OF STOCK';",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This is not one of the statements marked as successfully executing in the document."
+        },
+        {
+          "id": "B",
+          "text": "SELECT prod_id || q'[s not available]' || 'CURRENT AVAILABILITY'\nFROM product_status\nWHERE status = 'OUT OF STOCK';",
+          "format": "sql",
+          "correct": true,
+          "explanation": "The alternative quoting syntax correctly creates the text containing the apostrophe, and || concatenates the values."
+        },
+        {
+          "id": "C",
+          "text": "SELECT prod_id || q'[s not available]'\nFROM product_status\nWHERE status = 'OUT OF STOCK';",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This is not one of the statements marked as correct in the document."
+        },
+        {
+          "id": "D",
+          "text": "SELECT prod_id || q'[s not available'\nFROM product_status\nWHERE status = 'OUT OF STOCK';",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The alternative quoted string is not properly terminated."
+        },
+        {
+          "id": "E",
+          "text": "SELECT prod_id || q'[s not available]' || 'CURRENT AVAILABILITY'\nFROM product_status\nWHERE status = 'OUT OF STOCK';",
+          "format": "sql",
+          "correct": true,
+          "explanation": "The quoted text is valid, and all values are joined using the concatenation operator."
+        },
+        {
+          "id": "F",
+          "text": "SELECT prod_id || q'[s not available]'\nFROM product_status\nWHERE status = 'OUT OF STOCKS';",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The filter uses OUT OF STOCKS, but the stated valid status value is OUT OF STOCK."
+        }
+      ],
+      "correct": [
+        "B",
+        "E"
+      ],
+      "answerExplanation": "The alternative quoting syntax correctly creates the text containing the apostrophe, and || concatenates the values. The quoted text is valid, and all values are joined using the concatenation operator.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 144,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 145,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the EMPLOYEES table. Which statement executes successfully and returns distinct employees with non-null first names?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [
+        {
+          "title": "EMPLOYEES table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "EMPLOYEE_ID",
+              "NOT NULL",
+              "NUMBER(3)"
+            ],
+            [
+              "FIRST_NAME",
+              "",
+              "VARCHAR2(15)"
+            ],
+            [
+              "LAST_NAME",
+              "NOT NULL",
+              "VARCHAR2(15)"
+            ],
+            [
+              "SALARY",
+              "",
+              "NUMBER(6,2)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "SELECT first_name, DISTINCT last_name\nFROM employees\nWHERE first_name <> NULL;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "DISTINCT must follow SELECT and apply to the selected row. Also, nulls must be tested with IS NOT NULL, not <> NULL."
+        },
+        {
+          "id": "B",
+          "text": "SELECT first_name, DISTINCT last_name\nFROM employees\nWHERE first_name IS NOT NULL;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The null condition is valid, but DISTINCT is in an invalid position within the select list."
+        },
+        {
+          "id": "C",
+          "text": "SELECT DISTINCT *\nFROM employees\nWHERE first_name IS NOT NULL;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "DISTINCT is correctly placed after SELECT, and IS NOT NULL correctly excludes employees whose first name is null."
+        },
+        {
+          "id": "D",
+          "text": "SELECT DISTINCT *\nFROM employees\nWHERE first_name <> NULL;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The DISTINCT syntax is valid, but <> NULL does not correctly test for non-null values."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "answerExplanation": "DISTINCT is correctly placed after SELECT, and IS NOT NULL correctly excludes employees whose first name is null.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 145,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 146,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the following SQL statement. Which two statements are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "SQL statement",
+          "language": "sql",
+          "code": "UPDATE orders o\nSET customer_name = (\nSELECT cust_last_name\n FROM customers\nWHERE customer_id = o.customer_id\n);"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "All existing rows in the ORDERS table are updated.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The UPDATE statement has no outer WHERE clause, so every existing row in ORDERS is processed."
+        },
+        {
+          "id": "B",
+          "text": "The subquery is executed before the UPDATE statement is executed.",
+          "format": "text",
+          "correct": true,
+          "explanation": "This statement is marked as correct in the source document."
+        },
+        {
+          "id": "C",
+          "text": "The subquery is not a correlated subquery.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The subquery references o.customer_id from the outer UPDATE, making it a correlated scalar subquery."
+        },
+        {
+          "id": "D",
+          "text": "The subquery is executed for every updated row in the ORDERS table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This statement is not marked as correct in the source document."
+        },
+        {
+          "id": "E",
+          "text": "The UPDATE statement executes successfully even if the subquery selects multiple rows.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A scalar subquery must return at most one row for each outer row. Multiple rows cause a single-row subquery error."
+        }
+      ],
+      "correct": [
+        "A",
+        "B"
+      ],
+      "answerExplanation": "The UPDATE statement has no outer WHERE clause, so every existing row in ORDERS is processed. This statement is marked as correct in the source document.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 146,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 147,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the following CREATE TABLE statement. Which two changes must be made for it to execute successfully?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "SQL statement",
+          "language": "sql",
+          "code": "CREATE TABLE employees (\nemp_id NUMBER(5) PRIMARY KEY,\n ename VARCHAR2(15) NOT NULL,\n email VARCHAR2(40) UNIQUE,\n address LONG,\n resume LONG,\n dept_id NUMBER(3)\n CONSTRAINT emp_dept_id_fk\n REFERENCES departments (dept_id)\n);"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "The NOT NULL constraint on ENAME must be defined at the column level instead of the table level.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A NOT NULL constraint must be defined as part of the column definition."
+        },
+        {
+          "id": "B",
+          "text": "The foreign key on DEPT_ID must be defined at the table level instead of the column level.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A single-column foreign key can be defined at the column level using REFERENCES."
+        },
+        {
+          "id": "C",
+          "text": "The word CONSTRAINT in the foreign key constraint on DEPT_ID must be changed to FOREIGN KEY.",
+          "format": "text",
+          "correct": false,
+          "explanation": "CONSTRAINT constraint_name REFERENCES ... is valid column-level syntax."
+        },
+        {
+          "id": "D",
+          "text": "The primary key constraint on EMP_ID must have a name.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle can generate a system name when a constraint name is not explicitly specified."
+        },
+        {
+          "id": "E",
+          "text": "One of the LONG columns must be changed to VARCHAR2 or CLOB.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An Oracle table can contain only one LONG column, so either ADDRESS or RESUME must use another suitable data type."
+        }
+      ],
+      "correct": [
+        "A",
+        "E"
+      ],
+      "answerExplanation": "A NOT NULL constraint must be defined as part of the column definition. An Oracle table can contain only one LONG column, so either ADDRESS or RESUME must use another suitable data type.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 147,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 148,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the description of the MEMBERS table and the partial query. You want to display all cities containing the string AN, sorted by city in ascending order and then by last name in descending order. Which two clauses must you add?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [
+        {
+          "title": "MEMBERS table",
+          "columns": [
+            "COLUMN",
+            "NULL?",
+            "DATA TYPE"
+          ],
+          "rows": [
+            [
+              "MEMBER_ID",
+              "NOT NULL",
+              "VARCHAR2(6)"
+            ],
+            [
+              "FIRST_NAME",
+              "",
+              "VARCHAR2(50)"
+            ],
+            [
+              "LAST_NAME",
+              "NOT NULL",
+              "VARCHAR2(50)"
+            ],
+            [
+              "ADDRESS",
+              "",
+              "VARCHAR2(50)"
+            ],
+            [
+              "CITY",
+              "",
+              "VARCHAR2(25)"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [
+        {
+          "title": "Partial query",
+          "language": "sql",
+          "code": "SELECT city, last_name AS lname\nFROM members ...;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "ORDER BY 1, 2",
+          "format": "text",
+          "correct": false,
+          "explanation": "Both columns would use ascending order by default, but the last name must be sorted in descending order."
+        },
+        {
+          "id": "B",
+          "text": "ORDER BY 1, lname DESC",
+          "format": "text",
+          "correct": true,
+          "explanation": "Position 1 sorts CITY in ascending order by default, and LNAME DESC sorts matching last names in descending order."
+        },
+        {
+          "id": "C",
+          "text": "WHERE city IN ('%AN%')",
+          "format": "text",
+          "correct": false,
+          "explanation": "IN performs equality comparison and does not interpret % as a wildcard."
+        },
+        {
+          "id": "D",
+          "text": "WHERE city = '%A%'",
+          "format": "text",
+          "correct": false,
+          "explanation": "The equality operator treats % as a literal character rather than as a wildcard."
+        },
+        {
+          "id": "E",
+          "text": "WHERE city LIKE '%AN%'",
+          "format": "text",
+          "correct": true,
+          "explanation": "LIKE interprets % as a wildcard and finds city values containing AN anywhere in the text."
+        },
+        {
+          "id": "F",
+          "text": "ORDER BY last_name DESC, city ASC",
+          "format": "text",
+          "correct": false,
+          "explanation": "This sorts by last name first, but the requirement is to sort primarily by city."
+        }
+      ],
+      "correct": [
+        "B",
+        "E"
+      ],
+      "answerExplanation": "Position 1 sorts CITY in ascending order by default, and LNAME DESC sorts matching last names in descending order. LIKE interprets % as a wildcard and finds city values containing AN anywhere in the text.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 148,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 149,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine the following query. What will be the output?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Conversion",
+          "content": "100 months = 8 years and 4 months\n8 × 12 = 96, with 4 months remaining."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "Query",
+          "language": "sql",
+          "code": "SELECT INTERVAL '100' MONTH duration\nFROM dual;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "An error",
+          "format": "text",
+          "correct": false,
+          "explanation": "The interval literal is valid and can represent a duration of 100 months."
+        },
+        {
+          "id": "B",
+          "text": "DURATION\n100",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle normalizes the month quantity into year-and-month components."
+        },
+        {
+          "id": "C",
+          "text": "DURATION\n8",
+          "format": "text",
+          "correct": false,
+          "explanation": "This output omits the remaining four-month component."
+        },
+        {
+          "id": "D",
+          "text": "DURATION\n4",
+          "format": "text",
+          "correct": true,
+          "explanation": "One hundred months is normalized to eight years and four months."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "answerExplanation": "One hundred months is normalized to eight years and four months.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 149,
+        "verification": "spreadsheet"
+      }
+    },
+    {
+      "id": 150,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "The EMPLOYEES table contains EMPLOYEE_ID, JOB_ID, and SALARY. Only EMPLOYEE_ID is indexed. Rows exist for employees 100 and 200. Examine the following statement. Which two statements are true?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "SQL statement",
+          "language": "sql",
+          "code": "UPDATE employees\nSET (job_id, salary) = (\nSELECT job_id, salary\n FROM employees\nWHERE employee_id = 200\n)\nWHERE employee_id = 100;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "Employees 100 and 200 will have the same SALARY as before the update command.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Employee 100’s salary is changed to the salary currently stored for employee 200."
+        },
+        {
+          "id": "B",
+          "text": "Employee 100 will have JOB_ID set to the same value as the JOB_ID of employee 200.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The first value returned by the subquery is employee 200’s JOB_ID, which is assigned to employee 100."
+        },
+        {
+          "id": "C",
+          "text": "Employee 200 will have JOB_ID set to the same value as the JOB_ID of employee 100.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Employee 200 is read by the subquery but is not updated by the outer statement."
+        },
+        {
+          "id": "D",
+          "text": "Employees 100 and 200 will have the same JOB_ID as before the update command.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Employee 100’s job ID may change because it is assigned employee 200’s job ID."
+        },
+        {
+          "id": "E",
+          "text": "Employee 100 will have SALARY set to the same value as the SALARY of employee 200.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The second value returned by the subquery is employee 200’s salary, which is assigned to employee 100."
+        },
+        {
+          "id": "F",
+          "text": "Employee 200 will have SALARY set to the same value as the SALARY of employee 100.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Employee 200 is not the target of the update."
+        }
+      ],
+      "correct": [
+        "B",
+        "E"
+      ],
+      "answerExplanation": "The first value returned by the subquery is employee 200’s JOB_ID, which is assigned to employee 100. The second value returned by the subquery is employee 200’s salary, which is assigned to employee 100.",
+      "technicalNote": "",
+      "source": {
+        "file": "101-150.xlsx",
+        "questionNumber": 150,
+        "verification": "spreadsheet"
+      }
+    }
+  ]
+}

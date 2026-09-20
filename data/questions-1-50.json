@@ -1,0 +1,3248 @@
+{
+  "schemaVersion": "1.0.0",
+  "title": "Oracle SQL Reviewer Question Bank 1-50",
+  "description": "Structured question bank for Practice Mode and 63-question Mock Exam generation. Official scoring follows the answers recorded in the source reviewer.",
+  "sourceFiles": [
+    "1-50.xlsx"
+  ],
+  "range": {
+    "start": 1,
+    "end": 50
+  },
+  "questionCount": 50,
+  "availableCount": 50,
+  "scorableCount": 50,
+  "settings": {
+    "practiceOrder": "original",
+    "mockQuestionCount": 63,
+    "scoreUsing": "document-highlighted answers",
+    "shufflePracticeChoices": false,
+    "shuffleMockChoices": true
+  },
+  "questions": [
+    {
+      "id": 1,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which three statements about roles are true?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Roles are assigned to users using the ALTER USER statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Roles are given to users with GRANT role TO user. ALTER USER only sets password, quota, and default role."
+        },
+        {
+          "id": "B",
+          "text": "Privileges are assigned to a role using the GRANT statement.",
+          "format": "text",
+          "correct": true,
+          "explanation": "GRANT SELECT ON emp TO hr_role; — GRANT is the verb that puts privileges into a role."
+        },
+        {
+          "id": "C",
+          "text": "A role is a named group of related privileges that can only be assigned to a user.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The word only breaks it; a role can also be granted to another role."
+        },
+        {
+          "id": "D",
+          "text": "A single user can be assigned multiple roles.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Roles are additive — a user's privileges are the union of all roles granted to them."
+        },
+        {
+          "id": "E",
+          "text": "Privileges are assigned to a role using the ALTER ROLE statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "ALTER ROLE changes only the role's authentication (e.g. IDENTIFIED BY), never its privileges."
+        },
+        {
+          "id": "F",
+          "text": "Roles are assigned to roles using the ALTER ROLE statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Nesting a role inside a role is still done with GRANT role_a TO role_b."
+        },
+        {
+          "id": "G",
+          "text": "A single role can be assigned to multiple users.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Defining a privilege set once and granting it to many users is the purpose of a role."
+        }
+      ],
+      "correct": [
+        "B",
+        "D",
+        "G"
+      ],
+      "answerExplanation": "GRANT SELECT ON emp TO hr_role; — GRANT is the verb that puts privileges into a role. Roles are additive — a user's privileges are the union of all roles granted to them. Defining a privilege set once and granting it to many users is the purpose of a role.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 1
+      }
+    },
+    {
+      "id": 2,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two are true about granting object privileges on tables, views, and sequences?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "INSERT can be granted only on tables and sequences.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "INSERT applies to tables and views — not sequences."
+        },
+        {
+          "id": "B",
+          "text": "DELETE can be granted on tables, views, and sequences.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "DELETE applies to tables and views only; sequences have no rows to delete."
+        },
+        {
+          "id": "C",
+          "text": "SELECT can be granted on tables, views, and sequences.",
+          "format": "sql",
+          "correct": true,
+          "explanation": "SELECT is the one privilege valid across all three — on a sequence it permits NEXTVAL/CURRVAL."
+        },
+        {
+          "id": "D",
+          "text": "ALTER can be granted only on tables and sequences.",
+          "format": "sql",
+          "correct": true,
+          "explanation": "ALTER is valid on tables and sequences; a view is changed with CREATE OR REPLACE VIEW, not an ALTER object privilege."
+        },
+        {
+          "id": "E",
+          "text": "REFERENCES can be granted only on tables.",
+          "format": "text",
+          "correct": false,
+          "explanation": "REFERENCES can be granted on tables and materialized views, so only makes it false."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "SELECT is the one privilege valid across all three — on a sequence it permits NEXTVAL/CURRVAL. ALTER is valid on tables and sequences; a view is changed with CREATE OR REPLACE VIEW, not an ALTER object privilege.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 2
+      }
+    },
+    {
+      "id": 3,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which three are true about privileges and roles?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A role can contain a combination of several privileges and roles.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A role can hold both system and object privileges, and other roles can be granted into it for nested/hierarchical design."
+        },
+        {
+          "id": "B",
+          "text": "A user has all object privileges for every object in their schema by default.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Ownership implies full object privileges — the owner never needs an explicit grant on their own objects."
+        },
+        {
+          "id": "C",
+          "text": "System privileges always set privileges for an entire database.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Only true when ANY is used; otherwise a system privilege is scoped to the user's own schema."
+        },
+        {
+          "id": "D",
+          "text": "PUBLIC can be revoked from a user.",
+          "format": "text",
+          "correct": false,
+          "explanation": "PUBLIC is not a role granted to individuals, so it cannot be revoked from a single user."
+        },
+        {
+          "id": "E",
+          "text": "All roles are owned by the SYS schema.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Roles are not schema objects — they live in the same namespace as users, database-wide."
+        },
+        {
+          "id": "F",
+          "text": "A role is owned by the user who created it.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Roles have no owner; they exist database-wide rather than inside the creator's schema."
+        },
+        {
+          "id": "G",
+          "text": "PUBLIC acts as a default role granted to every user in a database.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Anything granted to PUBLIC is automatically available to every user in the database."
+        }
+      ],
+      "correct": [
+        "A",
+        "B",
+        "G"
+      ],
+      "answerExplanation": "A role can hold both system and object privileges, and other roles can be granted into it for nested/hierarchical design. Ownership implies full object privileges — the owner never needs an explicit grant on their own objects. Anything granted to PUBLIC is automatically available to every user in the database.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 3
+      }
+    },
+    {
+      "id": 4,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two statements are true about _TABLES views?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "All users can query DBA_TABLES successfully.",
+          "format": "text",
+          "correct": false,
+          "explanation": "DBA_ views are restricted — they require SELECT ANY TABLE (or the DBA role), which ordinary users don't have."
+        },
+        {
+          "id": "B",
+          "text": "USER_TABLES displays all tables owned by the current user.",
+          "format": "text",
+          "correct": true,
+          "explanation": "USER_ views are scoped to the caller's own schema — exactly the tables the user owns."
+        },
+        {
+          "id": "C",
+          "text": "You must have ANY TABLE system privileges, or be granted object privileges on the table, to view a table in ALL_TABLES.",
+          "format": "text",
+          "correct": true,
+          "explanation": "ALL_TABLES shows the user's own tables plus those they've been granted access to, so a privilege on the table is what makes it appear."
+        },
+        {
+          "id": "D",
+          "text": "ALL_TABLES displays all tables owned by the current user.",
+          "format": "text",
+          "correct": false,
+          "explanation": "That describes USER_TABLES. ALL_TABLES is broader — owned tables plus granted ones."
+        },
+        {
+          "id": "E",
+          "text": "You must have ANY TABLE system privileges, or be granted object privileges on the table, to view a table in DBA_TABLES.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Access to DBA_TABLES comes from SELECT ANY DICTIONARY/DBA role, not from object privileges on individual tables."
+        },
+        {
+          "id": "F",
+          "text": "You must have ANY TABLE system privileges, or be granted object privileges on the table, to view a table in USER_TABLES.",
+          "format": "text",
+          "correct": false,
+          "explanation": "No privileges are needed for USER_TABLES — ownership alone is sufficient."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "answerExplanation": "USER_ views are scoped to the caller's own schema — exactly the tables the user owns. ALL_TABLES shows the user's own tables plus those they've been granted access to, so a privilege on the table is what makes it appear.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 4
+      }
+    },
+    {
+      "id": 5,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "You and your colleague Andrew have SELECT, INSERT, UPDATE, and DELETE privileges on the EMPLOYEE_RECORDS table. You update some rows but do not commit. Andrew then connects and queries the table. No other users are accessing it. Which two statements are true at this point?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Andrew will be unable to see the changes you have made.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Read consistency means uncommitted changes are visible only to the session that made them; Andrew sees the pre-update data from undo."
+        },
+        {
+          "id": "B",
+          "text": "Andrew will be unable to perform any INSERTs, UPDATEs, or DELETEs on the table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Your transaction holds row-level locks only — Andrew can freely INSERT, and can UPDATE or DELETE any row you didn't touch."
+        },
+        {
+          "id": "C",
+          "text": "Andrew will be able to SELECT from the table but be unable to modify any existing rows.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle never escalates to a table-level lock for DML, so the unlocked rows remain modifiable."
+        },
+        {
+          "id": "D",
+          "text": "Andrew will be able to see the changes you have made.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Uncommitted data is never visible to another session — Oracle does not permit dirty reads."
+        },
+        {
+          "id": "E",
+          "text": "Andrew will be able to modify any rows in the table that have not been modified by your transaction.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Only the rows you updated are locked; everything else is available to Andrew immediately."
+        }
+      ],
+      "correct": [
+        "A",
+        "E"
+      ],
+      "answerExplanation": "Read consistency means uncommitted changes are visible only to the session that made them; Andrew sees the pre-update data from undo. Only the rows you updated are locked; everything else is available to Andrew immediately.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 5
+      }
+    },
+    {
+      "id": 6,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two are true about creating tables in an Oracle database?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Creating an external table will automatically create a file using the specified directory and file name.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The file must already exist; a file is only written when the external table is created with CREATE TABLE ... AS SELECT (unload)."
+        },
+        {
+          "id": "B",
+          "text": "A system privilege is required.",
+          "format": "text",
+          "correct": true,
+          "explanation": "CREATE TABLE (or CREATE ANY TABLE) is a system privilege you must hold before any table can be created."
+        },
+        {
+          "id": "C",
+          "text": "The same table name can be used for tables in different schemas.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Table names only need to be unique within a schema, since the schema qualifies the object name."
+        },
+        {
+          "id": "D",
+          "text": "A primary key constraint is mandatory.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Constraints are entirely optional — a table can be created with no keys at all."
+        },
+        {
+          "id": "E",
+          "text": "A CREATE TABLE statement can specify the maximum number of rows the table will contain.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle has no row-count limit clause; growth is bounded by storage and tablespace quota, not by DDL."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "answerExplanation": "CREATE TABLE (or CREATE ANY TABLE) is a system privilege you must hold before any table can be created. Table names only need to be unique within a schema, since the schema qualifies the object name.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 6
+      }
+    },
+    {
+      "id": 7,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two statements are true about Oracle databases and SQL?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Updates performed by a database user can be rolled back by another user by using the ROLLBACK command.",
+          "format": "text",
+          "correct": false,
+          "explanation": "ROLLBACK only affects the issuing session's own uncommitted transaction; one session can never roll back another's work."
+        },
+        {
+          "id": "B",
+          "text": "A query can access only tables within the same schema.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A query can reach any schema's tables provided the user holds the necessary object privileges and qualifies the name."
+        },
+        {
+          "id": "C",
+          "text": "The database guarantees read consistency at select level on user-created tables.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle provides statement-level read consistency — a SELECT sees the data as of the moment the statement began, reconstructing older versions from undo."
+        },
+        {
+          "id": "D",
+          "text": "A user can be the owner of multiple schemas in the same database.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A schema maps one-to-one with a user account; creating a user creates exactly one schema."
+        },
+        {
+          "id": "E",
+          "text": "When you execute an update statement, the database instance locks each updated row.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle takes an exclusive row-level lock on each modified row, held until COMMIT or ROLLBACK."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "Oracle provides statement-level read consistency — a SELECT sees the data as of the moment the statement began, reconstructing older versions from undo. Oracle takes an exclusive row-level lock on each modified row, held until COMMIT or ROLLBACK.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 7
+      }
+    },
+    {
+      "id": 8,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two statements are true about the DUAL table?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "It can be accessed only by SYS user.",
+          "format": "text",
+          "correct": false,
+          "explanation": "DUAL is owned by SYS but is accessible by name to every user in the database."
+        },
+        {
+          "id": "B",
+          "text": "It consists of a single row and single column of VARCHAR2 data type.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Its structure is one column, DUMMY VARCHAR2(1), holding exactly one row with the value X."
+        },
+        {
+          "id": "C",
+          "text": "It can be accessed by any user who has the SELECT privilege in any schema.",
+          "format": "text",
+          "correct": false,
+          "explanation": "No SELECT privilege is required — even a brand-new user with no grants can query DUAL."
+        },
+        {
+          "id": "D",
+          "text": "It can be used to display only constants or pseudo columns.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The word only breaks it; DUAL is also used for expressions, function calls, and subqueries."
+        },
+        {
+          "id": "E",
+          "text": "It can display multiple rows but only a single column.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A query against DUAL can return several columns, so this restriction is false."
+        },
+        {
+          "id": "F",
+          "text": "It can display multiple rows and columns.",
+          "format": "text",
+          "correct": true,
+          "explanation": "You can select many expressions as columns, and constructs like CONNECT BY LEVEL <= n generate multiple rows from DUAL."
+        }
+      ],
+      "correct": [
+        "B",
+        "F"
+      ],
+      "answerExplanation": "Its structure is one column, DUMMY VARCHAR2(1), holding exactly one row with the value X. You can select many expressions as columns, and constructs like CONNECT BY LEVEL <= n generate multiple rows from DUAL.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 8
+      }
+    },
+    {
+      "id": 9,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "EMPLOYEES.DEPARTMENT_ID has a foreign key referencing DEPARTMENTS.DEPARTMENT_ID. EMP_VIEW is based on the EMPLOYEES and DEPARTMENTS tables and has columns EMPLOYEE_ID, EMPLOYEE_NAME, and DEPARTMENT_NAME. \nYou must add a new column, MANAGER_ID, from the EMPLOYEES table to the view. \nWhich statement will do this?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Existing view",
+          "content": "EMP_VIEW is based on EMPLOYEES and DEPARTMENTS and currently contains EMPLOYEE_ID, EMPLOYEE_NAME, and DEPARTMENT_NAME."
+        },
+        {
+          "type": "text",
+          "title": "Requirement",
+          "content": "Add MANAGER_ID from EMPLOYEES to the view."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "ALTER VIEW emp_view ADD (SELECT manager_id FROM employees);",
+          "format": "sql",
+          "correct": false,
+          "explanation": "ALTER VIEW cannot add columns — it only recompiles the view or manages its constraints."
+        },
+        {
+          "id": "B",
+          "text": "ALTER VIEW emp_view MODIFY (SELECT employee_id, employee_name, department_name, manager_id FROM employees e, departments d WHERE e.department_id = d.department_id);",
+          "format": "sql",
+          "correct": false,
+          "explanation": "There is no MODIFY clause for changing a view's defining query."
+        },
+        {
+          "id": "C",
+          "text": "ALTER VIEW emp_view ADD (employee.manager_id);",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Same problem as A, plus invalid syntax — a view's column list can't be extended in place."
+        },
+        {
+          "id": "D",
+          "text": "CREATE OR REPLACE VIEW emp_view AS SELECT employee_id, employee_name, department_name, manager_id FROM employees e, departments d WHERE e.department_id = d.department_id;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "Redefining the view with CREATE OR REPLACE is the only way to change its column list, and it preserves existing privileges."
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "answerExplanation": "Redefining the view with CREATE OR REPLACE is the only way to change its column list, and it preserves existing privileges.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 9
+      }
+    },
+    {
+      "id": 10,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which two statements are true about indexes and their administration in an Oracle Database?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A DROP INDEX statement always prevents updates to the table during the drop operation.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The word always breaks it — DROP INDEX ... ONLINE allows concurrent DML on the table while the index is removed."
+        },
+        {
+          "id": "B",
+          "text": "If a query filters on an indexed column, the index will always be accessed during the execution of the query.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The optimizer decides; a full table scan is often cheaper when the filter is unselective, and functions on the column can make the index unusable."
+        },
+        {
+          "id": "C",
+          "text": "A new index can be created or an existing one reused when a primary key constraint is created.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Adding a PRIMARY KEY creates a supporting unique index automatically, or silently reuses a suitable existing index on the same column(s)."
+        },
+        {
+          "id": "D",
+          "text": "An INVISIBLE index is maintained by DML operations on the underlying table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Invisibility only hides the index from the optimizer — it is still fully maintained during INSERT, UPDATE, and DELETE."
+        },
+        {
+          "id": "E",
+          "text": "The same table column cannot be part of a unique and non-unique index.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A column may appear in multiple indexes, including both a unique and a separate non-unique (usually composite) index."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "Adding a PRIMARY KEY creates a supporting unique index automatically, or silently reuses a suitable existing index on the same column(s). Invisibility only hides the index from the optimizer — it is still fully maintained during INSERT, UPDATE, and DELETE.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 10
+      }
+    },
+    {
+      "id": 11,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which two statements are true about an Oracle database?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A table can have multiple primary keys.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Only one primary key per table is allowed; additional uniqueness must be enforced with UNIQUE constraints."
+        },
+        {
+          "id": "B",
+          "text": "A column definition can specify multiple data types.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Each column has exactly one data type, fixed at definition time."
+        },
+        {
+          "id": "C",
+          "text": "A VARCHAR2 column without data has NULL values.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Absence of data is NULL — note that Oracle also treats an empty string '' as NULL for VARCHAR2."
+        },
+        {
+          "id": "D",
+          "text": "A table can have multiple foreign keys.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A table may reference many parent tables, so multiple foreign key constraints are permitted."
+        },
+        {
+          "id": "E",
+          "text": "A NUMBER column without data has a zero value.",
+          "format": "text",
+          "correct": false,
+          "explanation": "An empty NUMBER column is NULL, not zero — NULL means unknown, which is not the same as 0."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "Absence of data is NULL — note that Oracle also treats an empty string '' as NULL for VARCHAR2. A table may reference many parent tables, so multiple foreign key constraints are permitted.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 11
+      }
+    },
+    {
+      "id": 12,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "SQL Concepts",
+      "stem": "Which three statements are true about Structured Query Language (SQL)?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "It provides independence for logical data structures being manipulated from the underlying physical data storage.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Physical data independence is core to SQL — you query tables and columns without knowing how blocks, files, or extents are laid out on disk."
+        },
+        {
+          "id": "B",
+          "text": "It is used to define encapsulation and polymorphism for a relational table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Encapsulation and polymorphism are object-relational features tied to object types, not to relational tables."
+        },
+        {
+          "id": "C",
+          "text": "It is the only language that can be used for both relational and object-oriented databases.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The word only breaks it — other languages and APIs also address both models."
+        },
+        {
+          "id": "D",
+          "text": "It best supports relational databases.",
+          "format": "text",
+          "correct": true,
+          "explanation": "SQL was designed on the relational model and remains the native language for relational systems."
+        },
+        {
+          "id": "E",
+          "text": "It requires that data be contained in hierarchical data storage.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Hierarchical storage is a pre-relational model; SQL requires no such structure."
+        },
+        {
+          "id": "F",
+          "text": "It guarantees atomicity, consistency, isolation and durability (ACID) features.",
+          "format": "text",
+          "correct": true,
+          "explanation": "SQL transaction control (COMMIT, ROLLBACK, SAVEPOINT) is what enforces the ACID properties."
+        }
+      ],
+      "correct": [
+        "A",
+        "D",
+        "F"
+      ],
+      "answerExplanation": "Physical data independence is core to SQL — you query tables and columns without knowing how blocks, files, or extents are laid out on disk. SQL was designed on the relational model and remains the native language for relational systems. SQL transaction control (COMMIT, ROLLBACK, SAVEPOINT) is what enforces the ACID properties.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 12
+      }
+    },
+    {
+      "id": 13,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Functions and Data Types",
+      "stem": "Which three statements are true about built-in data types?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A BLOB stores unstructured binary data within the database.",
+          "format": "text",
+          "correct": true,
+          "explanation": "BLOB (Binary Large Object) is used to store binary data such as images, audio, videos, and documents inside the database."
+        },
+        {
+          "id": "B",
+          "text": "A VARCHAR2 blank-pads column values only if the data stored is non-numeric and contains no special characters.",
+          "format": "text",
+          "correct": false,
+          "explanation": "VARCHAR2 does not blank-pad values. Blank-padding is a characteristic of the CHAR data type."
+        },
+        {
+          "id": "C",
+          "text": "The default length for a CHAR column is always one character.",
+          "format": "text",
+          "correct": true,
+          "explanation": "If no length is specified for a CHAR column, Oracle defaults it to CHAR(1)."
+        },
+        {
+          "id": "D",
+          "text": "A CHAR column definition does not require the length to be specified.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle allows CHAR without a length specification and defaults it to CHAR(1)."
+        },
+        {
+          "id": "E",
+          "text": "A BFILE stores unstructured binary data in operating system files.",
+          "format": "text",
+          "correct": true,
+          "explanation": "BFILE stores a reference to an external file located in the operating system rather than inside the database."
+        },
+        {
+          "id": "F",
+          "text": "A VARCHAR2 column definition does not require the length to be specified.",
+          "format": "text",
+          "correct": false,
+          "explanation": "VARCHAR2 requires a length specification, such as VARCHAR2(50)."
+        }
+      ],
+      "correct": [
+        "A",
+        "C",
+        "E"
+      ],
+      "answerExplanation": "BLOB (Binary Large Object) is used to store binary data such as images, audio, videos, and documents inside the database. If no length is specified for a CHAR column, Oracle defaults it to CHAR(1). BFILE stores a reference to an external file located in the operating system rather than inside the database.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 13
+      }
+    },
+    {
+      "id": 14,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which three statements are true about defining relations between tables in a relational database?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Primary key columns allow null values.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A primary key automatically enforces both uniqueness and NOT NULL."
+        },
+        {
+          "id": "B",
+          "text": "Foreign key columns allow null values.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A foreign key may contain NULL unless the column is separately defined as NOT NULL."
+        },
+        {
+          "id": "C",
+          "text": "Every foreign key value must refer to a matching primary key or unique key value.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Every non-null foreign key value must match an existing primary key or unique key value in the referenced table."
+        },
+        {
+          "id": "D",
+          "text": "Unique key columns allow null values.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A unique constraint prevents duplicate non-null values but permits null values."
+        },
+        {
+          "id": "E",
+          "text": "Every primary key or unique key value must refer to matching foreign key values.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The relationship works in the opposite direction. A foreign key references a parent primary or unique key; a parent row does not need a child row."
+        }
+      ],
+      "correct": [
+        "B",
+        "C",
+        "D"
+      ],
+      "answerExplanation": "A foreign key may contain NULL unless the column is separately defined as NOT NULL. Every non-null foreign key value must match an existing primary key or unique key value in the referenced table. A unique constraint prevents duplicate non-null values but permits null values.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 14
+      }
+    },
+    {
+      "id": 15,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Transactions and DML",
+      "stem": "Which two are SQL features?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Providing variable definition capabilities.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Variables are typically defined by procedural extensions such as PL/SQL, not by SQL itself."
+        },
+        {
+          "id": "B",
+          "text": "Processing sets of data.",
+          "format": "text",
+          "correct": true,
+          "explanation": "SQL is a set-oriented language that can retrieve or manipulate multiple rows through one statement."
+        },
+        {
+          "id": "C",
+          "text": "Providing database transaction control.",
+          "format": "text",
+          "correct": true,
+          "explanation": "SQL includes transaction-control statements such as COMMIT, ROLLBACK, and SAVEPOINT."
+        },
+        {
+          "id": "D",
+          "text": "Providing graphical capabilities.",
+          "format": "text",
+          "correct": false,
+          "explanation": "SQL processes and manages data; it does not provide a graphical user interface."
+        },
+        {
+          "id": "E",
+          "text": "Providing update capabilities for data in external files.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Data accessed through typical external tables is generally read-only. SQL does not directly update the underlying external file."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "answerExplanation": "SQL is a set-oriented language that can retrieve or manipulate multiple rows through one statement. SQL includes transaction-control statements such as COMMIT, ROLLBACK, and SAVEPOINT.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 15
+      }
+    },
+    {
+      "id": 16,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Tables and DDL",
+      "stem": "Which three statements are true about dropping unused columns in an Oracle database?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "An UNUSED column’s space is reclaimed automatically when the block containing that column is next queried.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Marking a column as unused does not immediately or automatically reclaim its storage space."
+        },
+        {
+          "id": "B",
+          "text": "A column that is set to UNUSED still counts toward the limit of 1,000 columns per table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An unused column remains internally defined until it is physically dropped, so it continues to count toward the column limit."
+        },
+        {
+          "id": "C",
+          "text": "A primary key column referenced by another column as a foreign key can be dropped if using the CASCADE option.",
+          "format": "text",
+          "correct": true,
+          "explanation": "CASCADE CONSTRAINTS permits the referenced key column to be removed by also removing dependent referential constraints."
+        },
+        {
+          "id": "D",
+          "text": "An UNUSED column’s space is reclaimed automatically when the row containing that column is next queried.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Querying the row does not reclaim the storage occupied by the unused column."
+        },
+        {
+          "id": "E",
+          "text": "Partition key columns cannot be dropped.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A column used as a partitioning key cannot be marked unused or dropped while it remains part of that key."
+        },
+        {
+          "id": "F",
+          "text": "A DROP COLUMN command can be rolled back.",
+          "format": "text",
+          "correct": false,
+          "explanation": "DROP COLUMN is DDL. It causes an implicit commit and cannot be reversed with ROLLBACK."
+        }
+      ],
+      "correct": [
+        "B",
+        "C",
+        "E"
+      ],
+      "answerExplanation": "An unused column remains internally defined until it is physically dropped, so it continues to count toward the column limit. CASCADE CONSTRAINTS permits the referenced key column to be removed by also removing dependent referential constraints. A column used as a partitioning key cannot be marked unused or dropped while it remains part of that key.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 16
+      }
+    },
+    {
+      "id": 17,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "External and Temporary Tables",
+      "stem": "Which three statements are true about external tables?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "They can be used in queries containing joins.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An external table can participate in a query and be joined with internal or other external tables."
+        },
+        {
+          "id": "B",
+          "text": "They can be indexed.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Conventional database indexes cannot be created on external tables because the data is stored outside the database."
+        },
+        {
+          "id": "C",
+          "text": "They can be used in queries containing sorts.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Retrieved external-table data can be sorted using ORDER BY and processed by other query operations."
+        },
+        {
+          "id": "D",
+          "text": "DML statements can modify them.",
+          "format": "text",
+          "correct": false,
+          "explanation": "External tables are generally queried rather than modified through INSERT, UPDATE, or DELETE."
+        },
+        {
+          "id": "E",
+          "text": "They can be temporary tables.",
+          "format": "text",
+          "correct": false,
+          "explanation": "An external table is not a global or private temporary table. It references data stored outside the database."
+        },
+        {
+          "id": "F",
+          "text": "Their metadata is stored in the database.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle stores the external table’s definition and access metadata in the data dictionary, while the actual data remains external."
+        }
+      ],
+      "correct": [
+        "A",
+        "C",
+        "F"
+      ],
+      "answerExplanation": "An external table can participate in a query and be joined with internal or other external tables. Retrieved external-table data can be sorted using ORDER BY and processed by other query operations. Oracle stores the external table’s definition and access metadata in the data dictionary, while the actual data remains external.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 17
+      }
+    },
+    {
+      "id": 18,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "External and Temporary Tables",
+      "stem": "Which two are true about external tables that use the ORACLE_DATAPUMP access driver?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "When creating an external table, data can be selected only from a table whose rows are stored in database blocks.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The source of a CREATE TABLE AS SELECT operation is not limited to a conventional table stored in database blocks."
+        },
+        {
+          "id": "B",
+          "text": "Creating an external table creates a dump file that can be used only by an external table in the same database.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The generated dump file is portable and can be referenced from a different Oracle database."
+        },
+        {
+          "id": "C",
+          "text": "Creating an external table creates a dump file that can be used by an external table in the same or a different database.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The ORACLE_DATAPUMP driver creates a platform-independent dump file that another compatible Oracle database can read."
+        },
+        {
+          "id": "D",
+          "text": "When creating an external table, data can be selected from another external table or from a table whose rows are stored in database blocks.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The AS SELECT query can obtain its rows from conventional database tables or from another external table."
+        },
+        {
+          "id": "E",
+          "text": "Creating an external table creates a directory object.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A directory object must already exist and the required privileges must be granted before Oracle can access the external files."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "The ORACLE_DATAPUMP driver creates a platform-independent dump file that another compatible Oracle database can read. The AS SELECT query can obtain its rows from conventional database tables or from another external table.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 18
+      }
+    },
+    {
+      "id": 19,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two are true about global temporary tables?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Indexes can be created on them.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A global temporary table can have indexes. The index data follows the temporary table’s transaction-specific or session-specific behavior."
+        },
+        {
+          "id": "B",
+          "text": "Backup and recovery operations are available for these tables.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Temporary data is not treated like permanent application data for backup and recovery."
+        },
+        {
+          "id": "C",
+          "text": "Their data is always stored in the default temporary tablespace of the user who created them.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Temporary table data is stored in temporary segments, but this is not necessarily the creator’s default temporary tablespace."
+        },
+        {
+          "id": "D",
+          "text": "If the ON COMMIT clause is transaction-specific, all rows in the table are deleted after each COMMIT or ROLLBACK.",
+          "format": "text",
+          "correct": true,
+          "explanation": "With ON COMMIT DELETE ROWS, each transaction receives its own data and the rows are cleared when that transaction ends."
+        },
+        {
+          "id": "E",
+          "text": "They can be created only by a user with the DBA role, but can be accessed by all users who can create a session.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The necessary table-creation privilege is required, not specifically the DBA role, and other users still need appropriate object privileges."
+        },
+        {
+          "id": "F",
+          "text": "If the ON COMMIT clause is session-specific, the table is dropped when the session is terminated.",
+          "format": "text",
+          "correct": false,
+          "explanation": "With ON COMMIT PRESERVE ROWS, the rows remain until the session ends, but only the rows are cleared. The global temporary table definition is not dropped."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "answerExplanation": "A global temporary table can have indexes. The index data follows the temporary table’s transaction-specific or session-specific behavior. With ON COMMIT DELETE ROWS, each transaction receives its own data and the rows are cleared when that transaction ends.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 19
+      }
+    },
+    {
+      "id": 20,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Examine these statements and results:",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [
+        {
+          "type": "list",
+          "title": "Executed statements and results",
+          "items": [
+            "SELECT COUNT(*) FROM emp; → 14",
+            "CREATE GLOBAL TEMPORARY TABLE t_emp AS SELECT * FROM emp; → Table created",
+            "INSERT INTO t_emp SELECT * FROM emp; → 14 rows created",
+            "COMMIT; → Commit complete",
+            "INSERT INTO t_emp SELECT * FROM emp; → 14 rows created"
+          ]
+        },
+        {
+          "type": "text",
+          "title": "Question",
+          "content": "How many rows are retrieved by the final SELECT COUNT(*) FROM t_emp query?"
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "Final query",
+          "language": "sql",
+          "code": "SELECT COUNT(*)\nFROM t_emp;"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "14",
+          "format": "text",
+          "correct": true,
+          "explanation": "Because no ON COMMIT clause was specified, the default is ON COMMIT DELETE ROWS. The first 14 rows are deleted by the COMMIT, and the second insert adds 14 new rows."
+        },
+        {
+          "id": "B",
+          "text": "0",
+          "format": "text",
+          "correct": false,
+          "explanation": "The second insert occurs after the commit and adds 14 rows before the final query runs."
+        },
+        {
+          "id": "C",
+          "text": "28",
+          "format": "text",
+          "correct": false,
+          "explanation": "The first 14 rows are removed by the commit, so they are not combined with the second group of 14 rows."
+        },
+        {
+          "id": "D",
+          "text": "42",
+          "format": "text",
+          "correct": false,
+          "explanation": "Only two inserts of 14 rows occur, and the first group is cleared by the commit."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "answerExplanation": "Because no ON COMMIT clause was specified, the default is ON COMMIT DELETE ROWS. The first 14 rows are deleted by the COMMIT, and the second insert adds 14 new rows.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 20
+      }
+    },
+    {
+      "id": 21,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two statements cause changes to the data dictionary?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "TRUNCATE TABLE emp;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "TRUNCATE is a DDL statement. It changes table-related metadata and storage information recorded in the data dictionary."
+        },
+        {
+          "id": "B",
+          "text": "ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY';",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This changes a setting only for the current session. It does not permanently modify a database object or its data dictionary definition."
+        },
+        {
+          "id": "C",
+          "text": "SELECT * FROM user_tab_privs;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "A SELECT statement only retrieves information. It does not modify the data dictionary."
+        },
+        {
+          "id": "D",
+          "text": "GRANT UPDATE ON scott.emp TO fin_manager;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "Granting an object privilege records privilege information in the data dictionary."
+        },
+        {
+          "id": "E",
+          "text": "DELETE FROM scott.emp;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "DELETE modifies table data, not the table definition or data dictionary metadata."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "answerExplanation": "TRUNCATE is a DDL statement. It changes table-related metadata and storage information recorded in the data dictionary. Granting an object privilege records privilege information in the data dictionary.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 21
+      }
+    },
+    {
+      "id": 22,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which two are true about using constraints?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "NOT NULL can be specified at the column and at the table level.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A NOT NULL constraint can be defined only at the column level."
+        },
+        {
+          "id": "B",
+          "text": "A table can have only one PRIMARY KEY and one FOREIGN KEY constraint.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A table can have only one primary key, but it can have multiple foreign key constraints."
+        },
+        {
+          "id": "C",
+          "text": "A FOREIGN KEY column in a child table and the referenced PRIMARY KEY column in the parent table must have the same names.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The column names may be different. The columns must have compatible data types and values."
+        },
+        {
+          "id": "D",
+          "text": "PRIMARY KEY and FOREIGN KEY constraints can be specified at the column and at the table level.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Both constraints can be written inline as column-level constraints or separately as table-level constraints."
+        },
+        {
+          "id": "E",
+          "text": "A table can have multiple PRIMARY KEY and multiple FOREIGN KEY constraints.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A table can have multiple foreign keys, but it can have only one primary key constraint."
+        },
+        {
+          "id": "F",
+          "text": "A table can have only one PRIMARY KEY but may have multiple FOREIGN KEY constraints.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle permits one primary key per table and multiple foreign keys referencing one or more parent tables."
+        }
+      ],
+      "correct": [
+        "D",
+        "F"
+      ],
+      "answerExplanation": "Both constraints can be written inline as column-level constraints or separately as table-level constraints. Oracle permits one primary key per table and multiple foreign keys referencing one or more parent tables.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 22
+      }
+    },
+    {
+      "id": 23,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which four statements are true regarding primary and foreign key constraints and the effect they can have on table data?",
+      "instruction": "Choose four.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "The foreign key columns and parent table primary key columns must have the same names.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The child and parent columns may have different names. Their corresponding data types must be compatible."
+        },
+        {
+          "id": "B",
+          "text": "A table can have only one primary key and one foreign key.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A table can have one primary key but multiple foreign key constraints."
+        },
+        {
+          "id": "C",
+          "text": "It is possible for child rows that have a foreign key to be deleted automatically from the child table when the parent row is deleted.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A foreign key defined with ON DELETE CASCADE automatically deletes related child rows when the parent row is deleted."
+        },
+        {
+          "id": "D",
+          "text": "Primary key and foreign key constraints can be defined at both the column and table level.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Both types can be declared inline with a column or separately as table-level constraints."
+        },
+        {
+          "id": "E",
+          "text": "A table can have only one primary key but multiple foreign keys.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle allows one primary key constraint and multiple foreign key constraints in a table."
+        },
+        {
+          "id": "F",
+          "text": "It is possible for child rows that have a foreign key to remain in the child table when the parent row is deleted.",
+          "format": "text",
+          "correct": true,
+          "explanation": "With ON DELETE SET NULL, the child rows remain and their foreign key values become NULL, provided the columns permit null values."
+        },
+        {
+          "id": "G",
+          "text": "Only the primary key can be defined at the column and table level.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Foreign key constraints can also be defined at either the column level or table level."
+        }
+      ],
+      "correct": [
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "answerExplanation": "A foreign key defined with ON DELETE CASCADE automatically deletes related child rows when the parent row is deleted. Both types can be declared inline with a column or separately as table-level constraints. Oracle allows one primary key constraint and multiple foreign key constraints in a table. With ON DELETE SET NULL, the child rows remain and their foreign key values become NULL, provided the columns permit null values.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 23
+      }
+    },
+    {
+      "id": 24,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Tables and DDL",
+      "stem": "Which two are true about unused columns?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A foreign key column cannot be set to unused.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A foreign key column may be set to unused when dependent constraints are handled appropriately, such as with CASCADE CONSTRAINTS."
+        },
+        {
+          "id": "B",
+          "text": "The DESCRIBE command displays unused columns.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Once a column is marked unused, it is no longer displayed as an available column by DESCRIBE."
+        },
+        {
+          "id": "C",
+          "text": "A primary key column cannot be set to unused.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A primary key column may be set to unused when dependent constraints are removed or handled with the appropriate cascade option."
+        },
+        {
+          "id": "D",
+          "text": "Once a column has been set to unused, a new column with the same name can be added to the table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An unused column is no longer logically accessible, so its original name can be reused for a new column."
+        },
+        {
+          "id": "E",
+          "text": "A query can return data from unused columns, but no DML is possible on those columns.",
+          "format": "text",
+          "correct": false,
+          "explanation": "After a column is marked unused, it cannot be referenced by queries or DML statements."
+        },
+        {
+          "id": "F",
+          "text": "Unused columns retain their data until they are dropped.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Marking a column unused hides it logically but does not immediately remove its stored data. Space is reclaimed when the unused column is physically dropped."
+        }
+      ],
+      "correct": [
+        "D",
+        "F"
+      ],
+      "answerExplanation": "An unused column is no longer logically accessible, so its original name can be reused for a new column. Marking a column unused hides it logically but does not immediately remove its stored data. Space is reclaimed when the unused column is physically dropped.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 24
+      }
+    },
+    {
+      "id": 25,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which three statements are true about Data Manipulation Language (DML)?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "UPDATE statements can have different subqueries to specify the values for each updated column.",
+          "format": "sql",
+          "correct": true,
+          "explanation": "An UPDATE statement can use separate scalar subqueries to calculate values for different target columns."
+        },
+        {
+          "id": "B",
+          "text": "DELETE statements can remove multiple rows based on multiple conditions.",
+          "format": "sql",
+          "correct": true,
+          "explanation": "A DELETE statement can remove every row satisfying a WHERE clause containing multiple conditions."
+        },
+        {
+          "id": "C",
+          "text": "INSERT INTO...SELECT...FROM statements automatically commit.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "An INSERT INTO ... SELECT statement is DML and does not automatically commit. The transaction remains pending until COMMIT, ROLLBACK, or an implicit commit occurs."
+        },
+        {
+          "id": "D",
+          "text": "DML statements require a primary key be defined on a table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Tables do not need primary keys for INSERT, UPDATE, or DELETE operations."
+        },
+        {
+          "id": "E",
+          "text": "INSERT statements can insert NULLs explicitly into a column.",
+          "format": "sql",
+          "correct": true,
+          "explanation": "An INSERT statement can explicitly specify NULL for a nullable column."
+        }
+      ],
+      "correct": [
+        "A",
+        "B",
+        "E"
+      ],
+      "answerExplanation": "An UPDATE statement can use separate scalar subqueries to calculate values for different target columns. A DELETE statement can remove every row satisfying a WHERE clause containing multiple conditions. An INSERT statement can explicitly specify NULL for a nullable column.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 25
+      }
+    },
+    {
+      "id": 26,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Functions and Data Types",
+      "stem": "Which two statements are true about single-row functions?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "CEIL can be used for positive and negative numbers.",
+          "format": "text",
+          "correct": true,
+          "explanation": "CEIL accepts positive and negative numeric values and returns the smallest integer greater than or equal to the specified number."
+        },
+        {
+          "id": "B",
+          "text": "FLOOR returns the smallest integer greater than or equal to a specified number.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This describes CEIL. FLOOR returns the greatest integer less than or equal to the specified number."
+        },
+        {
+          "id": "C",
+          "text": "TRUNC can be used with NUMBER and DATE values.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle provides TRUNC functionality for both numeric and date values."
+        },
+        {
+          "id": "D",
+          "text": "CONCAT can be used to combine any number of values.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The CONCAT function accepts only two arguments. Multiple values require nested CONCAT calls or the `"
+        },
+        {
+          "id": "E",
+          "text": "MOD returns the quotient of a division operation.",
+          "format": "text",
+          "correct": false,
+          "explanation": "MOD returns the remainder of a division operation, not the quotient."
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "answerExplanation": "CEIL accepts positive and negative numeric values and returns the smallest integer greater than or equal to the specified number. Oracle provides TRUNC functionality for both numeric and date values.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 26
+      }
+    },
+    {
+      "id": 27,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which three are true about the CREATE TABLE command?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "It can include the CREATE INDEX statement for creating an index to enforce the primary key constraint.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A supporting index can be created as part of defining a primary key constraint through the constraint’s index specification."
+        },
+        {
+          "id": "B",
+          "text": "It implicitly rolls back any pending transactions.",
+          "format": "text",
+          "correct": false,
+          "explanation": "DDL does not roll back pending work. Oracle implicitly commits the current transaction before executing a DDL statement."
+        },
+        {
+          "id": "C",
+          "text": "It implicitly executes a commit.",
+          "format": "text",
+          "correct": true,
+          "explanation": "CREATE TABLE is a DDL command and causes an implicit commit."
+        },
+        {
+          "id": "D",
+          "text": "The owner of the table must have the UNLIMITED TABLESPACE system privilege.",
+          "format": "text",
+          "correct": false,
+          "explanation": "UNLIMITED TABLESPACE is not mandatory. A sufficient quota on the target tablespace can be used instead."
+        },
+        {
+          "id": "E",
+          "text": "The user must have the CREATE ANY TABLE privilege to create tables.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A user needs CREATE TABLE to create a table in the user’s own schema. CREATE ANY TABLE is needed to create tables in other schemas."
+        },
+        {
+          "id": "F",
+          "text": "The owner of the table should have space quota available on the tablespace where the table is defined.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The table owner needs an adequate tablespace quota unless the owner has the UNLIMITED TABLESPACE privilege."
+        }
+      ],
+      "correct": [
+        "A",
+        "C",
+        "F"
+      ],
+      "answerExplanation": "A supporting index can be created as part of defining a primary key constraint through the constraint’s index specification. CREATE TABLE is a DDL command and causes an implicit commit. The table owner needs an adequate tablespace quota unless the owner has the UNLIMITED TABLESPACE privilege.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 27
+      }
+    },
+    {
+      "id": 28,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "External and Temporary Tables",
+      "stem": "Which three are true about multitable INSERT statements?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "They can be performed on external tables using SQL*Loader.",
+          "format": "text",
+          "correct": false,
+          "explanation": "SQL*Loader may load data into multiple database tables, but this is not an Oracle SQL multitable INSERT statement performed on external tables."
+        },
+        {
+          "id": "B",
+          "text": "They can be performed on relational tables.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A multitable INSERT can distribute rows among multiple relational tables."
+        },
+        {
+          "id": "C",
+          "text": "They can be performed only by using a subquery.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A multitable INSERT uses a subquery to supply the source rows evaluated by its INTO clauses."
+        },
+        {
+          "id": "D",
+          "text": "They can insert each computed row into more than one table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An unconditional or INSERT ALL operation can insert one source row into multiple target tables."
+        },
+        {
+          "id": "E",
+          "text": "They can be performed on views.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Multitable INSERT target objects must be tables and cannot be views."
+        },
+        {
+          "id": "F",
+          "text": "They can be performed on remote tables.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A multitable INSERT cannot use a remote table as one of its target tables."
+        }
+      ],
+      "correct": [
+        "B",
+        "C",
+        "D"
+      ],
+      "answerExplanation": "A multitable INSERT can distribute rows among multiple relational tables. A multitable INSERT uses a subquery to supply the source rows evaluated by its INTO clauses. An unconditional or INSERT ALL operation can insert one source row into multiple target tables.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 28
+      }
+    },
+    {
+      "id": 29,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Tables and DDL",
+      "stem": "Which two are true about dropping columns from a table?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A column drop is implicitly committed.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Dropping a column is a DDL operation, so Oracle performs implicit commits associated with the statement."
+        },
+        {
+          "id": "B",
+          "text": "A column that is referenced by another column in another table cannot be dropped.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A referenced column can be dropped when dependent constraints are removed or the appropriate cascade option is used."
+        },
+        {
+          "id": "C",
+          "text": "A column can be removed only if it contains no data.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A column can be dropped even when it contains data. The column and its stored values are removed."
+        },
+        {
+          "id": "D",
+          "text": "Multiple columns can be dropped simultaneously using the ALTER TABLE command.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle permits multiple columns to be removed in one ALTER TABLE ... DROP operation."
+        },
+        {
+          "id": "E",
+          "text": "A column must be set as unused before it is dropped from a table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Marking a column unused is optional. A column can be dropped directly."
+        },
+        {
+          "id": "F",
+          "text": "A primary key column cannot be dropped.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A primary key column can be dropped if its constraint and any dependent foreign key constraints are handled appropriately."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "answerExplanation": "Dropping a column is a DDL operation, so Oracle performs implicit commits associated with the statement. Oracle permits multiple columns to be removed in one ALTER TABLE ... DROP operation.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 29
+      }
+    },
+    {
+      "id": 30,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two are true about granting privileges on objects?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "An object privilege can be granted to other users only by the owner of that object.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A user who received the privilege with GRANT OPTION can grant that object privilege to other users."
+        },
+        {
+          "id": "B",
+          "text": "An object privilege can be granted to a role only by the owner of that object.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A user with the required authority, including a privilege granted with GRANT OPTION, may grant the privilege to a role."
+        },
+        {
+          "id": "C",
+          "text": "A table owner must grant the REFERENCES privilege to allow other users to create FOREIGN KEY constraints using that table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A user needs the REFERENCES privilege on the parent table or referenced columns to create a foreign key referencing them."
+        },
+        {
+          "id": "D",
+          "text": "The owner of an object acquires all object privileges on that object by default.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An object owner automatically has full authority over the object and does not require explicit object-privilege grants."
+        },
+        {
+          "id": "E",
+          "text": "The WITH GRANT OPTION clause can be used only by DBA users.",
+          "format": "text",
+          "correct": false,
+          "explanation": "An object owner or another properly authorized grantor can use WITH GRANT OPTION; it is not restricted to DBA users."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "A user needs the REFERENCES privilege on the parent table or referenced columns to create a foreign key referencing them. An object owner automatically has full authority over the object and does not require explicit object-privilege grants.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 30
+      }
+    },
+    {
+      "id": 31,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Transactions and DML",
+      "stem": "No user-defined locks are used in your database. Which three statements are true about Transaction Control Language (TCL)?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "COMMIT erases all the transaction’s savepoints and releases its locks.",
+          "format": "text",
+          "correct": true,
+          "explanation": "COMMIT ends the transaction, removes all savepoints created during the transaction, and releases the transaction’s locks."
+        },
+        {
+          "id": "B",
+          "text": "ROLLBACK TO SAVEPOINT undoes the transaction’s changes made since the named savepoint and then ends the transaction.",
+          "format": "text",
+          "correct": false,
+          "explanation": "It reverses changes made after the specified savepoint, but it does not end the entire transaction."
+        },
+        {
+          "id": "C",
+          "text": "COMMIT ends the transaction and makes all its changes permanent.",
+          "format": "text",
+          "correct": true,
+          "explanation": "COMMIT permanently saves the transaction’s changes and begins a new transaction when another executable SQL statement is issued."
+        },
+        {
+          "id": "D",
+          "text": "ROLLBACK without the TO SAVEPOINT clause undoes all the transaction’s changes but does not erase its savepoints.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A complete ROLLBACK ends the transaction and removes all savepoints created during that transaction."
+        },
+        {
+          "id": "E",
+          "text": "ROLLBACK without the TO SAVEPOINT clause undoes all the transaction’s changes, releases its locks, and erases its savepoints.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A complete rollback reverses all uncommitted changes, releases the transaction’s locks, and removes all savepoints."
+        }
+      ],
+      "correct": [
+        "A",
+        "C",
+        "E"
+      ],
+      "answerExplanation": "COMMIT ends the transaction, removes all savepoints created during the transaction, and releases the transaction’s locks. COMMIT permanently saves the transaction’s changes and begins a new transaction when another executable SQL statement is issued. A complete rollback reverses all uncommitted changes, releases the transaction’s locks, and removes all savepoints.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 31
+      }
+    },
+    {
+      "id": 32,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "Which two actions can you perform with object privileges?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Create roles.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Creating roles requires the CREATE ROLE system privilege, not an object privilege."
+        },
+        {
+          "id": "B",
+          "text": "Create FOREIGN KEY constraints that reference tables in other schemas.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "This statement is incomplete as written. A user must specifically receive the REFERENCES object privilege on the parent table or referenced columns."
+        },
+        {
+          "id": "C",
+          "text": "Delete rows from tables in any schema except SYS.",
+          "format": "sql",
+          "correct": true,
+          "explanation": "The DELETE object privilege allows a user to delete rows from a specific table in another schema when that privilege has been granted."
+        },
+        {
+          "id": "D",
+          "text": "Set default and temporary tablespaces for a user.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Managing another user’s default and temporary tablespaces requires administrative system privileges, not object privileges."
+        },
+        {
+          "id": "E",
+          "text": "Execute a procedure or function in another schema.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The EXECUTE object privilege allows a user to run a stored procedure or function owned by another schema."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "The DELETE object privilege allows a user to delete rows from a specific table in another schema when that privilege has been granted. The EXECUTE object privilege allows a user to run a stored procedure or function owned by another schema.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 32
+      }
+    },
+    {
+      "id": 33,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which two statements are true regarding constraints?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A constraint is enforced only for an INSERT operation on a table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Constraints may be enforced during both INSERT and UPDATE operations, depending on the affected data."
+        },
+        {
+          "id": "B",
+          "text": "A foreign key column cannot contain NULL values.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A foreign key column can contain NULL unless the column is also defined with a NOT NULL constraint."
+        },
+        {
+          "id": "C",
+          "text": "A column with the UNIQUE constraint can store NULLs.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A unique constraint prevents duplicate non-null values but permits null values."
+        },
+        {
+          "id": "D",
+          "text": "You can have more than one column in a table as part of a primary key.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The wording is ambiguous. A table can have only one primary key constraint, although that primary key may be a composite key containing multiple columns."
+        },
+        {
+          "id": "E",
+          "text": "A constraint can be disabled even if the constraint column contains data.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An existing constraint can be disabled while the table continues to contain data. The constraint will not enforce new changes while disabled."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "A unique constraint prevents duplicate non-null values but permits null values. An existing constraint can be disabled while the table continues to contain data. The constraint will not enforce new changes while disabled.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 33
+      }
+    },
+    {
+      "id": 34,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Tables and DDL",
+      "stem": "Which statement is true regarding external tables?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "The CREATE TABLE AS SELECT statement can be used to upload data into a normal table in the database from an external table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An external table can be queried as the source of a CREATE TABLE AS SELECT statement, creating a conventional database table containing the selected external data."
+        },
+        {
+          "id": "B",
+          "text": "The data and metadata for an external table are stored outside the database.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The data is stored outside the database, but the external table’s metadata is stored in the database data dictionary."
+        },
+        {
+          "id": "C",
+          "text": "The default REJECT LIMIT for external tables is UNLIMITED.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The reject limit is not unlimited by default. REJECT LIMIT UNLIMITED must be explicitly specified when required."
+        },
+        {
+          "id": "D",
+          "text": "ORACLE_LOADER and ORACLE_DATAPUMP have exactly the same functionality when used with an external table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The access drivers serve different purposes. ORACLE_LOADER reads external text files, while ORACLE_DATAPUMP works with binary dump files and supports unloading data."
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "answerExplanation": "An external table can be queried as the source of a CREATE TABLE AS SELECT statement, creating a conventional database table containing the selected external data.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 34
+      }
+    },
+    {
+      "id": 35,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Examine this business rule: Each student can work on multiple projects, and each project can have multiple students. You must design an Entity Relationship model for optimal data storage and allow reports in this format: STUDENT_ID FIRST_NAME LAST_NAME PROJECT_ID PROJECT_NAME PROJECT_TASK. Which two statements are true?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "PROJECT_ID must be the primary key in the PROJECTS entity and a foreign key in the STUDENTS entity.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Placing PROJECT_ID directly in STUDENTS would allow each student row to reference only one project rather than multiple projects."
+        },
+        {
+          "id": "B",
+          "text": "STUDENT_ID must be the primary key in the STUDENTS entity and a foreign key in the PROJECTS entity.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Placing STUDENT_ID directly in PROJECTS would allow each project row to reference only one student rather than multiple students."
+        },
+        {
+          "id": "C",
+          "text": "An associative table must be created with a composite key of STUDENT_ID and PROJECT_ID, linked by foreign keys to the STUDENTS and PROJECTS entities.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The associative table represents each student-project assignment. Its two identifying columns reference the related student and project rows."
+        },
+        {
+          "id": "D",
+          "text": "The ER model has a many-to-many relationship between STUDENTS and PROJECTS that must be resolved into one-to-many relationships.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The associative entity resolves the many-to-many relationship into two one-to-many relationships: STUDENTS to the associative entity and PROJECTS to the associative entity."
+        },
+        {
+          "id": "E",
+          "text": "The ER model has a one-to-many relationship between the STUDENTS and PROJECTS entities.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The original business rule describes a many-to-many relationship because one student can have many projects and one project can have many students."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "The associative table represents each student-project assignment. Its two identifying columns reference the related student and project rows. The associative entity resolves the many-to-many relationship into two one-to-many relationships: STUDENTS to the associative entity and PROJECTS to the associative entity.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 35
+      }
+    },
+    {
+      "id": 36,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Subqueries",
+      "stem": "Which three statements are true about multiple-row subqueries?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "They can contain a subquery within a subquery.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A multiple-row subquery can contain another nested subquery."
+        },
+        {
+          "id": "B",
+          "text": "They can return multiple columns as well as rows.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A multiple-column subquery may return multiple columns and multiple rows when used with a compatible comparison."
+        },
+        {
+          "id": "C",
+          "text": "They cannot contain a subquery within a subquery.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Subqueries can be nested within other subqueries."
+        },
+        {
+          "id": "D",
+          "text": "They can return only one column but multiple rows.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Multiple-row subqueries are not always restricted to one column. They can return multiple columns in supported operations."
+        },
+        {
+          "id": "E",
+          "text": "They can contain group functions and GROUP BY and HAVING clauses.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A subquery can group rows, calculate aggregate values, and filter groups using HAVING."
+        },
+        {
+          "id": "F",
+          "text": "They can contain group functions in the GROUP BY clause, but not the HAVING clause.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Group functions are normally used in the SELECT or HAVING clause, not directly as expressions in the GROUP BY clause."
+        }
+      ],
+      "correct": [
+        "A",
+        "B",
+        "E"
+      ],
+      "answerExplanation": "A multiple-row subquery can contain another nested subquery. A multiple-column subquery may return multiple columns and multiple rows when used with a compatible comparison. A subquery can group rows, calculate aggregate values, and filter groups using HAVING.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 36
+      }
+    },
+    {
+      "id": 37,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which three statements are true about the DESCRIBE command?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "It can be used only from SQL*Plus.",
+          "format": "text",
+          "correct": false,
+          "explanation": "DESCRIBE is supported by other Oracle tools in addition to SQL*Plus."
+        },
+        {
+          "id": "B",
+          "text": "It can be used to display the structure of an existing view.",
+          "format": "text",
+          "correct": true,
+          "explanation": "DESCRIBE can display a view’s column names, data types, and nullability information."
+        },
+        {
+          "id": "C",
+          "text": "It can be used from SQL Developer.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle SQL Developer supports the DESCRIBE command in its worksheet."
+        },
+        {
+          "id": "D",
+          "text": "It displays the NOT NULL constraint for any columns that have that constraint.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The command indicates whether a column permits null values, allowing NOT NULL columns to be identified."
+        },
+        {
+          "id": "E",
+          "text": "It displays the PRIMARY KEY constraint for any column or columns that have that constraint.",
+          "format": "text",
+          "correct": false,
+          "explanation": "DESCRIBE does not identify a column specifically as a primary key."
+        },
+        {
+          "id": "F",
+          "text": "It displays all constraints that are defined for each column.",
+          "format": "text",
+          "correct": false,
+          "explanation": "DESCRIBE shows basic column information but does not provide a complete list of constraints."
+        }
+      ],
+      "correct": [
+        "B",
+        "C",
+        "D"
+      ],
+      "answerExplanation": "DESCRIBE can display a view’s column names, data types, and nullability information. Oracle SQL Developer supports the DESCRIBE command in its worksheet. The command indicates whether a column permits null values, allowing NOT NULL columns to be identified.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 37
+      }
+    },
+    {
+      "id": 38,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Functions and Data Types",
+      "stem": "You want to return the current date and time from the user session, with a data type of TIMESTAMP WITH TIME ZONE. Which function will do this?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "LOCALTIMESTAMP",
+          "format": "text",
+          "correct": false,
+          "explanation": "LOCALTIMESTAMP returns a TIMESTAMP value without time-zone information."
+        },
+        {
+          "id": "B",
+          "text": "CURRENT_TIMESTAMP",
+          "format": "text",
+          "correct": true,
+          "explanation": "CURRENT_TIMESTAMP returns the current date and time in the session time zone as a TIMESTAMP WITH TIME ZONE value."
+        },
+        {
+          "id": "C",
+          "text": "SYSDATE",
+          "format": "text",
+          "correct": false,
+          "explanation": "SYSDATE returns the database server’s current date and time as a DATE, without time-zone information."
+        },
+        {
+          "id": "D",
+          "text": "CURRENT_DATE",
+          "format": "text",
+          "correct": false,
+          "explanation": "CURRENT_DATE returns the current date and time in the session time zone, but its data type is DATE."
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "answerExplanation": "CURRENT_TIMESTAMP returns the current date and time in the session time zone as a TIMESTAMP WITH TIME ZONE value.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 38
+      }
+    },
+    {
+      "id": 39,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Transactions and DML",
+      "stem": "Which two statements are true regarding a SAVEPOINT?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Rolling back to a SAVEPOINT can undo a CREATE INDEX statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "CREATE INDEX is a DDL statement that causes implicit commits. It cannot be undone by rolling back to a savepoint."
+        },
+        {
+          "id": "B",
+          "text": "Rolling back to a SAVEPOINT can undo a TRUNCATE statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "TRUNCATE is DDL and causes an implicit commit. It cannot be reversed using ROLLBACK TO SAVEPOINT."
+        },
+        {
+          "id": "C",
+          "text": "Only one SAVEPOINT may be issued in a transaction.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A transaction may contain multiple savepoints. Reusing a savepoint name moves that savepoint to the current transaction position."
+        },
+        {
+          "id": "D",
+          "text": "A SAVEPOINT does not issue a COMMIT.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A savepoint marks a position within the current transaction without committing any changes."
+        },
+        {
+          "id": "E",
+          "text": "Rolling back to a SAVEPOINT can undo a DELETE statement.",
+          "format": "text",
+          "correct": true,
+          "explanation": "DELETE is DML. If it was executed after the savepoint, ROLLBACK TO SAVEPOINT can undo it."
+        }
+      ],
+      "correct": [
+        "D",
+        "E"
+      ],
+      "answerExplanation": "A savepoint marks a position within the current transaction without committing any changes. DELETE is DML. If it was executed after the savepoint, ROLLBACK TO SAVEPOINT can undo it.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 39
+      }
+    },
+    {
+      "id": 40,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Which four statements are true regarding constraints on Oracle tables?",
+      "instruction": "Choose four.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A PRIMARY KEY constraint can be added after a table has been created and populated.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A primary key may be added later with ALTER TABLE, provided the existing values are unique and contain no nulls."
+        },
+        {
+          "id": "B",
+          "text": "A UNIQUE constraint permits NULL.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A unique constraint prevents duplicate non-null values, but it permits null values."
+        },
+        {
+          "id": "C",
+          "text": "A FOREIGN KEY column can contain NULLs.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A foreign key can contain null values unless the column also has a NOT NULL constraint."
+        },
+        {
+          "id": "D",
+          "text": "A NOT NULL constraint can be defined at the table level.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A NOT NULL constraint can be defined only as a column-level constraint."
+        },
+        {
+          "id": "E",
+          "text": "A CHECK constraint can refer to values in other rows.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A check constraint evaluates the current row and cannot reference data in other rows or tables."
+        },
+        {
+          "id": "F",
+          "text": "A UNIQUE constraint can use a pre-existing index on the constrained column or columns.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle can use a suitable existing index to enforce a unique constraint instead of creating another index."
+        },
+        {
+          "id": "G",
+          "text": "A column can have only one CHECK constraint.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A single column may have multiple check constraints."
+        }
+      ],
+      "correct": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ],
+      "answerExplanation": "A primary key may be added later with ALTER TABLE, provided the existing values are unique and contain no nulls. A unique constraint prevents duplicate non-null values, but it permits null values. A foreign key can contain null values unless the column also has a NOT NULL constraint. Oracle can use a suitable existing index to enforce a unique constraint instead of creating another index.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 40
+      }
+    },
+    {
+      "id": 41,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "External and Temporary Tables",
+      "stem": "Which three actions can you perform by using the ORACLE_DATAPUMP access driver?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Create a directory object for an external table.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The directory object must be created separately before the external table can access the dump file. The access driver does not create it automatically."
+        },
+        {
+          "id": "B",
+          "text": "Execute DML statements on an external table.",
+          "format": "text",
+          "correct": false,
+          "explanation": "External tables cannot be directly modified using conventional INSERT, UPDATE, or DELETE statements."
+        },
+        {
+          "id": "C",
+          "text": "Read data from a table in the database and insert it into an external table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The ORACLE_DATAPUMP driver supports unloading database data into an external dump file through CREATE TABLE ... ORGANIZATION EXTERNAL AS SELECT."
+        },
+        {
+          "id": "D",
+          "text": "Query data from an external table.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Data stored in an Oracle Data Pump external file can be retrieved through a SELECT statement."
+        },
+        {
+          "id": "E",
+          "text": "Read data from an external table and load it into a table in the database.",
+          "format": "text",
+          "correct": true,
+          "explanation": "An external table can serve as the source of an INSERT ... SELECT or CREATE TABLE AS SELECT operation."
+        },
+        {
+          "id": "F",
+          "text": "Create a directory object for a flat file.",
+          "format": "sql",
+          "correct": false,
+          "explanation": "A directory object must be created independently with CREATE DIRECTORY; it is not created by the access driver."
+        }
+      ],
+      "correct": [
+        "C",
+        "D",
+        "E"
+      ],
+      "answerExplanation": "The ORACLE_DATAPUMP driver supports unloading database data into an external dump file through CREATE TABLE ... ORGANIZATION EXTERNAL AS SELECT. Data stored in an Oracle Data Pump external file can be retrieved through a SELECT statement. An external table can serve as the source of an INSERT ... SELECT or CREATE TABLE AS SELECT operation.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 41
+      }
+    },
+    {
+      "id": 42,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Tables and DDL",
+      "stem": "Examine the description of the PRODUCTS table. Rows exist in this table with data in all columns. You put the PRODUCTS table in read-only mode. Which three commands execute successfully on PRODUCTS?",
+      "instruction": "Choose three.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "DROP TABLE products;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "The table must first be returned to read-write mode before the table itself can be dropped."
+        },
+        {
+          "id": "B",
+          "text": "ALTER TABLE products DROP COLUMN expiry_date;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "Oracle permits a column to be dropped from a table while the table is in read-only mode."
+        },
+        {
+          "id": "C",
+          "text": "ALTER TABLE products SET UNUSED (expiry_date);",
+          "format": "sql",
+          "correct": true,
+          "explanation": "A column may be marked as unused while the table is read-only because this changes the table definition rather than its row values through DML."
+        },
+        {
+          "id": "D",
+          "text": "ALTER TABLE products DROP UNUSED COLUMNS;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "Physically dropping unused columns is not permitted while the table remains in read-only mode."
+        },
+        {
+          "id": "E",
+          "text": "CREATE INDEX price_idx ON products (price);",
+          "format": "sql",
+          "correct": true,
+          "explanation": "An index may be created on a read-only table because the operation does not modify the existing table rows."
+        },
+        {
+          "id": "F",
+          "text": "TRUNCATE TABLE products;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "TRUNCATE removes all rows and is not permitted while the table is in read-only mode."
+        }
+      ],
+      "correct": [
+        "B",
+        "C",
+        "E"
+      ],
+      "answerExplanation": "Oracle permits a column to be dropped from a table while the table is in read-only mode. A column may be marked as unused while the table is read-only because this changes the table definition rather than its row values through DML. An index may be created on a read-only table because the operation does not modify the existing table rows.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 42
+      }
+    },
+    {
+      "id": 43,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "verified_from_user_image",
+      "topic": "Privileges and Roles",
+      "stem": "Which two statements are true about Oracle synonyms?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Users must have the DBA role to create public synonyms.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Creating a public synonym requires the CREATE PUBLIC SYNONYM system privilege. The DBA role itself is not specifically required."
+        },
+        {
+          "id": "B",
+          "text": "Synonyms cannot be created for synonyms.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle allows a synonym to reference another synonym, so the statement is false."
+        },
+        {
+          "id": "C",
+          "text": "Synonyms cannot be created for sequences.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Oracle synonyms can be created for sequences, so the statement is false."
+        },
+        {
+          "id": "D",
+          "text": "Synonyms can be created for roles.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A role is not a schema object that can be referenced by a synonym."
+        },
+        {
+          "id": "E",
+          "text": "Users must have the required privileges on the underlying objects referenced by synonyms.",
+          "format": "text",
+          "correct": true,
+          "explanation": "A synonym provides an alternative name for an object but does not grant access. The user still needs the appropriate privilege on the underlying object."
+        },
+        {
+          "id": "F",
+          "text": "Synonyms can be created for packages.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle permits a synonym to reference a stored package."
+        }
+      ],
+      "correct": [
+        "E",
+        "F"
+      ],
+      "answerExplanation": "A synonym does not provide object privileges, so users still need the required privileges on the referenced object. Oracle also permits synonyms to be created for stored packages.",
+      "technicalNote": "Choices E and F were verified from the user-provided source image.",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 43,
+        "verification": "user-provided image"
+      }
+    },
+    {
+      "id": 44,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Oracle SQL",
+      "stem": "Which two statements are true about the precedence of operators and conditions?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "|| has a higher order of precedence than + addition.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Concatenation and addition are not ordered in the manner stated. Parentheses should be used when an expression could be ambiguous."
+        },
+        {
+          "id": "B",
+          "text": "+ addition has a higher order of precedence than * multiplication.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Multiplication is evaluated before addition."
+        },
+        {
+          "id": "C",
+          "text": "NOT has a higher order of precedence than AND and OR in a condition.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Oracle evaluates NOT before AND, and evaluates AND before OR."
+        },
+        {
+          "id": "D",
+          "text": "AND and OR have the same order of precedence in a condition.",
+          "format": "text",
+          "correct": false,
+          "explanation": "AND has higher precedence than OR."
+        },
+        {
+          "id": "E",
+          "text": "Operators are evaluated before conditions.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Arithmetic and other operators are evaluated before comparison and logical conditions."
+        }
+      ],
+      "correct": [
+        "C",
+        "E"
+      ],
+      "answerExplanation": "Oracle evaluates NOT before AND, and evaluates AND before OR. Arithmetic and other operators are evaluated before comparison and logical conditions.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 44
+      }
+    },
+    {
+      "id": 45,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Substitution Variables",
+      "stem": "Which two statements are true about substitution variables?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "A substitution variable can be used only in a SELECT statement.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Substitution variables can be used in different SQL and SQL*Plus commands, not only in SELECT."
+        },
+        {
+          "id": "B",
+          "text": "A substitution variable used to prompt for a column name must be enclosed in double quotation marks.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A substituted column name is an identifier and normally should not be enclosed in quotation marks."
+        },
+        {
+          "id": "C",
+          "text": "A substitution variable can be used with any clause in a SELECT statement.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Substitution variables perform textual replacement and may represent items such as columns, conditions, values, or ordering expressions."
+        },
+        {
+          "id": "D",
+          "text": "A substitution variable prefixed with && prompts only once for a value in a session unless it is set to undefined in the session.",
+          "format": "text",
+          "correct": true,
+          "explanation": "&& defines and retains the supplied value, allowing later references to reuse it until the variable is undefined."
+        },
+        {
+          "id": "E",
+          "text": "A substitution variable prefixed with & always prompts only once for a value in a session.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A single & prompts whenever the variable is referenced while it remains undefined."
+        },
+        {
+          "id": "F",
+          "text": "A substitution variable used to prompt for a column name must be enclosed in single quotation marks.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Single quotation marks produce a character literal rather than a column identifier."
+        }
+      ],
+      "correct": [
+        "C",
+        "D"
+      ],
+      "answerExplanation": "Substitution variables perform textual replacement and may represent items such as columns, conditions, values, or ordering expressions. && defines and retains the supplied value, allowing later references to reuse it until the variable is undefined.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 45
+      }
+    },
+    {
+      "id": 46,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Privileges and Roles",
+      "stem": "MANAGER is an existing role with no privileges or roles. EMP is an existing role containing the CREATE TABLE privilege. EMPLOYEES is an existing table in the HR schema. Which two commands execute successfully?",
+      "instruction": "",
+      "type": "multi",
+      "sections": [
+        {
+          "type": "list",
+          "title": "Given objects",
+          "items": [
+            "MANAGER is an existing role with no privileges or roles.",
+            "EMP is an existing role containing the CREATE TABLE privilege.",
+            "EMPLOYEES is an existing table in the HR schema."
+          ]
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "GRANT CREATE SEQUENCE TO manager, emp;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "A system privilege can be granted to multiple roles in one GRANT statement."
+        },
+        {
+          "id": "B",
+          "text": "GRANT CREATE ANY SESSION, CREATE ANY TABLE TO manager;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "CREATE ANY SESSION is not a valid Oracle system privilege. The valid privilege is CREATE SESSION."
+        },
+        {
+          "id": "C",
+          "text": "GRANT SELECT, INSERT ON hr.employees TO manager WITH GRANT OPTION;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "WITH GRANT OPTION cannot be used when granting object privileges to a role. It applies to grants made to users."
+        },
+        {
+          "id": "D",
+          "text": "GRANT CREATE TABLE, emp TO manager;",
+          "format": "sql",
+          "correct": true,
+          "explanation": "A system privilege and an existing role can be granted to another role in the same statement."
+        },
+        {
+          "id": "E",
+          "text": "GRANT CREATE TABLE, SELECT ON hr.employees TO manager;",
+          "format": "sql",
+          "correct": false,
+          "explanation": "A system privilege and object privilege cannot be combined using this syntax. They require separate GRANT statements."
+        }
+      ],
+      "correct": [
+        "A",
+        "D"
+      ],
+      "answerExplanation": "A system privilege can be granted to multiple roles in one GRANT statement. A system privilege and an existing role can be granted to another role in the same statement.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 46
+      }
+    },
+    {
+      "id": 47,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "verified_from_user_image",
+      "topic": "Views",
+      "stem": "Which two statements are true about dropping views?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Data selected by a view's defining query is deleted from its underlying tables when the view is dropped.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Dropping a view removes the view definition only. It does not delete rows from the underlying tables."
+        },
+        {
+          "id": "B",
+          "text": "Read-only views cannot be dropped.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Read-only status prevents DML through the view, but the view can still be dropped by its owner or an appropriately privileged user."
+        },
+        {
+          "id": "C",
+          "text": "The creator of a view to be dropped must have the DROP ANY VIEW privilege.",
+          "format": "text",
+          "correct": false,
+          "explanation": "A user can drop a view owned in the user’s own schema without DROP ANY VIEW. DROP ANY VIEW is required to drop a view in another schema."
+        },
+        {
+          "id": "D",
+          "text": "CASCADE CONSTRAINTS must be specified when referential integrity constraints on other objects refer to primary or unique keys in the view to be dropped.",
+          "format": "text",
+          "correct": true,
+          "explanation": "CASCADE CONSTRAINTS removes referential-integrity constraints that depend on primary-key or unique-key constraints associated with the view being dropped."
+        },
+        {
+          "id": "E",
+          "text": "Views referencing a dropped view become invalid.",
+          "format": "text",
+          "correct": true,
+          "explanation": "Dependent views are not automatically removed. They remain in the database but become invalid because their referenced view no longer exists."
+        }
+      ],
+      "correct": [
+        "D",
+        "E"
+      ],
+      "answerExplanation": "Dependent referential-integrity constraints require CASCADE CONSTRAINTS when applicable, and views that depend on a dropped view become invalid rather than being deleted automatically.",
+      "technicalNote": "Choices D and E were verified from the user-provided source image.",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 47,
+        "verification": "user-provided image"
+      }
+    },
+    {
+      "id": 48,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Constraints",
+      "stem": "Examine the structure of the CUSTOMERS table. CUSTNO is the primary key. You must determine whether any customers’ details have been entered more than once using different CUSTNO values by listing all duplicate names. Which two methods can you use to get the required result?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [
+        {
+          "type": "text",
+          "title": "Table information",
+          "content": "CUSTNO is the primary key of CUSTOMERS."
+        },
+        {
+          "type": "text",
+          "title": "Requirement",
+          "content": "List duplicate customer names entered under different CUSTNO values."
+        }
+      ],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "Subquery",
+          "format": "text",
+          "correct": true,
+          "explanation": "A subquery can identify customer names that occur more than once, such as by using GROUP BY and HAVING COUNT(*) > 1."
+        },
+        {
+          "id": "B",
+          "text": "Self-join",
+          "format": "text",
+          "correct": true,
+          "explanation": "The table can be joined to itself using the same customer name and different CUSTNO values to find duplicate entries."
+        },
+        {
+          "id": "C",
+          "text": "Full outer join with self-join",
+          "format": "text",
+          "correct": false,
+          "explanation": "A full outer join also returns unmatched rows, which are not required when identifying duplicate names."
+        },
+        {
+          "id": "D",
+          "text": "Left outer join with self-join",
+          "format": "text",
+          "correct": false,
+          "explanation": "A left outer join preserves unmatched customer rows and is unnecessary for locating matches representing duplicates."
+        },
+        {
+          "id": "E",
+          "text": "Right outer join with self-join",
+          "format": "text",
+          "correct": false,
+          "explanation": "A right outer join preserves unmatched rows from one side and is unnecessary for finding duplicate customer names."
+        }
+      ],
+      "correct": [
+        "A",
+        "B"
+      ],
+      "answerExplanation": "A subquery can identify customer names that occur more than once, such as by using GROUP BY and HAVING COUNT(*) > 1. The table can be joined to itself using the same customer name and different CUSTNO values to find duplicate entries.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 48
+      }
+    },
+    {
+      "id": 49,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Joins and Data Modeling",
+      "stem": "Which two join conditions in a FROM clause are non-equijoins?",
+      "instruction": "Choose two.",
+      "type": "multi",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [],
+      "options": [
+        {
+          "id": "A",
+          "text": "table1 JOIN table2 USING (column1, column2)",
+          "format": "text",
+          "correct": false,
+          "explanation": "USING matches rows based on equality between columns with the same names, making it an equijoin."
+        },
+        {
+          "id": "B",
+          "text": "table1 JOIN table2 ON (table1.column BETWEEN table2.column1 AND table2.column2)",
+          "format": "text",
+          "correct": true,
+          "explanation": "BETWEEN compares a value with a range rather than using an equality condition."
+        },
+        {
+          "id": "C",
+          "text": "table1 JOIN table2 ON (table1.column >= table2.column)",
+          "format": "text",
+          "correct": true,
+          "explanation": "The >= comparison is a non-equality operator, so this is a non-equijoin."
+        },
+        {
+          "id": "D",
+          "text": "table1 JOIN table2 ON (table1.column = table2.column) WHERE table2.column LIKE 'A%'",
+          "format": "text",
+          "correct": false,
+          "explanation": "The join itself uses equality. The LIKE condition filters the result but does not make the join a non-equijoin."
+        },
+        {
+          "id": "E",
+          "text": "table1 NATURAL JOIN table2",
+          "format": "text",
+          "correct": false,
+          "explanation": "A natural join automatically uses equality between columns that have matching names and compatible data types."
+        }
+      ],
+      "correct": [
+        "B",
+        "C"
+      ],
+      "answerExplanation": "BETWEEN compares a value with a range rather than using an equality condition. The >= comparison is a non-equality operator, so this is a non-equijoin.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 49
+      }
+    },
+    {
+      "id": 50,
+      "available": true,
+      "scorable": true,
+      "validationStatus": "ready",
+      "topic": "Subqueries",
+      "stem": "Examine this partial statement: SELECT * FROM employees WHERE salary = (<subquery>); Which statement is true?",
+      "instruction": "Choose one.",
+      "type": "single",
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
+        {
+          "title": "Partial statement",
+          "language": "sql",
+          "code": "SELECT *\nFROM employees\nWHERE salary = (<subquery>);"
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": "Both the query and the subquery can select only zero rows or one row.",
+          "format": "text",
+          "correct": false,
+          "explanation": "The outer query may return multiple employees whose salaries match the value returned by the subquery."
+        },
+        {
+          "id": "B",
+          "text": "Both the query and the subquery can select any number of rows.",
+          "format": "text",
+          "correct": false,
+          "explanation": "Because the equality operator is used, the subquery must be a single-row subquery. Multiple returned rows cause an error."
+        },
+        {
+          "id": "C",
+          "text": "The query can select any number of rows, but the subquery can select only zero rows or one row.",
+          "format": "text",
+          "correct": true,
+          "explanation": "The scalar subquery may return zero or one row. The outer query may return any number of employees matching the resulting value."
+        },
+        {
+          "id": "D",
+          "text": "The query can select only zero rows or one row, but the subquery can select any number of rows.",
+          "format": "text",
+          "correct": false,
+          "explanation": "This reverses the rule. The outer query may return multiple rows, while the equality comparison requires no more than one subquery row."
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "answerExplanation": "The scalar subquery may return zero or one row. The outer query may return any number of employees matching the resulting value.",
+      "technicalNote": "",
+      "source": {
+        "file": "1-50.xlsx",
+        "questionNumber": 50
+      }
+    }
+  ]
+}
