@@ -91,9 +91,9 @@ function renderStart() {
 
   els.startTitle.textContent = `${total} Question Reviewer`;
   els.startDetails.textContent =
-    `Practice mode uses the original sequence and includes unavailable placeholders. ` +
+    `Practice mode gives feedback each time you answer a question. ` +
     `Mock exam randomly selects ${mockCount} scorable questions from ${available} available questions. ` +
-    `${unavailable} question is marked unavailable.`;
+    `${unavailable} question is marked unavailable. Goodluck!`;
 }
 
 function begin(mode) {
