@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "1.0.0",
-  "title": "Oracle SQL Reviewer Question Bank 1-50",
-  "description": "Structured question bank for Practice Mode and 63-question Mock Exam generation. Official scoring follows the answers recorded in the source reviewer.",
+  "schemaVersion": "1.2.0",
+  "title": "Oracle SQL Reviewer Question Bank 1-50 (Corrected v3)",
+  "description": "Corrected question bank with complete context and detailed, choice-specific explanations. Official scoring follows document-highlighted answers; technical conflicts remain clearly identified.",
   "sourceFiles": [
     "1-50.xlsx"
   ],
@@ -731,7 +731,7 @@
       "id": 12,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "explanations_revised",
       "topic": "SQL Concepts",
       "stem": "Which three statements are true about Structured Query Language (SQL)?",
       "instruction": "Choose three.",
@@ -745,54 +745,55 @@
           "text": "It provides independence for logical data structures being manipulated from the underlying physical data storage.",
           "format": "text",
           "correct": true,
-          "explanation": "Physical data independence is core to SQL — you query tables and columns without knowing how blocks, files, or extents are laid out on disk."
+          "explanation": "This statement is marked correct in the reviewer. SQL operates on logical objects such as tables, rows, and columns, while Oracle manages physical storage separately. A query therefore does not need to specify data files, blocks, or storage locations."
         },
         {
           "id": "B",
           "text": "It is used to define encapsulation and polymorphism for a relational table.",
           "format": "text",
           "correct": false,
-          "explanation": "Encapsulation and polymorphism are object-relational features tied to object types, not to relational tables."
+          "explanation": "This statement is incorrect. Encapsulation and polymorphism belong to object-oriented or object-relational design. They are not properties that SQL defines for an ordinary relational table."
         },
         {
           "id": "C",
           "text": "It is the only language that can be used for both relational and object-oriented databases.",
           "format": "text",
           "correct": false,
-          "explanation": "The word only breaks it — other languages and APIs also address both models."
+          "explanation": "This statement is incorrect because of the word “only.” SQL can work with relational and object-relational features, but it is not the exclusive language or interface that can access those database models."
         },
         {
           "id": "D",
           "text": "It best supports relational databases.",
           "format": "text",
-          "correct": true,
-          "explanation": "SQL was designed on the relational model and remains the native language for relational systems."
+          "correct": false,
+          "explanation": "This statement is not one of the answers highlighted in the supplied reviewer. SQL is strongly associated with relational databases, but the official reviewer key for this question selects A, E, and F."
         },
         {
           "id": "E",
           "text": "It requires that data be contained in hierarchical data storage.",
           "format": "text",
-          "correct": false,
-          "explanation": "Hierarchical storage is a pre-relational model; SQL requires no such structure."
+          "correct": true,
+          "explanation": "This statement is marked correct in the supplied reviewer and is therefore used for official scoring. However, the wording is technically questionable because relational SQL does not require data to be physically stored in a hierarchical structure. Keep this distinction visible in the technical note."
         },
         {
           "id": "F",
           "text": "It guarantees atomicity, consistency, isolation and durability (ACID) features.",
           "format": "text",
           "correct": true,
-          "explanation": "SQL transaction control (COMMIT, ROLLBACK, SAVEPOINT) is what enforces the ACID properties."
+          "explanation": "This statement is marked correct in the reviewer. SQL provides transaction-control statements such as COMMIT, ROLLBACK, and SAVEPOINT, while the database transaction engine enforces atomicity, consistency, isolation, and durability."
         }
       ],
       "correct": [
         "A",
-        "D",
+        "E",
         "F"
       ],
-      "answerExplanation": "Physical data independence is core to SQL — you query tables and columns without knowing how blocks, files, or extents are laid out on disk. SQL was designed on the relational model and remains the native language for relational systems. SQL transaction control (COMMIT, ROLLBACK, SAVEPOINT) is what enforces the ACID properties.",
-      "technicalNote": "",
+      "answerExplanation": "This statement is marked correct in the reviewer. SQL operates on logical objects such as tables, rows, and columns, while Oracle manages physical storage separately. A query therefore does not need to specify data files, blocks, or storage locations. This statement is marked correct in the supplied reviewer and is therefore used for official scoring. However, the wording is technically questionable because relational SQL does not require data to be physically stored in a hierarchical structure. Keep this distinction visible in the technical note. This statement is marked correct in the reviewer. SQL provides transaction-control statements such as COMMIT, ROLLBACK, and SAVEPOINT, while the database transaction engine enforces atomicity, consistency, isolation, and durability.",
+      "technicalNote": "The document-highlighted answers are A, E, and F. Choice E is retained exactly for document-based scoring even though its wording may be technically disputed.",
       "source": {
         "file": "1-50.xlsx",
-        "questionNumber": 12
+        "questionNumber": 12,
+        "verification": "user-provided image"
       }
     },
     {
@@ -1251,75 +1252,89 @@
       "id": 20,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
-      "topic": "Oracle SQL",
+      "validationStatus": "explanations_revised",
+      "topic": "External and Temporary Tables",
       "stem": "Examine these statements and results:",
       "instruction": "Choose one.",
       "type": "single",
       "sections": [
         {
-          "type": "list",
+          "type": "sql-sequence",
           "title": "Executed statements and results",
           "items": [
-            "SELECT COUNT(*) FROM emp; → 14",
-            "CREATE GLOBAL TEMPORARY TABLE t_emp AS SELECT * FROM emp; → Table created",
-            "INSERT INTO t_emp SELECT * FROM emp; → 14 rows created",
-            "COMMIT; → Commit complete",
-            "INSERT INTO t_emp SELECT * FROM emp; → 14 rows created"
+            {
+              "sql": "SELECT COUNT(*) FROM emp;",
+              "result": "COUNT(*)\n--------\n14"
+            },
+            {
+              "sql": "CREATE GLOBAL TEMPORARY TABLE t_emp AS SELECT * FROM emp;",
+              "result": "Table created."
+            },
+            {
+              "sql": "INSERT INTO t_emp SELECT * FROM emp;",
+              "result": "14 rows created."
+            },
+            {
+              "sql": "COMMIT;",
+              "result": "Commit complete."
+            },
+            {
+              "sql": "INSERT INTO t_emp SELECT * FROM emp;",
+              "result": "14 rows created."
+            },
+            {
+              "sql": "SELECT COUNT(*) FROM t_emp;",
+              "result": ""
+            }
           ]
         },
         {
           "type": "text",
           "title": "Question",
-          "content": "How many rows are retrieved by the final SELECT COUNT(*) FROM t_emp query?"
+          "content": "How many rows are retrieved by the last query?"
         }
       ],
       "tables": [],
-      "codeBlocks": [
-        {
-          "title": "Final query",
-          "language": "sql",
-          "code": "SELECT COUNT(*)\nFROM t_emp;"
-        }
-      ],
+      "codeBlocks": [],
       "options": [
         {
           "id": "A",
           "text": "14",
           "format": "text",
           "correct": true,
-          "explanation": "Because no ON COMMIT clause was specified, the default is ON COMMIT DELETE ROWS. The first 14 rows are deleted by the COMMIT, and the second insert adds 14 new rows."
+          "explanation": "This is correct. Because the global temporary table was created without an ON COMMIT clause, Oracle uses ON COMMIT DELETE ROWS. COMMIT clears the first 14 temporary rows, and the second INSERT adds 14 rows before the final COUNT(*)."
         },
         {
           "id": "B",
           "text": "0",
           "format": "text",
           "correct": false,
-          "explanation": "The second insert occurs after the commit and adds 14 rows before the final query runs."
+          "explanation": "This is incorrect. The COMMIT clears the first set of temporary rows, but a second INSERT runs afterward and adds 14 rows. The table is therefore not empty when the final query executes."
         },
         {
           "id": "C",
           "text": "28",
           "format": "text",
           "correct": false,
-          "explanation": "The first 14 rows are removed by the commit, so they are not combined with the second group of 14 rows."
+          "explanation": "This is incorrect. The two inserts do not accumulate to 28 rows because COMMIT occurs between them and removes the first 14 rows from this transaction-specific temporary table."
         },
         {
           "id": "D",
           "text": "42",
           "format": "text",
           "correct": false,
-          "explanation": "Only two inserts of 14 rows occur, and the first group is cleared by the commit."
+          "explanation": "This is incorrect. Only two groups of 14 rows are inserted, and the first group is deleted at COMMIT. There is no operation that could produce 42 rows."
         }
       ],
       "correct": [
         "A"
       ],
-      "answerExplanation": "Because no ON COMMIT clause was specified, the default is ON COMMIT DELETE ROWS. The first 14 rows are deleted by the COMMIT, and the second insert adds 14 new rows.",
-      "technicalNote": "",
+      "answerExplanation": "This is correct. Because the global temporary table was created without an ON COMMIT clause, Oracle uses ON COMMIT DELETE ROWS. COMMIT clears the first 14 temporary rows, and the second INSERT adds 14 rows before the final COUNT(*).",
+      "technicalNote": "The entire SQL execution sequence and each displayed result were restored from the user-provided reviewer image.",
       "source": {
         "file": "1-50.xlsx",
-        "questionNumber": 20
+        "questionNumber": 20,
+        "verification": "user-provided image"
       }
     },
     {
@@ -2597,7 +2612,7 @@
       "id": 41,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "explanations_revised",
       "topic": "External and Temporary Tables",
       "stem": "Which three actions can you perform by using the ORACLE_DATAPUMP access driver?",
       "instruction": "Choose three.",
@@ -2610,123 +2625,162 @@
           "id": "A",
           "text": "Create a directory object for an external table.",
           "format": "sql",
-          "correct": false,
-          "explanation": "The directory object must be created separately before the external table can access the dump file. The access driver does not create it automatically."
+          "correct": true,
+          "explanation": "This statement is marked correct in the supplied reviewer. A DIRECTORY object identifies the operating-system location used by external-table files. Technically, CREATE DIRECTORY is a separate SQL statement and is not performed automatically by the ORACLE_DATAPUMP access driver, so this item must retain a technical note."
         },
         {
           "id": "B",
           "text": "Execute DML statements on an external table.",
           "format": "text",
           "correct": false,
-          "explanation": "External tables cannot be directly modified using conventional INSERT, UPDATE, or DELETE statements."
+          "explanation": "This statement is incorrect. An external table is not updated directly with ordinary INSERT, UPDATE, or DELETE statements. External tables are primarily queried, while ORACLE_DATAPUMP can write data when an external table is created with an AS SELECT operation."
         },
         {
           "id": "C",
           "text": "Read data from a table in the database and insert it into an external table.",
           "format": "text",
           "correct": true,
-          "explanation": "The ORACLE_DATAPUMP driver supports unloading database data into an external dump file through CREATE TABLE ... ORGANIZATION EXTERNAL AS SELECT."
+          "explanation": "This statement is correct. ORACLE_DATAPUMP supports unloading rows selected from a database table into a binary dump file represented by an external table."
         },
         {
           "id": "D",
           "text": "Query data from an external table.",
           "format": "text",
           "correct": true,
-          "explanation": "Data stored in an Oracle Data Pump external file can be retrieved through a SELECT statement."
+          "explanation": "This statement is correct. After an ORACLE_DATAPUMP external table is defined for a compatible dump file, its rows can be retrieved with a SELECT query like rows from a relational table."
         },
         {
           "id": "E",
           "text": "Read data from an external table and load it into a table in the database.",
           "format": "text",
-          "correct": true,
-          "explanation": "An external table can serve as the source of an INSERT ... SELECT or CREATE TABLE AS SELECT operation."
+          "correct": false,
+          "explanation": "This statement is not highlighted in the supplied reviewer. Although an external table can commonly serve as the source of an INSERT INTO internal_table SELECT ... operation, the official document key for this question selects A, C, and D."
         },
         {
           "id": "F",
           "text": "Create a directory object for a flat file.",
           "format": "sql",
           "correct": false,
-          "explanation": "A directory object must be created independently with CREATE DIRECTORY; it is not created by the access driver."
+          "explanation": "This statement is incorrect. A DIRECTORY object points to an operating-system directory, not to a specific flat file, and it is created separately with CREATE DIRECTORY rather than by the access driver."
         }
       ],
       "correct": [
+        "A",
         "C",
-        "D",
-        "E"
+        "D"
       ],
-      "answerExplanation": "The ORACLE_DATAPUMP driver supports unloading database data into an external dump file through CREATE TABLE ... ORGANIZATION EXTERNAL AS SELECT. Data stored in an Oracle Data Pump external file can be retrieved through a SELECT statement. An external table can serve as the source of an INSERT ... SELECT or CREATE TABLE AS SELECT operation.",
-      "technicalNote": "",
+      "answerExplanation": "This statement is marked correct in the supplied reviewer. A DIRECTORY object identifies the operating-system location used by external-table files. Technically, CREATE DIRECTORY is a separate SQL statement and is not performed automatically by the ORACLE_DATAPUMP access driver, so this item must retain a technical note. This statement is correct. ORACLE_DATAPUMP supports unloading rows selected from a database table into a binary dump file represented by an external table. This statement is correct. After an ORACLE_DATAPUMP external table is defined for a compatible dump file, its rows can be retrieved with a SELECT query like rows from a relational table.",
+      "technicalNote": "The document-highlighted answers are A, C, and D. Choice A is retained for document-based scoring even though CREATE DIRECTORY is a separate SQL operation rather than an action performed by the access driver itself.",
       "source": {
         "file": "1-50.xlsx",
-        "questionNumber": 41
+        "questionNumber": 41,
+        "verification": "user-provided image"
       }
     },
     {
       "id": 42,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "explanations_revised",
       "topic": "Tables and DDL",
       "stem": "Examine the description of the PRODUCTS table. Rows exist in this table with data in all columns. You put the PRODUCTS table in read-only mode. Which three commands execute successfully on PRODUCTS?",
       "instruction": "Choose three.",
       "type": "multi",
-      "sections": [],
-      "tables": [],
+      "sections": [
+        {
+          "type": "text",
+          "title": "Table status",
+          "content": "Rows exist in PRODUCTS with data in all columns."
+        },
+        {
+          "type": "text",
+          "title": "Operation",
+          "content": "The PRODUCTS table is placed in read-only mode."
+        }
+      ],
+      "tables": [
+        {
+          "title": "PRODUCTS table",
+          "columns": [
+            "NAME",
+            "NULL?",
+            "TYPE"
+          ],
+          "rows": [
+            [
+              "PROD_ID",
+              "NOT NULL",
+              "NUMBER(2)"
+            ],
+            [
+              "QTY",
+              "",
+              "NUMBER(5,2)"
+            ],
+            [
+              "COST",
+              "",
+              "NUMBER(8,2)"
+            ]
+          ]
+        }
+      ],
       "codeBlocks": [],
       "options": [
         {
           "id": "A",
           "text": "DROP TABLE products;",
           "format": "sql",
-          "correct": false,
-          "explanation": "The table must first be returned to read-write mode before the table itself can be dropped."
+          "correct": true,
+          "explanation": "This command is marked correct in the supplied reviewer. Dropping the table removes the table definition and its data as a DDL operation; the reviewer indicates that the read-only state does not prevent this command."
         },
         {
           "id": "B",
           "text": "ALTER TABLE products DROP COLUMN expiry_date;",
           "format": "sql",
-          "correct": true,
-          "explanation": "Oracle permits a column to be dropped from a table while the table is in read-only mode."
+          "correct": false,
+          "explanation": "This command is incorrect for the displayed table because EXPIRY_DATE is not listed in the PRODUCTS structure. Oracle cannot drop a column that does not exist in the table."
         },
         {
           "id": "C",
           "text": "ALTER TABLE products SET UNUSED (expiry_date);",
           "format": "sql",
-          "correct": true,
-          "explanation": "A column may be marked as unused while the table is read-only because this changes the table definition rather than its row values through DML."
+          "correct": false,
+          "explanation": "This command is incorrect for the displayed table because EXPIRY_DATE is not one of the shown PRODUCTS columns. SET UNUSED cannot target a nonexistent column."
         },
         {
           "id": "D",
           "text": "ALTER TABLE products DROP UNUSED COLUMNS;",
           "format": "sql",
           "correct": false,
-          "explanation": "Physically dropping unused columns is not permitted while the table remains in read-only mode."
+          "explanation": "This command is incorrect because the scenario does not show any columns that were previously marked UNUSED. DROP UNUSED COLUMNS therefore has no displayed unused column to remove."
         },
         {
           "id": "E",
           "text": "CREATE INDEX price_idx ON products (price);",
           "format": "sql",
           "correct": true,
-          "explanation": "An index may be created on a read-only table because the operation does not modify the existing table rows."
+          "explanation": "This command is marked correct in the supplied reviewer. The reviewer treats index creation as permitted on the read-only table. However, PRICE is not present in the displayed PRODUCTS structure, so the source question is internally inconsistent and that inconsistency must remain visible in the technical note."
         },
         {
           "id": "F",
           "text": "TRUNCATE TABLE products;",
           "format": "sql",
-          "correct": false,
-          "explanation": "TRUNCATE removes all rows and is not permitted while the table is in read-only mode."
+          "correct": true,
+          "explanation": "This command is marked correct in the supplied reviewer. TRUNCATE is DDL that removes all table rows and resets allocated storage metadata; the official document key indicates that it executes successfully in this scenario."
         }
       ],
       "correct": [
-        "B",
-        "C",
-        "E"
+        "A",
+        "E",
+        "F"
       ],
-      "answerExplanation": "Oracle permits a column to be dropped from a table while the table is in read-only mode. A column may be marked as unused while the table is read-only because this changes the table definition rather than its row values through DML. An index may be created on a read-only table because the operation does not modify the existing table rows.",
-      "technicalNote": "",
+      "answerExplanation": "This command is marked correct in the supplied reviewer. Dropping the table removes the table definition and its data as a DDL operation; the reviewer indicates that the read-only state does not prevent this command. This command is marked correct in the supplied reviewer. The reviewer treats index creation as permitted on the read-only table. However, PRICE is not present in the displayed PRODUCTS structure, so the source question is internally inconsistent and that inconsistency must remain visible in the technical note. This command is marked correct in the supplied reviewer. TRUNCATE is DDL that removes all table rows and resets allocated storage metadata; the official document key indicates that it executes successfully in this scenario.",
+      "technicalNote": "The source image displays PRODUCTS columns PROD_ID, QTY, and COST, while some choices reference EXPIRY_DATE and PRICE. The question and scoring are preserved exactly according to the supplied reviewer image.",
       "source": {
         "file": "1-50.xlsx",
-        "questionNumber": 42
+        "questionNumber": 42,
+        "verification": "user-provided image"
       }
     },
     {
@@ -3059,8 +3113,8 @@
       "id": 48,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
-      "topic": "Constraints",
+      "validationStatus": "explanations_revised",
+      "topic": "Joins and Subqueries",
       "stem": "Examine the structure of the CUSTOMERS table. CUSTNO is the primary key. You must determine whether any customers’ details have been entered more than once using different CUSTNO values by listing all duplicate names. Which two methods can you use to get the required result?",
       "instruction": "Choose two.",
       "type": "multi",
@@ -3068,15 +3122,46 @@
         {
           "type": "text",
           "title": "Table information",
-          "content": "CUSTNO is the primary key of CUSTOMERS."
+          "content": "CUSTNO is the PRIMARY KEY."
         },
         {
           "type": "text",
           "title": "Requirement",
-          "content": "List duplicate customer names entered under different CUSTNO values."
+          "content": "Determine whether any customers' details have been entered more than once using a different CUSTNO by listing all duplicate names."
         }
       ],
-      "tables": [],
+      "tables": [
+        {
+          "title": "CUSTOMERS table",
+          "columns": [
+            "NAME",
+            "NULL?",
+            "TYPE"
+          ],
+          "rows": [
+            [
+              "CUSTNO",
+              "NOT NULL",
+              "NUMBER(3)"
+            ],
+            [
+              "CUSTNAME",
+              "NOT NULL",
+              "VARCHAR2(25)"
+            ],
+            [
+              "CUSTADDRESS",
+              "",
+              "VARCHAR2(35)"
+            ],
+            [
+              "CUST_CREDIT_LIMIT",
+              "",
+              "NUMBER(5)"
+            ]
+          ]
+        }
+      ],
       "codeBlocks": [],
       "options": [
         {
@@ -3084,46 +3169,47 @@
           "text": "Subquery",
           "format": "text",
           "correct": true,
-          "explanation": "A subquery can identify customer names that occur more than once, such as by using GROUP BY and HAVING COUNT(*) > 1."
+          "explanation": "This method is correct. A subquery can group rows by CUSTNAME and use HAVING COUNT(*) > 1 to identify names that occur under more than one customer record."
         },
         {
           "id": "B",
           "text": "Self-join",
           "format": "text",
           "correct": true,
-          "explanation": "The table can be joined to itself using the same customer name and different CUSTNO values to find duplicate entries."
+          "explanation": "This method is correct. A self-join can match two CUSTOMERS rows with the same CUSTNAME while requiring different CUSTNO values, directly identifying duplicate names stored under different primary keys."
         },
         {
           "id": "C",
           "text": "Full outer join with self-join",
           "format": "text",
           "correct": false,
-          "explanation": "A full outer join also returns unmatched rows, which are not required when identifying duplicate names."
+          "explanation": "This method is unnecessary. A full outer self-join preserves unmatched rows from both sides, but the task needs only matching customer names with different CUSTNO values."
         },
         {
           "id": "D",
           "text": "Left outer join with self-join",
           "format": "text",
           "correct": false,
-          "explanation": "A left outer join preserves unmatched customer rows and is unnecessary for locating matches representing duplicates."
+          "explanation": "This method is unnecessary. A left outer self-join keeps unmatched rows from the left side, which adds customers that have no duplicate and does not directly satisfy the requirement."
         },
         {
           "id": "E",
           "text": "Right outer join with self-join",
           "format": "text",
           "correct": false,
-          "explanation": "A right outer join preserves unmatched rows from one side and is unnecessary for finding duplicate customer names."
+          "explanation": "This method is unnecessary. A right outer self-join keeps unmatched rows from the right side, introducing nonduplicate customer rows that are outside the requested result."
         }
       ],
       "correct": [
         "A",
         "B"
       ],
-      "answerExplanation": "A subquery can identify customer names that occur more than once, such as by using GROUP BY and HAVING COUNT(*) > 1. The table can be joined to itself using the same customer name and different CUSTNO values to find duplicate entries.",
-      "technicalNote": "",
+      "answerExplanation": "This method is correct. A subquery can group rows by CUSTNAME and use HAVING COUNT(*) > 1 to identify names that occur under more than one customer record. This method is correct. A self-join can match two CUSTOMERS rows with the same CUSTNAME while requiring different CUSTNO values, directly identifying duplicate names stored under different primary keys.",
+      "technicalNote": "The complete CUSTOMERS table structure and business requirement were restored from the user-provided reviewer image.",
       "source": {
         "file": "1-50.xlsx",
-        "questionNumber": 48
+        "questionNumber": 48,
+        "verification": "user-provided image"
       }
     },
     {
@@ -3244,5 +3330,23 @@
         "questionNumber": 50
       }
     }
-  ]
+  ],
+  "revision": {
+    "version": "v3",
+    "baseVersion": "v2",
+    "correctedQuestions": [
+      12,
+      20,
+      41,
+      42,
+      48
+    ],
+    "changes": [
+      "Replaced generic reviewer-based wording with choice-specific explanations.",
+      "Preserved official document-highlighted scoring.",
+      "Preserved technical notes for disputed source answers.",
+      "Preserved restored SQL sequence and table structures."
+    ],
+    "correctionFile": "CORRECTIONS_1_50_EXPLANATIONS.md"
+  }
 }

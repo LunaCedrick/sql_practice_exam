@@ -175,9 +175,26 @@ function renderSection(section) {
     return `<div class="content-section">${escapeHtml(section)}</div>`;
   }
 
+  if (section.type === "sql-sequence") {
+    return renderSqlSequence(section);
+  }
+
   const title = section.title ? `<p class="table-title">${escapeHtml(section.title)}</p>` : "";
   const text = section.text || section.content || "";
   return `<div class="content-section">${title}${escapeHtml(text)}</div>`;
+}
+
+function renderSqlSequence(section) {
+  const title = section.title ? `<p class="code-title">${escapeHtml(section.title)}</p>` : "";
+  const items = Array.isArray(section.items) ? section.items : [];
+  const sequence = items.map(item => `
+    <div class="code-card">
+      <pre><code>${escapeHtml(item.sql || "")}</code></pre>
+      ${item.result ? `<pre class="sql-result"><code>${escapeHtml(item.result)}</code></pre>` : ""}
+    </div>
+  `).join("");
+
+  return `<div class="content-section sql-sequence">${title}${sequence}</div>`;
 }
 
 function renderTable(table) {
@@ -488,6 +505,8 @@ function reviewCard(question) {
     <div class="review-card">
       <h3>Question ${question.id}: ${escapeHtml(question.topic)}</h3>
       <p><strong>${escapeHtml(question.stem)}</strong></p>
+      ${question.sections.map(renderSection).join("")}
+      ${question.tables.map(renderTable).join("")}
       ${question.codeBlocks.map(renderCodeBlock).join("")}
       ${feedbackHtml(question)}
     </div>
