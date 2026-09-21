@@ -98,6 +98,8 @@
     }
 
     .start .panel {
+      display: grid;
+      justify-items: center;
       width: min(760px, 100%);
       padding: 34px 30px 28px;
       text-align: center;
@@ -110,9 +112,22 @@
     }
 
     .start p {
+      width: min(620px, 100%);
       margin: 0 0 14px;
       color: var(--muted);
       line-height: 1.65;
+    }
+
+    .confidential-note {
+      width: min(620px, 100%);
+      margin: 0 0 18px;
+      padding: 12px 14px;
+      border: 1px solid #f0d47a;
+      border-radius: 12px;
+      background: var(--warn-soft);
+      color: var(--warn);
+      font-weight: 800;
+      line-height: 1.5;
     }
 
     .start-actions,
@@ -121,6 +136,13 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 12px;
+    }
+
+    .start .start-actions,
+    .start .reviewer-links {
+      width: min(620px, 100%);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .reviewer-links {
@@ -700,6 +722,11 @@
         align-items: stretch;
       }
 
+      .start .start-actions,
+      .start .reviewer-links {
+        grid-template-columns: 1fr;
+      }
+
       .btn,
       .download-link {
         width: 100%;
@@ -754,6 +781,7 @@
     <div class="panel">
       <h1 id="startTitle">Oracle SQL Reviewer</h1>
       <p id="startDetails"></p>
+      <p class="confidential-note">Confidential reviewer. Do not share with anyone.</p>
       <div class="start-actions">
         <button id="mockBtn" class="btn primary" type="button">Mock Exam</button>
         <button id="practiceBtn" class="btn soft" type="button">Practice Mode</button>
