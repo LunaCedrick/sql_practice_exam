@@ -1420,7 +1420,7 @@
       "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
       "stem": "Examine the description of the TRANSACTION table. Which two SQL statements execute successfully?",
-      "instruction": "Choose two.",
+      "instruction": "Choose three.",
       "type": "multi",
       "sections": [],
       "tables": [
@@ -3154,7 +3154,7 @@
       "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
       "stem": "Examine the description of the PRODUCT_STATUS table. The STATUS column contains either IN STOCK or OUT OF STOCK for each row. Which two queries execute successfully?",
-      "instruction": "Choose two.",
+      "instruction": "Choose three.",
       "type": "multi",
       "sections": [],
       "tables": [
