@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "1.0.0",
-  "title": "Oracle SQL Reviewer Question Bank 51-100",
-  "description": "Structured question bank. Official scoring follows document-highlighted answers.",
+  "schemaVersion": "1.1.0",
+  "title": "Oracle SQL Reviewer Question Bank 51-100 (Corrected v2)",
+  "description": "Corrected question bank with restored tables, queries, outputs, source-highlighted scoring, understandable per-choice explanations, and explicit technical notes for disputed items.",
   "sourceFiles": [
     "51-100.xlsx"
   ],
@@ -160,14 +160,56 @@
       "id": 53,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Sorting and Grouping",
-      "stem": "Examine the EMP table and this query: SELECT deptno AS \"Department\", AVG(sal) AS AverageSalary, MAX(sal) AS \"Max Salary\" FROM emp WHERE sal >= 12000 GROUP BY \"Department\" ORDER BY AverageSalary; Why does an error occur?",
+      "stem": "Examine the data in the EMP table and the query. Why does an error occur?",
       "instruction": "Choose one.",
       "type": "single",
       "sections": [],
-      "tables": [],
-      "codeBlocks": [],
+      "tables": [
+        {
+          "title": "EMP table",
+          "columns": [
+            "ENO",
+            "ENAME",
+            "SAL",
+            "DEPTNO"
+          ],
+          "rows": [
+            [
+              "1001",
+              "John",
+              "12000",
+              "10"
+            ],
+            [
+              "1002",
+              "Sam",
+              "40000",
+              "20"
+            ],
+            [
+              "1003",
+              "Daniel",
+              "12000",
+              "20"
+            ],
+            [
+              "1004",
+              "Andrea",
+              "5000",
+              "10"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [
+        {
+          "title": "Query",
+          "language": "sql",
+          "code": "SELECT deptno AS \"Department\",\n       AVG(sal) AS AverageSalary,\n       MAX(sal) AS \"Max Salary\"\nFROM emp\nWHERE sal >= 12000\nGROUP BY \"Department\"\nORDER BY AverageSalary;"
+        }
+      ],
       "options": [
         {
           "id": "A",
@@ -202,10 +244,11 @@
         "D"
       ],
       "answerExplanation": "In this Oracle SQL context, the GROUP BY clause must use the underlying expression or column name, such as GROUP BY deptno, instead of the select-list alias \"Department\".",
-      "technicalNote": "",
+      "technicalNote": "The table and complete query were restored from the correction document. The select-list alias \"Department\" is not available to GROUP BY in this Oracle SQL context; GROUP BY deptno is required.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 53
+        "questionNumber": 53,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -513,14 +556,116 @@
       "id": 59,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Sorting and Grouping",
-      "stem": "A query groups sales by channel type, month, and country code, and the displayed output contains detailed country totals and monthly subtotals for each channel. Which GROUP BY clause must be added to produce the displayed result?",
+      "stem": "Examine the query and its displayed output. Which GROUP BY clause must be added so the query returns the results shown?",
       "instruction": "Choose one.",
       "type": "single",
       "sections": [],
-      "tables": [],
-      "codeBlocks": [],
+      "tables": [
+        {
+          "title": "Displayed output",
+          "columns": [
+            "CHANNEL_TYPE",
+            "MONTH",
+            "CO",
+            "SALES"
+          ],
+          "rows": [
+            [
+              "Internet",
+              "2000-09",
+              "GB",
+              "16569"
+            ],
+            [
+              "Internet",
+              "2000-09",
+              "US",
+              "124224"
+            ],
+            [
+              "Internet",
+              "2000-09",
+              "",
+              "140793"
+            ],
+            [
+              "Internet",
+              "2000-10",
+              "GB",
+              "14539"
+            ],
+            [
+              "Internet",
+              "2000-10",
+              "US",
+              "137054"
+            ],
+            [
+              "Internet",
+              "2000-10",
+              "",
+              "151593"
+            ],
+            [
+              "Internet",
+              "",
+              "",
+              "292387"
+            ],
+            [
+              "Direct Sales",
+              "2000-09",
+              "GB",
+              "85223"
+            ],
+            [
+              "Direct Sales",
+              "2000-09",
+              "US",
+              "638201"
+            ],
+            [
+              "Direct Sales",
+              "2000-09",
+              "",
+              "723424"
+            ],
+            [
+              "Direct Sales",
+              "2000-10",
+              "GB",
+              "91925"
+            ],
+            [
+              "Direct Sales",
+              "2000-10",
+              "US",
+              "682297"
+            ],
+            [
+              "Direct Sales",
+              "2000-10",
+              "",
+              "774222"
+            ],
+            [
+              "Direct Sales",
+              "",
+              "",
+              "1497646"
+            ]
+          ]
+        }
+      ],
+      "codeBlocks": [
+        {
+          "title": "Incomplete query",
+          "language": "sql",
+          "code": "SELECT ch.channel_type, t.month, co.country_code,\n       SUM(s.amount_sold) AS sales\nFROM sales s, times t, channels ch, countries co\nWHERE s.time_id = t.time_id\n  AND s.country_id = co.country_id\n  AND s.channel_id = ch.channel_id\n  AND ch.channel_type IN ('Direct Sales', 'Internet')\n  AND t.month IN ('2000-09', '2000-10')\n  AND co.country_code IN ('GB', 'US')\n<GROUP BY clause>\nORDER BY ch.channel_type, t.month, co.country_code;"
+        }
+      ],
       "options": [
         {
           "id": "A",
@@ -555,23 +700,85 @@
         "A"
       ],
       "answerExplanation": "The regular grouping by channel separates each channel, while ROLLUP returns month-and-country details, monthly subtotals, and a higher-level subtotal for each channel.",
-      "technicalNote": "",
+      "technicalNote": "The incomplete query and displayed subtotal output were restored from the correction document. Blank MONTH or CO cells represent subtotal rows produced by ROLLUP.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 59
+        "questionNumber": 59,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
       "id": 60,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Set Operators",
-      "stem": "Examine the BRICKS and BRICKS_STAGE tables. Which two queries execute successfully?",
+      "stem": "Examine the descriptions of the BRICKS and BRICKS_STAGE tables. Which two queries execute successfully?",
       "instruction": "Choose two.",
       "type": "multi",
       "sections": [],
-      "tables": [],
+      "tables": [
+        {
+          "title": "BRICKS table",
+          "columns": [
+            "NAME",
+            "NULL?",
+            "TYPE"
+          ],
+          "rows": [
+            [
+              "BRICK_ID",
+              "NOT NULL",
+              "NUMBER(38)"
+            ],
+            [
+              "SHAPE",
+              "",
+              "VARCHAR2(30)"
+            ],
+            [
+              "COLOR",
+              "",
+              "VARCHAR2(30)"
+            ],
+            [
+              "WEIGHT",
+              "",
+              "NUMBER"
+            ]
+          ]
+        },
+        {
+          "title": "BRICKS_STAGE table",
+          "columns": [
+            "NAME",
+            "NULL?",
+            "TYPE"
+          ],
+          "rows": [
+            [
+              "WEIGHT",
+              "",
+              "NUMBER"
+            ],
+            [
+              "BRICK",
+              "",
+              "VARCHAR2(30)"
+            ],
+            [
+              "COLOR",
+              "",
+              "VARCHAR2(30)"
+            ],
+            [
+              "SHAPE",
+              "",
+              "VARCHAR2(30)"
+            ]
+          ]
+        }
+      ],
       "codeBlocks": [],
       "options": [
         {
@@ -615,10 +822,11 @@
         "D"
       ],
       "answerExplanation": "Both queries return two columns with compatible data-type groups: a numeric first column and a character second column. Both queries return two character columns, so the corresponding data types are compatible.",
-      "technicalNote": "",
+      "technicalNote": "The two table descriptions were restored as separate tables. Set-operator queries require the same column count and compatible data-type groups in corresponding positions.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 60
+        "questionNumber": 60,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -693,7 +901,7 @@
       "id": 62,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
       "stem": "Examine the data in the ORDERS and INVOICES tables and the query. What rows will be returned?",
       "instruction": "Choose two.",
@@ -726,21 +934,26 @@
             [
               "5",
               "01-MAR-2019"
-            ],
-            [
-              "INVOICE_ID",
-              "ORDER_ID",
-              "ORDER_DATE"
-            ],
+            ]
+          ]
+        },
+        {
+          "title": "INVOICES table",
+          "columns": [
+            "INVOICE_ID",
+            "ORDER_ID",
+            "ORDER_DATE"
+          ],
+          "rows": [
             [
               "1",
               "1",
-              "01-JAN-2019"
-            ],
-            [
-              "2",
-              "2",
               "NULL"
+            ],
+            [
+              "2",
+              "2",
+              "01-JAN-2019"
             ],
             [
               "3",
@@ -772,54 +985,55 @@
           "id": "A",
           "text": "2, NULL",
           "format": "text",
-          "correct": true,
-          "explanation": "The complete row appears in both query results. For set operations, corresponding null values are considered matching."
+          "correct": false,
+          "explanation": "This row is not returned. ORDERS contains (2, NULL), but INVOICES contains (2, 01-JAN-2019), so the complete two-column rows do not match."
         },
         {
           "id": "B",
           "text": "1, NULL",
           "format": "text",
-          "correct": false,
-          "explanation": "In INVOICES, order ID 1 has the date 01-JAN-2019, so the complete rows do not match."
+          "correct": true,
+          "explanation": "This row is returned. Both query branches contain ORDER_ID 1 with a NULL ORDER_DATE. INTERSECT treats corresponding nulls as equal for duplicate comparison."
         },
         {
           "id": "C",
           "text": "3, NULL",
           "format": "text",
           "correct": false,
-          "explanation": "In ORDERS, order ID 3 has the date 01-JAN-2019, so the complete rows do not match."
+          "explanation": "This row is not returned. INVOICES contains (3, NULL), but ORDERS contains (3, 01-JAN-2019)."
         },
         {
           "id": "D",
           "text": "5, 01-MAR-2019",
           "format": "text",
           "correct": false,
-          "explanation": "In INVOICES, order ID 5 has the date 01-APR-2019, so the complete rows do not match."
+          "explanation": "This row is not returned. INVOICES contains order 5 with 01-APR-2019 rather than 01-MAR-2019."
         },
         {
           "id": "E",
           "text": "3, 01-JAN-2019",
           "format": "text",
           "correct": false,
-          "explanation": "In INVOICES, order ID 3 has a null order date, so the complete rows do not match."
+          "explanation": "This row is not returned. ORDERS has (3, 01-JAN-2019), while INVOICES has (3, NULL)."
         },
         {
           "id": "F",
           "text": "4, 01-FEB-2019",
           "format": "text",
           "correct": true,
-          "explanation": "The same order ID and order date appear in both tables."
+          "explanation": "This row is returned because both tables contain ORDER_ID 4 with ORDER_DATE 01-FEB-2019."
         }
       ],
       "correct": [
-        "A",
+        "B",
         "F"
       ],
-      "answerExplanation": "The complete row appears in both query results. For set operations, corresponding null values are considered matching. The same order ID and order date appear in both tables.",
-      "technicalNote": "",
+      "answerExplanation": "This row is returned. Both query branches contain ORDER_ID 1 with a NULL ORDER_DATE. INTERSECT treats corresponding nulls as equal for duplicate comparison. This row is returned because both tables contain ORDER_ID 4 with ORDER_DATE 01-FEB-2019.",
+      "technicalNote": "The earlier JSON incorrectly merged the INVOICES rows into the ORDERS table and used the wrong date values. The correction document shows two separate tables and highlights (1, NULL) and (4, 01-FEB-2019).",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 62
+        "questionNumber": 62,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -1198,59 +1412,94 @@
       "id": 68,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Functions and Data Types",
       "stem": "Examine the partial statement and its displayed output. Which ORDER BY clause will generate the displayed output?",
       "instruction": "Choose one.",
       "type": "single",
-      "sections": [
+      "sections": [],
+      "tables": [
         {
-          "type": "text",
           "title": "Displayed output",
-          "content": "ENAME │ SAL │ COMM"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "WARD │ 1250 │ 500"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "ALLEN │ 1600 │ 300"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "TURNER │ 1500 │ 0"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "ADAMS │ 1100 │ NULL"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "BLAKE │ 2850 │ NULL"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "CLARK │ 2450 │ NULL"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "MILLER │ 1300 │ NULL"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "SMITH │ 800 │ NULL"
+          "columns": [
+            "ENAME",
+            "SAL",
+            "COMM"
+          ],
+          "rows": [
+            [
+              "MARTIN",
+              "1250",
+              "1400"
+            ],
+            [
+              "WARD",
+              "1250",
+              "500"
+            ],
+            [
+              "ALLEN",
+              "1600",
+              "300"
+            ],
+            [
+              "TURNER",
+              "1500",
+              "0"
+            ],
+            [
+              "ADAMS",
+              "1100",
+              "NULL"
+            ],
+            [
+              "BLAKE",
+              "2850",
+              "NULL"
+            ],
+            [
+              "CLARK",
+              "2450",
+              "NULL"
+            ],
+            [
+              "FORD",
+              "3000",
+              "NULL"
+            ],
+            [
+              "JAMES",
+              "950",
+              "NULL"
+            ],
+            [
+              "JONES",
+              "2975",
+              "NULL"
+            ],
+            [
+              "KING",
+              "5000",
+              "NULL"
+            ],
+            [
+              "MILLER",
+              "1300",
+              "NULL"
+            ],
+            [
+              "SCOTT",
+              "3000",
+              "NULL"
+            ],
+            [
+              "SMITH",
+              "800",
+              "NULL"
+            ]
+          ]
         }
       ],
-      "tables": [],
       "codeBlocks": [
         {
           "title": "Partial statement",
@@ -1292,10 +1541,11 @@
         "A"
       ],
       "answerExplanation": "Commission values are sorted from highest to lowest, followed by null commissions. Employees with null commissions are sorted alphabetically by name.",
-      "technicalNote": "",
+      "technicalNote": "The displayed result was converted from separate text fragments into one structured table. The output orders non-null commissions descending, then null commissions by ENAME.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 68
+        "questionNumber": 68,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -1408,111 +1658,60 @@
       "id": 70,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
       "stem": "Examine the contents of the EMP table and the query below. What is the result?",
       "instruction": "Choose one.",
       "type": "single",
-      "sections": [
-        {
-          "type": "text",
-          "title": "How it works",
-          "content": "The rows are sorted by salary in ascending order. The fifth row has a salary of 1250, and another employee also earns 1250. Because the query uses WITH TIES, both rows with that boundary salary are returned."
-        },
-        {
-          "type": "text",
-          "title": "Result rows",
-          "content": "ENAME │ SAL\nFive rows are returned because the fifth position does not create an additional tie beyond these five rows in the displayed data."
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "SMITH │ 800"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "JAMES │ 950"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "ADAMS │ 1100"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "WARD │ 1250"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "MARTIN │ 1250"
-        }
-      ],
+      "sections": [],
       "tables": [
         {
           "title": "EMP table",
           "columns": [
-            "ENAME",
-            "SAL"
+            "ID",
+            "NAME",
+            "SALARY"
           ],
           "rows": [
             [
-              "SMITH",
-              "800"
+              "101",
+              "John",
+              "26000"
             ],
             [
-              "JAMES",
-              "950"
+              "102",
+              "Neena",
+              "24000"
             ],
             [
-              "ADAMS",
-              "1100"
+              "103",
+              "DeMaan",
+              "12000"
             ],
             [
-              "WARD",
-              "1250"
+              "104",
+              "Lex",
+              "17000"
             ],
             [
-              "MARTIN",
-              "1250"
+              "105",
+              "IB",
+              "18000"
             ],
             [
-              "MILLER",
-              "1300"
+              "106",
+              "Daniel",
+              "26000"
             ],
             [
-              "TURNER",
-              "1500"
+              "107",
+              "Ben",
+              "12000"
             ],
             [
-              "ALLEN",
-              "1600"
-            ],
-            [
-              "CLARK",
-              "2450"
-            ],
-            [
-              "BLAKE",
-              "2850"
-            ],
-            [
-              "JONES",
-              "2975"
-            ],
-            [
-              "SCOTT",
-              "3000"
-            ],
-            [
-              "FORD",
-              "3000"
-            ],
-            [
-              "KING",
-              "5000"
+              "108",
+              "George",
+              "25000"
             ]
           ]
         }
@@ -1521,7 +1720,7 @@
         {
           "title": "Query",
           "language": "sql",
-          "code": "SELECT ename, sal\nFROM emp\nORDER BY sal\nFETCH FIRST 5 ROWS WITH TIES;"
+          "code": "SELECT id, name, salary\nFROM emp\nORDER BY salary\nFETCH FIRST 5 ROWS WITH TIES;"
         }
       ],
       "options": [
@@ -1530,78 +1729,90 @@
           "text": "It will return the five employees earning the lowest salaries, in ascending order.",
           "format": "text",
           "correct": true,
-          "explanation": "ORDER BY sal defaults to ascending order, and FETCH FIRST 5 ROWS WITH TIES returns the first five rows plus any additional rows tied with the fifth row. In the displayed data, the result contains five employees."
+          "explanation": "ORDER BY salary uses ascending order. The five lowest rows are the two salaries of 12000, followed by 17000, 18000, and 24000. Because no additional row ties with the fifth-row salary of 24000, exactly five employees are returned."
         },
         {
           "id": "B",
           "text": "It will return the five employees earning the highest salaries, in descending order.",
           "format": "text",
           "correct": false,
-          "explanation": "The query does not specify DESC, so it begins with the lowest salaries rather than the highest."
+          "explanation": "This is incorrect because DESC is not specified. Oracle sorts the salaries in ascending order, beginning with the lowest salary."
         },
         {
           "id": "C",
           "text": "It will return the six employees earning the highest salaries, in descending order.",
           "format": "text",
           "correct": false,
-          "explanation": "The sort direction is ascending, and the query does not begin with the highest salaries."
+          "explanation": "This is incorrect because the query does not sort in descending order and therefore does not return the highest salaries first."
         },
         {
           "id": "D",
           "text": "It will return the six employees earning the lowest salaries, in ascending order.",
           "format": "text",
           "correct": false,
-          "explanation": "Based on the displayed EMP data, the fifth returned salary does not require a sixth row beyond the rows shown in the result."
+          "explanation": "This is incorrect. WITH TIES adds extra rows only when another row has the same ORDER BY value as the fifth row. No other employee has salary 24000."
         }
       ],
       "correct": [
         "A"
       ],
-      "answerExplanation": "ORDER BY sal defaults to ascending order, and FETCH FIRST 5 ROWS WITH TIES returns the first five rows plus any additional rows tied with the fifth row. In the displayed data, the result contains five employees.",
-      "technicalNote": "",
+      "answerExplanation": "ORDER BY salary uses ascending order. The five lowest rows are the two salaries of 12000, followed by 17000, 18000, and 24000. Because no additional row ties with the fifth-row salary of 24000, exactly five employees are returned.",
+      "technicalNote": "The dictated result rows and calculation were removed from the question body. The result is now derived only in the explanations after submission.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 70
+        "questionNumber": 70,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
       "id": 71,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Functions and Data Types",
       "stem": "Examine the contents of the CUSTOMERS table. You need to display the last names and credit limits of all customers whose last name starts with A or B, in lowercase or uppercase, and whose credit limit is below 1000. Which two WHERE conditions give the required result?",
       "instruction": "Choose two.",
       "type": "multi",
-      "sections": [
+      "sections": [],
+      "tables": [
         {
-          "type": "text",
-          "title": "Required columns",
-          "content": "CUST_LAST_NAME\nThe image’s source-table values are not legible enough to reproduce reliably, but the required columns and filtering conditions are visible."
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "CUST_CREDIT_LIMIT"
-        },
-        {
-          "type": "text",
-          "title": "Partial query",
-          "content": "SELECT cust_last_name, cust_credit_limit\nThe correct condition must perform a case-insensitive A-or-B prefix search and require a credit limit below 1000."
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "FROM customers"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "WHERE ...;"
+          "title": "CUSTOMERS table",
+          "columns": [
+            "NAME",
+            "NULL?",
+            "TYPE"
+          ],
+          "rows": [
+            [
+              "CUST_ID",
+              "NOT NULL",
+              "VARCHAR2"
+            ],
+            [
+              "CUST_LAST_NAME",
+              "",
+              "VARCHAR2(20)"
+            ],
+            [
+              "CITY",
+              "",
+              "VARCHAR2(10)"
+            ],
+            [
+              "CUST_CREDIT_LIMIT",
+              "",
+              "NUMBER(6,2)"
+            ]
+          ]
         }
       ],
-      "tables": [],
-      "codeBlocks": [],
+      "codeBlocks": [
+        {
+          "title": "Incomplete query",
+          "language": "sql",
+          "code": "SELECT cust_last_name, cust_credit_limit\nFROM customers\nWHERE <condition>;"
+        }
+      ],
       "options": [
         {
           "id": "A",
@@ -1644,10 +1855,11 @@
         "C"
       ],
       "answerExplanation": "UPPER makes the comparison case-insensitive, while A% and B% match names beginning with A or B. The rounded credit limit must remain below 1000. INITCAP makes the first character uppercase, allowing either prefix pattern to match, and the credit limit condition is applied directly.",
-      "technicalNote": "",
+      "technicalNote": "The CUSTOMERS structure and incomplete query were restored from the correction document. The source image does not display a size for CUST_ID clearly enough to reproduce, so its type is retained as VARCHAR2 without an inferred length.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 71
+        "questionNumber": 71,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -2136,7 +2348,7 @@
       "id": 79,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Joins and Data Modeling",
       "stem": "Examine the data in the BRICKS and BOXES tables. Which two queries return only CUBE?",
       "instruction": "Choose two.",
@@ -2161,12 +2373,17 @@
             [
               "Cylinder",
               "15"
-            ],
-            [
-              "BOX_SIZE",
-              "MIN_WEIGHT",
-              "MAX_WEIGHT"
-            ],
+            ]
+          ]
+        },
+        {
+          "title": "BOXES table",
+          "columns": [
+            "BOX_SIZE",
+            "MIN_WEIGHT",
+            "MAX_WEIGHT"
+          ],
+          "rows": [
             [
               "SMALL",
               "0",
@@ -2218,10 +2435,11 @@
         "C"
       ],
       "answerExplanation": "The range includes weight 5 but excludes weight 10 because the maximum comparison uses <. Therefore, only Cube is returned. Only Cube has a weight below 10. Cuboid equals 10, and Cylinder is above 10.",
-      "technicalNote": "",
+      "technicalNote": "BRICKS and BOXES are separate tables in the source. They must render independently and must not be merged into one table.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 79
+        "questionNumber": 79,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -2620,119 +2838,119 @@
       "id": 85,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Joins and Data Modeling",
       "stem": "Examine the two queries and their output. Then examine the CROSS JOIN query. How many rows will be displayed?",
       "instruction": "Choose one.",
       "type": "single",
-      "sections": [
+      "sections": [],
+      "tables": [
         {
-          "type": "text",
-          "title": "DEPT output",
-          "content": "DEPTNO │ DNAME\nDepartments 10 and 20 satisfy the later IN (10, 20) filter."
+          "title": "DEPT query output",
+          "columns": [
+            "DEPTNO",
+            "DNAME"
+          ],
+          "rows": [
+            [
+              "10",
+              "ACCOUNTING"
+            ],
+            [
+              "20",
+              "RESEARCH"
+            ],
+            [
+              "30",
+              "SALES"
+            ],
+            [
+              "40",
+              "OPERATIONS"
+            ]
+          ]
         },
         {
-          "type": "text",
-          "title": "",
-          "content": "10 │ ACCOUNTING"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "20 │ RESEARCH"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "30 │ SALES"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "40 │ OPERATIONS"
-        },
-        {
-          "type": "text",
-          "title": "EMP output",
-          "content": "ENAME │ JOB │ DEPTNO\nThree employees have the job MANAGER: CLARK, JONES, and BLAKE."
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "CLARK │ MANAGER │ 10"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "KING │ PRESIDENT │ 10"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "MILLER │ CLERK │ 10"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "JONES │ MANAGER │ 20"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "FORD │ ANALYST │ 20"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "ADAMS │ CLERK │ 20"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "SMITH │ CLERK │ 20"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "SCOTT │ ANALYST │ 20"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "WARD │ SALESMAN │ 30"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "TURNER │ SALESMAN │ 30"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "ALLEN │ SALESMAN │ 30"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "JAMES │ CLERK │ 30"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "BLAKE │ MANAGER │ 30"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "MARTIN │ SALESMAN │ 30"
-        },
-        {
-          "type": "text",
-          "title": "Calculation",
-          "content": "3 managers × 2 departments = 6 rows\nCLARK, JONES, and BLAKE are each paired with ACCOUNTING and RESEARCH."
+          "title": "EMP query output",
+          "columns": [
+            "ENAME",
+            "JOB",
+            "DEPTNO"
+          ],
+          "rows": [
+            [
+              "CLARK",
+              "MANAGER",
+              "10"
+            ],
+            [
+              "KING",
+              "PRESIDENT",
+              "10"
+            ],
+            [
+              "MILLER",
+              "CLERK",
+              "10"
+            ],
+            [
+              "JONES",
+              "MANAGER",
+              "20"
+            ],
+            [
+              "FORD",
+              "ANALYST",
+              "20"
+            ],
+            [
+              "ADAMS",
+              "CLERK",
+              "20"
+            ],
+            [
+              "SMITH",
+              "CLERK",
+              "20"
+            ],
+            [
+              "SCOTT",
+              "ANALYST",
+              "20"
+            ],
+            [
+              "WARD",
+              "SALESMAN",
+              "30"
+            ],
+            [
+              "TURNER",
+              "SALESMAN",
+              "30"
+            ],
+            [
+              "ALLEN",
+              "SALESMAN",
+              "30"
+            ],
+            [
+              "JAMES",
+              "CLERK",
+              "30"
+            ],
+            [
+              "BLAKE",
+              "MANAGER",
+              "30"
+            ],
+            [
+              "MARTIN",
+              "SALESMAN",
+              "30"
+            ]
+          ]
         }
       ],
-      "tables": [],
       "codeBlocks": [
         {
           "title": "First query",
@@ -2747,7 +2965,7 @@
         {
           "title": "Query being evaluated",
           "language": "sql",
-          "code": "SELECT ename, dname\nFROM emp CROSS JOIN dept\nWHERE job = 'MANAGER'\nAND dept.deptno IN (10, 20);"
+          "code": "SELECT ename, dname\nFROM emp CROSS JOIN dept\nWHERE job = 'MANAGER'\n  AND dept.deptno IN (10, 20);"
         }
       ],
       "options": [
@@ -2784,10 +3002,11 @@
         "A"
       ],
       "answerExplanation": "The cross join pairs three managers with two qualifying departments, producing six rows.",
-      "technicalNote": "",
+      "technicalNote": "The two source outputs were restored as separate tables and the three queries were preserved in their original order. The row-count calculation is shown only in the explanations after submission.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 85
+        "questionNumber": 85,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -2993,9 +3212,9 @@
       "id": 90,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Tables, Views, and Sequences",
-      "stem": "Examine the following requirements for a sequence. Which two statements satisfy the requirements?",
+      "stem": "Examine the list of requirements for a sequence. Which two statements satisfy these requirements?",
       "instruction": "Choose two.",
       "type": "multi",
       "sections": [
@@ -3019,53 +3238,54 @@
           "text": "CREATE SEQUENCE emp_seq STARTS WITH 1 INCREMENT BY 1 CYCLE;",
           "format": "sql",
           "correct": false,
-          "explanation": "The correct syntax is START WITH, not STARTS WITH. Additionally, CYCLE permits values to repeat after the sequence reaches its limit."
+          "explanation": "This statement fails because STARTS WITH is invalid syntax; Oracle uses START WITH. CYCLE would also allow sequence values to repeat after reaching a limit, violating the no-duplicates requirement."
         },
         {
           "id": "B",
           "text": "CREATE SEQUENCE emp_seq STARTS WITH 1 CACHE;",
           "format": "sql",
           "correct": false,
-          "explanation": "STARTS WITH is invalid syntax. Caching may also increase the possibility of gaps if cached values are lost."
+          "explanation": "This statement fails because STARTS WITH is invalid syntax. CACHE can also increase gaps when cached values are lost before use."
         },
         {
           "id": "C",
           "text": "CREATE SEQUENCE emp_seq;",
           "format": "sql",
-          "correct": true,
-          "explanation": "Oracle’s defaults start the ascending sequence at 1, increment by 1, use NOCYCLE, and do not permit duplicate values during its valid range."
+          "correct": false,
+          "explanation": "This statement executes and starts at 1 with increment 1 and NOCYCLE by default, but Oracle also uses CACHE by default. That does not best meet the requirement to reduce possible gaps."
         },
         {
           "id": "D",
           "text": "CREATE SEQUENCE emp_seq STARTS WITH 1 INCREMENT BY 1 CACHE;",
           "format": "sql",
           "correct": false,
-          "explanation": "STARTS WITH is invalid syntax. CACHE also does not best satisfy the requirement to reduce potential gaps."
+          "explanation": "This statement fails because STARTS WITH is invalid syntax. It also explicitly uses CACHE, which does not best reduce possible gaps."
         },
         {
           "id": "E",
           "text": "CREATE SEQUENCE emp_seq START WITH 1 INCREMENT BY 1 NOCACHE;",
           "format": "sql",
           "correct": true,
-          "explanation": "The sequence starts at 1, increments by 1, defaults to NOCYCLE, and uses NOCACHE to reduce gaps caused by unused cached values."
+          "explanation": "This statement is correct. It starts at 1, increments by 1, does not cycle by default, and uses NOCACHE to reduce gaps caused by unused cached values."
         },
         {
           "id": "F",
           "text": "CREATE SEQUENCE emp_seq NOCACHE;",
           "format": "sql",
-          "correct": false,
-          "explanation": "This also defaults to an initial value of 1, an increment of 1, and NOCYCLE, while explicitly disabling caching. The document nevertheless expects only two answers."
+          "correct": true,
+          "explanation": "This statement is correct. START WITH 1, INCREMENT BY 1, and NOCYCLE are defaults, while NOCACHE explicitly reduces gaps from lost cached values."
         }
       ],
       "correct": [
-        "C",
-        "E"
+        "E",
+        "F"
       ],
-      "answerExplanation": "Oracle’s defaults start the ascending sequence at 1, increment by 1, use NOCYCLE, and do not permit duplicate values during its valid range. The sequence starts at 1, increments by 1, defaults to NOCYCLE, and uses NOCACHE to reduce gaps caused by unused cached values.",
-      "technicalNote": "The document highlights C and E. Choice F also appears to satisfy the requirements.",
+      "answerExplanation": "This statement is correct. It starts at 1, increments by 1, does not cycle by default, and uses NOCACHE to reduce gaps caused by unused cached values. This statement is correct. START WITH 1, INCREMENT BY 1, and NOCYCLE are defaults, while NOCACHE explicitly reduces gaps from lost cached values.",
+      "technicalNote": "The correction document highlights E and F. Choice C is executable, but its default CACHE setting does not best satisfy the requirement to reduce gaps.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 90
+        "questionNumber": 90,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -3366,7 +3586,7 @@
       "id": 96,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Sorting and Grouping",
       "stem": "Examine the description of the EMPLOYEES table and the listed requirements. Which statement will satisfy all the requirements?",
       "instruction": "Choose one.",
@@ -3422,52 +3642,53 @@
           "text": "SELECT manager_id, MIN(salary)\nFROM employees\nWHERE manager_id IS NOT NULL\nGROUP BY manager_id\nHAVING MIN(salary) > 6000\nORDER BY MIN(salary);",
           "format": "sql",
           "correct": false,
-          "explanation": "The filtering and grouping are correct, but the default sort order is ascending. The requirement asks for the highest minimum salary first."
+          "explanation": "This query correctly filters null managers, groups by manager, and applies HAVING, but ORDER BY MIN(salary) defaults to ascending order. It fails the requirement to show the highest minimum salary first."
         },
         {
           "id": "B",
           "text": "SELECT manager_id, MIN(salary)\nFROM employees\nHAVING MIN(salary) > 6000\nWHERE manager_id IS NOT NULL\nGROUP BY manager_id\nORDER BY MIN(salary) DESC;",
           "format": "sql",
           "correct": false,
-          "explanation": "The clause order is invalid. WHERE must appear before GROUP BY, and HAVING must appear after GROUP BY."
+          "explanation": "This query is invalid because HAVING appears before WHERE and GROUP BY. SQL clauses must follow WHERE, GROUP BY, HAVING, then ORDER BY."
         },
         {
           "id": "C",
           "text": "SELECT manager_id, MIN(salary)\nFROM employees\nWHERE manager_id IS NOT NULL\nHAVING MIN(salary) > 6000\nGROUP BY manager_id\nORDER BY MIN(salary) DESC;",
           "format": "sql",
-          "correct": false,
-          "explanation": "The clause order is invalid because HAVING appears before GROUP BY."
+          "correct": true,
+          "explanation": "This is the choice highlighted in the supplied correction document. However, it is technically invalid because HAVING appears before GROUP BY. The clauses should be GROUP BY manager_id followed by HAVING MIN(salary) > 6000."
         },
         {
           "id": "D",
           "text": "SELECT manager_id, MIN(salary)\nFROM employees\nWHERE manager_id IS NOT NULL\nAND MIN(salary) > 6000\nGROUP BY manager_id\nORDER BY MIN(salary) DESC;",
           "format": "sql",
           "correct": false,
-          "explanation": "A group function such as MIN cannot be used in the WHERE clause. Aggregate results must be filtered through HAVING."
+          "explanation": "This query is invalid because MIN(salary) is a group function and cannot be placed in WHERE. Aggregate-group filtering belongs in HAVING after GROUP BY."
         },
         {
           "id": "E",
           "text": "SELECT manager_id, MIN(salary)\nFROM employees\nWHERE manager_id IS NOT NULL\nGROUP BY manager_id\nHAVING MIN(salary) > 6000\nORDER BY MIN(salary) DESC;",
           "format": "sql",
-          "correct": true,
-          "explanation": "It excludes null manager IDs before grouping, calculates each manager’s minimum salary, filters grouped results through HAVING, and sorts the minimum salaries in descending order."
+          "correct": false,
+          "explanation": "This query is technically the correctly ordered solution: WHERE removes null managers, GROUP BY forms manager groups, HAVING removes groups with minimum salary at or below 6000, and ORDER BY ... DESC sorts the highest minimum salary first. The document nevertheless highlights C."
         }
       ],
       "correct": [
-        "E"
+        "C"
       ],
-      "answerExplanation": "It excludes null manager IDs before grouping, calculates each manager’s minimum salary, filters grouped results through HAVING, and sorts the minimum salaries in descending order.",
-      "technicalNote": "",
+      "answerExplanation": "This is the choice highlighted in the supplied correction document. However, it is technically invalid because HAVING appears before GROUP BY. The clauses should be GROUP BY manager_id followed by HAVING MIN(salary) > 6000.",
+      "technicalNote": "None of the source choices aligns cleanly with both the highlighted key and valid clause order. The document highlights C, but C places HAVING before GROUP BY and does not execute. Choice E is the technically correct Oracle SQL statement. Scoring follows the document-highlighted answer C as requested.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 96
+        "questionNumber": 96,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
       "id": 97,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Sorting and Grouping",
       "stem": "Examine the description of the BOOKS table and the requirements. Which two queries can be used?",
       "instruction": "Choose two.",
@@ -3523,42 +3744,43 @@
       "options": [
         {
           "id": "A",
-          "text": "SELECT book_title\nFROM books\nWHERE price NOT BETWEEN 500 AND 1000\nAND purchase_date < '17-JAN-2007'\nORDER BY purchase_date DESC;",
+          "text": "SELECT book_title\nFROM books\nWHERE (price NOT BETWEEN 500 AND 1000)\n  AND (purchase_date < '17-JAN-2007')\nORDER BY purchase_date DESC;",
           "format": "sql",
           "correct": true,
-          "explanation": "NOT BETWEEN 500 AND 1000 selects prices below 500 or above 1000. The date condition restricts purchases to before January 17, 2007, and DESC places the most recent qualifying purchase first."
+          "explanation": "This query is correct. NOT BETWEEN 500 AND 1000 selects prices below 500 or above 1000. The date condition selects purchases before January 17, 2007, and DESC sorts the newest qualifying purchase first."
         },
         {
           "id": "B",
-          "text": "SELECT book_title\nFROM books\nWHERE (price < 500 OR price > 1000)\nAND purchase_date < '17-JAN-2007'\nORDER BY purchase_date DESC;",
+          "text": "SELECT book_title\nFROM books\nWHERE (price < 500 OR price > 1000)\n  AND (purchase_date < '17-JAN-2007')\nORDER BY purchase_date DESC;",
           "format": "sql",
-          "correct": true,
-          "explanation": "The parenthesized price conditions correctly implement “less than 500 or more than 1000.” The date and descending sort requirements are also satisfied."
+          "correct": false,
+          "explanation": "This query is technically correct because the parenthesized price expressions implement the same condition as NOT BETWEEN, and the date and descending sort also match the requirements. It is not highlighted in the source document."
         },
         {
           "id": "C",
-          "text": "SELECT book_title\nFROM books\nWHERE price < 500 OR price > 1000\nAND purchase_date < '17-JAN-2007'\nORDER BY purchase_date DESC;",
+          "text": "SELECT book_title\nFROM books\nWHERE (price < 500 OR 1000)\n  AND (purchase_date < '17-JAN-2007')\nORDER BY purchase_date DESC;",
           "format": "sql",
-          "correct": false,
-          "explanation": "Because AND has higher precedence than OR, the purchase-date condition applies only to price > 1000. Books below 500 could be returned regardless of purchase date."
+          "correct": true,
+          "explanation": "This query is highlighted in the source document, but it is technically invalid. The expression OR 1000 does not provide a Boolean condition; it should be OR price > 1000."
         },
         {
           "id": "D",
-          "text": "SELECT book_title\nFROM books\nWHERE (price BETWEEN 500 AND 1000)\nAND purchase_date < '17-JAN-2007'\nORDER BY purchase_date;",
+          "text": "SELECT book_title\nFROM books\nWHERE (price BETWEEN 500 AND 1000)\n  AND (purchase_date < '17-JAN-2007')\nORDER BY purchase_date;",
           "format": "sql",
           "correct": false,
-          "explanation": "It selects prices inside the excluded range and sorts the purchase dates in ascending order."
+          "explanation": "This query is incorrect because BETWEEN selects books inside the 500-to-1000 range, the opposite of the required price condition. It also sorts purchase dates ascending instead of descending."
         }
       ],
       "correct": [
         "A",
-        "B"
+        "C"
       ],
-      "answerExplanation": "NOT BETWEEN 500 AND 1000 selects prices below 500 or above 1000. The date condition restricts purchases to before January 17, 2007, and DESC places the most recent qualifying purchase first. The parenthesized price conditions correctly implement “less than 500 or more than 1000.” The date and descending sort requirements are also satisfied.",
-      "technicalNote": "",
+      "answerExplanation": "This query is correct. NOT BETWEEN 500 AND 1000 selects prices below 500 or above 1000. The date condition selects purchases before January 17, 2007, and DESC sorts the newest qualifying purchase first. This query is highlighted in the source document, but it is technically invalid. The expression OR 1000 does not provide a Boolean condition; it should be OR price > 1000.",
+      "technicalNote": "The correction document highlights A and C. Choice C is syntactically invalid because `OR 1000` is not a Boolean condition, while Choice B is the technically correct second query. Scoring follows the document-highlighted answers A and C as requested.",
       "source": {
         "file": "51-100.xlsx",
-        "questionNumber": 97
+        "questionNumber": 97,
+        "verification": "coorection 51-100.docx"
       }
     },
     {
@@ -3761,5 +3983,24 @@
         "questionNumber": 100
       }
     }
-  ]
+  ],
+  "revision": {
+    "version": "v2",
+    "correctedQuestions": [
+      53,
+      59,
+      60,
+      62,
+      68,
+      70,
+      71,
+      79,
+      85,
+      90,
+      96,
+      97
+    ],
+    "correctionFile": "CORRECTIONS_51_100.md",
+    "sourceDocument": "coorection 51-100.docx"
+  }
 }

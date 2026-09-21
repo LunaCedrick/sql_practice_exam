@@ -179,9 +179,24 @@ function renderSection(section) {
     return renderSqlSequence(section);
   }
 
+  if (section.type === "list") {
+    return renderListSection(section);
+  }
+
   const title = section.title ? `<p class="table-title">${escapeHtml(section.title)}</p>` : "";
   const text = section.text || section.content || "";
   return `<div class="content-section">${title}${escapeHtml(text)}</div>`;
+}
+
+function renderListSection(section) {
+  const title = section.title ? `<p class="table-title">${escapeHtml(section.title)}</p>` : "";
+  const items = Array.isArray(section.items) ? section.items : [];
+  return `
+    <div class="content-section">
+      ${title}
+      <ul>${items.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+    </div>
+  `;
 }
 
 function renderSqlSequence(section) {
