@@ -131,6 +131,7 @@
     }
 
     .start-actions,
+    .resume-area,
     .reviewer-links {
       display: flex;
       justify-content: center;
@@ -139,10 +140,19 @@
     }
 
     .start .start-actions,
+    .start .resume-area,
     .start .reviewer-links {
       width: min(620px, 100%);
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .resume-area {
+      margin: 2px 0 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8fbff;
     }
 
     .reviewer-links {
@@ -715,6 +725,7 @@
       }
 
       .start-actions,
+      .resume-area,
       .reviewer-links,
       .actions,
       .actions > div {
@@ -723,6 +734,7 @@
       }
 
       .start .start-actions,
+      .start .resume-area,
       .start .reviewer-links {
         grid-template-columns: 1fr;
       }
@@ -782,9 +794,13 @@
       <h1 id="startTitle">Oracle SQL Reviewer</h1>
       <p id="startDetails"></p>
       <p class="confidential-note">Confidential reviewer. Do not share with anyone.</p>
+      <div id="resumeArea" class="resume-area hidden">
+        <button id="resumeBtn" class="btn primary" type="button">Resume Progress</button>
+        <button id="discardSaveBtn" class="btn" type="button">Discard Saved Progress</button>
+      </div>
       <div class="start-actions">
-        <button id="mockBtn" class="btn primary" type="button">Mock Exam</button>
-        <button id="practiceBtn" class="btn soft" type="button">Practice Mode</button>
+        <button id="mockBtn" class="btn primary" type="button">Start New Mock Exam</button>
+        <button id="practiceBtn" class="btn soft" type="button">Start Practice Mode</button>
       </div>
       <div class="reviewer-links">
         <a class="download-link" href="./reviewers/Oracle SQL First-Half Exam Reviewer.pdf" download>Download Reviewer 1</a>
@@ -814,6 +830,7 @@
         <div class="actions">
           <button id="prevBtn" class="btn" type="button">Previous</button>
           <div>
+            <button id="saveExitBtn" class="btn" type="button">Save &amp; Exit</button>
             <button id="flagBtn" class="btn soft" type="button">Flag question</button>
             <button id="nextBtn" class="btn primary" type="button">Next</button>
           </div>

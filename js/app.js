@@ -1,5 +1,7 @@
 import { loadQuestionBank } from "./questionBank.js";
 
+const SAVE_KEY = "sql-practice-progress-v1";
+
 const els = {
   loading: document.getElementById("loading"),
   error: document.getElementById("error"),
@@ -9,6 +11,9 @@ const els = {
   results: document.getElementById("results"),
   startTitle: document.getElementById("startTitle"),
   startDetails: document.getElementById("startDetails"),
+  resumeArea: document.getElementById("resumeArea"),
+  resumeBtn: document.getElementById("resumeBtn"),
+  discardSaveBtn: document.getElementById("discardSaveBtn"),
   timer: document.getElementById("timer"),
   qnum: document.getElementById("qnum"),
   topic: document.getElementById("topic"),
@@ -20,6 +25,7 @@ const els = {
   numbers: document.getElementById("numbers"),
   summary: document.getElementById("summary"),
   prevBtn: document.getElementById("prevBtn"),
+  saveExitBtn: document.getElementById("saveExitBtn"),
   flagBtn: document.getElementById("flagBtn"),
   nextBtn: document.getElementById("nextBtn"),
   submitBtn: document.getElementById("submitBtn"),
@@ -56,7 +62,10 @@ async function init() {
 function bindEvents() {
   els.mockBtn.addEventListener("click", () => begin("mock"));
   els.practiceBtn.addEventListener("click", () => begin("practice"));
+  els.resumeBtn.addEventListener("click", resumeProgress);
+  els.discardSaveBtn.addEventListener("click", discardSavedProgress);
   els.prevBtn.addEventListener("click", () => move(-1));
+  els.saveExitBtn.addEventListener("click", saveAndExit);
   els.flagBtn.addEventListener("click", toggleFlag);
   els.nextBtn.addEventListener("click", nextAction);
   els.submitBtn.addEventListener("click", submitExam);
@@ -65,7 +74,12 @@ function bindEvents() {
   els.backStartBtn.addEventListener("click", () => {
     state = emptyState();
     els.timer.textContent = "";
+    clearProgress();
+    renderStart();
     show("start");
+  });
+  window.addEventListener("beforeunload", () => {
+    if (state.startedAt && !state.finished) saveProgress();
   });
 }
 
@@ -78,6 +92,7 @@ function emptyState() {
     flags: {},
     confirmed: {},
     startedAt: 0,
+    elapsedMs: 0,
     finished: false,
     lastResult: null
   };
@@ -94,9 +109,12 @@ function renderStart() {
     `Practice mode gives feedback each time you answer a question. ` +
     `Mock exam randomly selects ${mockCount} scorable questions from ${available} available questions. ` +
     `${unavailable} question is marked unavailable. Goodluck!`;
+  updateResumeControls();
 }
 
 function begin(mode) {
+  if (loadProgress() && !confirm("Start a new session and discard saved progress?")) return;
+  clearProgress();
   const questions = mode === "practice"
     ? bank.questions.map(question => withRuntimeOptions(question, false))
     : shuffle(bank.scorableQuestions).slice(0, Math.min(bank.mockQuestionCount, bank.scorableQuestions.length))
@@ -110,6 +128,38 @@ function begin(mode) {
   };
   show("exam");
   render();
+  saveProgress();
+}
+
+function resumeProgress() {
+  const saved = loadProgress();
+  if (!saved) {
+    updateResumeControls();
+    return;
+  }
+
+  state = {
+    ...emptyState(),
+    ...saved,
+    startedAt: Date.now(),
+    finished: false
+  };
+  show("exam");
+  render();
+}
+
+function saveAndExit() {
+  saveProgress();
+  state = emptyState();
+  els.timer.textContent = "";
+  renderStart();
+  show("start");
+}
+
+function discardSavedProgress() {
+  if (!confirm("Discard saved progress?")) return;
+  clearProgress();
+  updateResumeControls();
 }
 
 function withRuntimeOptions(question, shuffleChoices) {
@@ -288,6 +338,7 @@ function selectAnswer(question, input) {
       : current.filter(value => value !== input.value);
   }
   render();
+  saveProgress();
 }
 
 function renderFeedback(question) {
@@ -341,6 +392,7 @@ function renderNumbers() {
     button.addEventListener("click", () => {
       state.index = Number(button.dataset.index);
       render();
+      saveProgress();
     });
   });
 
@@ -369,6 +421,7 @@ function nextAction() {
     }
     state.confirmed[question.id] = true;
     render();
+    saveProgress();
     return;
   }
 
@@ -382,12 +435,14 @@ function nextAction() {
 function move(delta) {
   state.index = Math.max(0, Math.min(state.questions.length - 1, state.index + delta));
   render();
+  saveProgress();
 }
 
 function toggleFlag() {
   const question = currentQuestion();
   state.flags[question.id] = !state.flags[question.id];
   render();
+  saveProgress();
 }
 
 function submitExam() {
@@ -400,6 +455,7 @@ function submitExam() {
 
   state.finished = true;
   state.lastResult = result;
+  clearProgress();
   renderResults(result);
   show("results");
 }
@@ -534,6 +590,57 @@ function show(screen) {
   });
 }
 
+function updateResumeControls() {
+  const saved = loadProgress();
+  els.resumeArea.classList.toggle("hidden", !saved);
+}
+
+function saveProgress() {
+  if (!state.startedAt || state.finished || !state.questions.length) return;
+  const checkpoint = {
+    ...state,
+    elapsedMs: elapsedMs(),
+    startedAt: 0,
+    lastResult: null
+  };
+  localStorage.setItem(SAVE_KEY, JSON.stringify(checkpoint));
+}
+
+function loadProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null");
+    if (!isValidProgress(saved)) {
+      clearProgress();
+      return null;
+    }
+    return saved;
+  } catch {
+    clearProgress();
+    return null;
+  }
+}
+
+function clearProgress() {
+  localStorage.removeItem(SAVE_KEY);
+}
+
+function isValidProgress(saved) {
+  return saved &&
+    ["mock", "practice"].includes(saved.mode) &&
+    Array.isArray(saved.questions) &&
+    saved.questions.length > 0 &&
+    Number.isInteger(saved.index) &&
+    saved.index >= 0 &&
+    saved.index < saved.questions.length &&
+    saved.answers &&
+    saved.flags &&
+    saved.confirmed;
+}
+
+function elapsedMs() {
+  return state.elapsedMs + (state.startedAt ? Date.now() - state.startedAt : 0);
+}
+
 function sameSet(a, b) {
   const left = [...a].sort();
   const right = [...b].sort();
@@ -565,6 +672,6 @@ function escapeAttribute(value) {
 
 setInterval(() => {
   if (!state.startedAt || state.finished) return;
-  const elapsed = Math.floor((Date.now() - state.startedAt) / 1000);
+  const elapsed = Math.floor(elapsedMs() / 1000);
   els.timer.textContent = `${Math.floor(elapsed / 60)}:${String(elapsed % 60).padStart(2, "0")}`;
 }, 1000);
