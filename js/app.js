@@ -186,7 +186,9 @@ function render() {
 
   els.prevBtn.disabled = state.index === 0;
   els.flagBtn.disabled = !question.available;
-  els.nextBtn.textContent = nextText(question);
+  const nextLabel = nextText(question);
+  els.nextBtn.textContent = nextLabel;
+  els.nextBtn.dataset.mobileLabel = nextLabel;
 }
 
 function currentQuestion() {
@@ -408,7 +410,7 @@ function renderSummary() {
 
 function nextText(question) {
   if (state.mode === "practice" && question.available && !state.confirmed[question.id]) return "Confirm";
-  return state.index === state.questions.length - 1 ? "Finish" : "Next";
+  return "Next";
 }
 
 function nextAction() {
