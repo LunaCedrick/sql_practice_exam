@@ -411,10 +411,12 @@ function technicalNoteHtml(question) {
 function renderNumbers() {
   els.numbers.innerHTML = state.questions.map((question, index) => {
     const answered = (state.answers[question.id] || []).length > 0;
+    const practiceStatus = practiceNavStatus(question);
     const classes = [
       "num",
       index === state.index ? "current" : "",
       answered ? "answered" : "",
+      practiceStatus,
       !question.available ? "unavailable" : "",
       state.flags[question.id] ? "flagged" : ""
     ].filter(Boolean).join(" ");
@@ -431,6 +433,11 @@ function renderNumbers() {
   });
 
   els.numbers.querySelector(".current")?.scrollIntoView({ block: "nearest", inline: "nearest" });
+}
+
+function practiceNavStatus(question) {
+  if (state.mode !== "practice" || !question.available || !state.confirmed[question.id]) return "";
+  return sameSet(state.answers[question.id] || [], question.correct) ? "correct" : "incorrect";
 }
 
 function renderSummary() {
