@@ -189,6 +189,8 @@ function render() {
   const nextLabel = nextText(question);
   els.nextBtn.textContent = nextLabel;
   els.nextBtn.dataset.mobileLabel = nextLabel;
+  els.nextBtn.disabled = isLastQuestion() && nextLabel === "Next";
+  els.nextBtn.title = els.nextBtn.disabled ? "Use Submit to finish the exam." : "";
 }
 
 function currentQuestion() {
@@ -427,17 +429,22 @@ function nextAction() {
     return;
   }
 
-  if (state.index === state.questions.length - 1) {
-    submitExam();
-  } else {
-    move(1);
+  if (isLastQuestion()) {
+    alert("You are on the last question. Use Submit when you are ready to finish.");
+    return;
   }
+
+  move(1);
 }
 
 function move(delta) {
   state.index = Math.max(0, Math.min(state.questions.length - 1, state.index + delta));
   render();
   saveProgress();
+}
+
+function isLastQuestion() {
+  return state.index === state.questions.length - 1;
 }
 
 function toggleFlag() {
