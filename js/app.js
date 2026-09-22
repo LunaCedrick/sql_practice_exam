@@ -9,6 +9,7 @@ const els = {
   start: document.getElementById("start"),
   exam: document.getElementById("exam"),
   results: document.getElementById("results"),
+  examReview: document.getElementById("examReview"),
   startTitle: document.getElementById("startTitle"),
   startDetails: document.getElementById("startDetails"),
   resumeArea: document.getElementById("resumeArea"),
@@ -37,13 +38,27 @@ const els = {
   unanswered: document.getElementById("unanswered"),
   analytics: document.getElementById("analytics"),
   newTakeBtn: document.getElementById("newTakeBtn"),
+  reviewAllBtn: document.getElementById("reviewAllBtn"),
   reviewMissedBtn: document.getElementById("reviewMissedBtn"),
   backStartBtn: document.getElementById("backStartBtn"),
-  review: document.getElementById("review")
+  review: document.getElementById("review"),
+  reviewQnum: document.getElementById("reviewQnum"),
+  reviewTopic: document.getElementById("reviewTopic"),
+  reviewKind: document.getElementById("reviewKind"),
+  reviewBar: document.getElementById("reviewBar"),
+  reviewQuestionBody: document.getElementById("reviewQuestionBody"),
+  reviewOptions: document.getElementById("reviewOptions"),
+  reviewFeedback: document.getElementById("reviewFeedback"),
+  reviewNumbers: document.getElementById("reviewNumbers"),
+  reviewSummary: document.getElementById("reviewSummary"),
+  reviewPrevBtn: document.getElementById("reviewPrevBtn"),
+  reviewBackBtn: document.getElementById("reviewBackBtn"),
+  reviewNextBtn: document.getElementById("reviewNextBtn")
 };
 
 let bank = null;
 let state = emptyState();
+let reviewState = emptyReviewState();
 
 init();
 
@@ -70,7 +85,11 @@ function bindEvents() {
   els.nextBtn.addEventListener("click", nextAction);
   els.submitBtn.addEventListener("click", submitExam);
   els.newTakeBtn.addEventListener("click", () => begin("mock"));
-  els.reviewMissedBtn.addEventListener("click", renderMissedReview);
+  els.reviewAllBtn.addEventListener("click", () => startExamReview("all"));
+  els.reviewMissedBtn.addEventListener("click", () => startExamReview("missed"));
+  els.reviewPrevBtn.addEventListener("click", () => moveExamReview(-1));
+  els.reviewNextBtn.addEventListener("click", () => moveExamReview(1));
+  els.reviewBackBtn.addEventListener("click", () => show("results"));
   els.backStartBtn.addEventListener("click", () => {
     state = emptyState();
     els.timer.textContent = "";
@@ -81,6 +100,14 @@ function bindEvents() {
   window.addEventListener("beforeunload", () => {
     if (state.startedAt && !state.finished) saveProgress();
   });
+}
+
+function emptyReviewState() {
+  return {
+    mode: "all",
+    questions: [],
+    index: 0
+  };
 }
 
 function emptyState() {
@@ -203,19 +230,22 @@ function kindText(question) {
 }
 
 function renderQuestionBody(question) {
+  els.questionBody.innerHTML = questionBodyHtml(question);
+}
+
+function questionBodyHtml(question) {
   if (!question.available) {
-    els.questionBody.innerHTML = `
+    return `
       <p class="stem">Question unavailable in supplied reviewer.</p>
       <div class="unavailable">${escapeHtml(question.answerExplanation || "No question content or answer is supplied.")}</div>
     `;
-    return;
   }
 
   const sections = question.sections.map(renderSection).join("");
   const tables = question.tables.map(renderTable).join("");
   const codeBlocks = question.codeBlocks.map(renderCodeBlock).join("");
 
-  els.questionBody.innerHTML = `
+  return `
     <p class="stem">${escapeHtml(question.stem)}</p>
     ${question.instruction ? `<p class="instruction">${escapeHtml(question.instruction)}</p>` : ""}
     ${sections}
@@ -568,33 +598,158 @@ function topicCard(title, rows) {
   `;
 }
 
-function renderMissedReview() {
-  const missed = state.questions.filter(question =>
+function startExamReview(mode = "all") {
+  const questions = mode === "missed" ? missedQuestions() : state.questions;
+
+  if (!questions.length) {
+    alert("Perfect score. No missed items to review.");
+    return;
+  }
+
+  reviewState = {
+    mode,
+    questions,
+    index: 0
+  };
+  show("examReview");
+  renderExamReview();
+}
+
+function renderExamReview() {
+  const question = reviewState.questions[reviewState.index];
+  const progress = ((reviewState.index + 1) / reviewState.questions.length) * 100;
+  const status = reviewStatus(question);
+  const title = reviewState.mode === "missed" ? "Missed review" : "Mock review";
+
+  els.reviewQnum.textContent = `${title} ${reviewState.index + 1} of ${reviewState.questions.length}`;
+  els.reviewTopic.textContent = question.topic;
+  els.reviewKind.textContent = `${reviewStatusLabel(question)} - Question ${question.id}`;
+  els.reviewBar.style.width = `${progress}%`;
+  els.reviewQuestionBody.innerHTML = questionBodyHtml(question);
+  els.reviewOptions.innerHTML = reviewOptionsHtml(question);
+  els.reviewFeedback.innerHTML = `
+    ${reviewAnswerSummary(question)}
+    ${feedbackHtml(question)}
+  `;
+  renderReviewNumbers();
+  renderReviewSummary();
+
+  els.reviewPrevBtn.disabled = reviewState.index === 0;
+  els.reviewNextBtn.disabled = reviewState.index === reviewState.questions.length - 1;
+  els.reviewNextBtn.title = els.reviewNextBtn.disabled ? "This is the last reviewed question." : "";
+  els.reviewBackBtn.textContent = "Back to results";
+  els.reviewBackBtn.dataset.mobileLabel = "Results";
+  els.reviewNextBtn.dataset.mobileLabel = "Next";
+  els.reviewPrevBtn.dataset.mobileLabel = "Prev";
+
+  if (status === "correct") {
+    els.reviewKind.className = "chip good";
+  } else if (status === "incorrect") {
+    els.reviewKind.className = "chip bad";
+  } else {
+    els.reviewKind.className = "chip";
+  }
+
+  els.reviewQuestionBody.closest(".qscroll")?.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function moveExamReview(delta) {
+  reviewState.index = Math.max(0, Math.min(reviewState.questions.length - 1, reviewState.index + delta));
+  renderExamReview();
+}
+
+function renderReviewNumbers() {
+  els.reviewNumbers.innerHTML = reviewState.questions.map((question, index) => {
+    const examIndex = state.questions.indexOf(question);
+    const classes = [
+      "num",
+      index === reviewState.index ? "current" : "",
+      reviewStatus(question)
+    ].filter(Boolean).join(" ");
+
+    return `<button class="${classes}" type="button" data-index="${index}">${examIndex + 1}</button>`;
+  }).join("");
+
+  els.reviewNumbers.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+      reviewState.index = Number(button.dataset.index);
+      renderExamReview();
+    });
+  });
+
+  els.reviewNumbers.querySelector(".current")?.scrollIntoView({ block: "nearest", inline: "nearest" });
+}
+
+function renderReviewSummary() {
+  const correct = reviewState.questions.filter(question => reviewStatus(question) === "correct").length;
+  const incorrect = reviewState.questions.filter(question => reviewStatus(question) === "incorrect").length;
+  const unanswered = reviewState.questions.filter(question => reviewStatus(question) === "unanswered").length;
+  els.reviewSummary.textContent = `Correct ${correct} - Incorrect ${incorrect} - Unanswered ${unanswered}`;
+}
+
+function missedQuestions() {
+  return state.questions.filter(question =>
     question.available &&
     question.scorable &&
     !sameSet(state.answers[question.id] || [], question.correct)
   );
-
-  els.review.innerHTML = missed.length
-    ? `<h2>Missed items</h2>${missed.map(reviewCard).join("")}`
-    : `<p class="good">Perfect score.</p>`;
 }
 
-function reviewCard(question) {
+function reviewStatus(question) {
+  if (!question.available || !(state.answers[question.id] || []).length) return "unanswered";
+  return sameSet(state.answers[question.id] || [], question.correct) ? "correct" : "incorrect";
+}
+
+function reviewStatusLabel(question) {
+  const status = reviewStatus(question);
+  if (status === "correct") return "Correct";
+  if (status === "incorrect") return "Incorrect";
+  return "Unanswered";
+}
+
+function reviewAnswerSummary(question) {
+  const chosen = state.answers[question.id] || [];
   return `
-    <div class="review-card">
-      <h3>Question ${question.id}: ${escapeHtml(question.topic)}</h3>
-      <p><strong>${escapeHtml(question.stem)}</strong></p>
-      ${question.sections.map(renderSection).join("")}
-      ${question.tables.map(renderTable).join("")}
-      ${question.codeBlocks.map(renderCodeBlock).join("")}
-      ${feedbackHtml(question)}
+    <div class="feedback">
+      <p><strong>Your answer:</strong> ${chosen.length ? escapeHtml(chosen.join(", ")) : "No answer"}</p>
+      <p><strong>Correct answer:</strong> ${escapeHtml(question.correct.join(", "))}</p>
     </div>
   `;
 }
 
+function reviewOptionsHtml(question) {
+  if (!question.available) return "";
+  const chosen = state.answers[question.id] || [];
+  const inputType = question.type === "multi" ? "checkbox" : "radio";
+
+  return question.runtimeOptions.map(option => {
+    const selected = chosen.includes(option.id);
+    const classes = [
+      "option",
+      selected ? "selected" : "",
+      option.correct ? "correct" : ""
+    ].filter(Boolean).join(" ");
+    const markers = [
+      option.correct ? "Correct answer" : "",
+      selected ? "Your answer" : ""
+    ].filter(Boolean).join(" - ");
+
+    return `
+      <label class="${classes}">
+        <input type="${inputType}" name="review-answer" value="${escapeAttribute(option.id)}"
+          ${selected ? "checked" : ""} disabled>
+        <span class="option-letter">${escapeHtml(option.id)}</span>
+        <span class="option-text">
+          ${renderOptionText(option)}
+          ${markers ? `<span class="option-status">${escapeHtml(markers)}</span>` : ""}
+        </span>
+      </label>
+    `;
+  }).join("");
+}
+
 function show(screen) {
-  ["loading", "error", "start", "exam", "results"].forEach(name => {
+  ["loading", "error", "start", "exam", "results", "examReview"].forEach(name => {
     els[name].classList.toggle("hidden", name !== screen);
   });
 }

@@ -433,6 +433,38 @@
       color: #fff;
     }
 
+    .review-mode .option {
+      cursor: default;
+    }
+
+    .review-mode .option.correct {
+      border-color: rgba(29,122,79,0.28);
+      background: var(--ok-soft);
+    }
+
+    .review-mode .option.correct .option-letter {
+      background: var(--ok);
+      color: #fff;
+    }
+
+    .review-mode .option.selected:not(.correct) {
+      border-color: rgba(180,35,24,0.28);
+      background: var(--bad-soft);
+    }
+
+    .review-mode .option.selected:not(.correct) .option-letter {
+      background: var(--bad);
+      color: #fff;
+    }
+
+    .option-status {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
     .option-text {
       min-width: 0;
       line-height: 1.55;
@@ -571,6 +603,26 @@
       background: rgba(29,122,79,0.09);
       border-color: rgba(29,122,79,0.2);
       color: var(--ok);
+    }
+
+    .num.correct {
+      background: var(--ok-soft);
+      border-color: rgba(29,122,79,0.22);
+      color: var(--ok);
+    }
+
+    .num.incorrect {
+      background: var(--bad-soft);
+      border-color: rgba(180,35,24,0.24);
+      color: var(--bad);
+    }
+
+    .num.current.correct,
+    .num.current.incorrect,
+    .num.current.unanswered {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
     }
 
     .num.unavailable {
@@ -966,10 +1018,50 @@
       <div id="analytics"></div>
       <p class="start-actions">
         <button id="newTakeBtn" class="btn primary" type="button">New randomized take</button>
+        <button id="reviewAllBtn" class="btn soft" type="button">Review all results</button>
         <button id="reviewMissedBtn" class="btn soft" type="button">Review missed items</button>
         <button id="backStartBtn" class="btn" type="button">Back to start</button>
       </p>
       <div id="review"></div>
+    </div>
+  </section>
+
+  <section id="examReview" class="screen hidden review-mode">
+    <div class="layout">
+      <main class="panel question-panel">
+        <div class="qhead">
+          <div class="meta">
+            <span id="reviewQnum" class="chip"></span>
+            <span id="reviewTopic" class="chip"></span>
+            <span id="reviewKind" class="chip"></span>
+          </div>
+          <div class="progress"><i id="reviewBar"></i></div>
+        </div>
+
+        <div class="qscroll">
+          <div id="reviewQuestionBody"></div>
+          <div id="reviewOptions"></div>
+          <div id="reviewFeedback"></div>
+        </div>
+
+        <div class="actions">
+          <button id="reviewPrevBtn" class="btn" type="button" data-mobile-label="Prev">Previous</button>
+          <div>
+            <button id="reviewBackBtn" class="btn" type="button" data-mobile-label="Results">Back to results</button>
+            <button id="reviewNextBtn" class="btn primary" type="button" data-mobile-label="Next">Next</button>
+          </div>
+        </div>
+      </main>
+
+      <aside class="panel side">
+        <h2>Review</h2>
+        <div class="nav-scroll">
+          <div id="reviewNumbers" class="numbers"></div>
+        </div>
+        <div class="sidefoot">
+          <p id="reviewSummary" class="summary"></p>
+        </div>
+      </aside>
     </div>
   </section>
 
