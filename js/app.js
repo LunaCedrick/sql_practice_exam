@@ -31,6 +31,7 @@ const els = {
   nextBtn: document.getElementById("nextBtn"),
   submitBtn: document.getElementById("submitBtn"),
   mockBtn: document.getElementById("mockBtn"),
+  quickBtn: document.getElementById("quickBtn"),
   practiceBtn: document.getElementById("practiceBtn"),
   score: document.getElementById("score"),
   correct: document.getElementById("correct"),
@@ -76,6 +77,7 @@ async function init() {
 
 function bindEvents() {
   els.mockBtn.addEventListener("click", () => begin("mock"));
+  els.quickBtn.addEventListener("click", () => begin("quick"));
   els.practiceBtn.addEventListener("click", () => begin("practice"));
   els.resumeBtn.addEventListener("click", resumeProgress);
   els.discardSaveBtn.addEventListener("click", discardSavedProgress);
@@ -84,7 +86,7 @@ function bindEvents() {
   els.flagBtn.addEventListener("click", toggleFlag);
   els.nextBtn.addEventListener("click", nextAction);
   els.submitBtn.addEventListener("click", submitExam);
-  els.newTakeBtn.addEventListener("click", () => begin("mock"));
+  els.newTakeBtn.addEventListener("click", () => begin(state.mode === "quick" ? "quick" : "mock"));
   els.reviewAllBtn.addEventListener("click", () => startExamReview("all"));
   els.reviewMissedBtn.addEventListener("click", () => startExamReview("missed"));
   els.reviewPrevBtn.addEventListener("click", () => moveExamReview(-1));
@@ -130,11 +132,13 @@ function renderStart() {
   const available = bank.availableQuestions.length;
   const unavailable = bank.unavailableQuestions.length;
   const mockCount = Math.min(bank.mockQuestionCount, bank.scorableQuestions.length);
+  const quickCount = quickQuestionCount();
 
   els.startTitle.textContent = `${total} Question Reviewer`;
   els.startDetails.textContent =
     `Practice mode gives feedback each time you answer a question. ` +
     `Mock exam randomly selects ${mockCount} scorable questions from ${available} available questions. ` +
+    `Quick Quiz randomly selects ${quickCount} scorable questions with results shown at the end. ` +
     `${unavailable} question is marked unavailable. Goodluck!`;
   updateResumeControls();
 }
@@ -142,10 +146,7 @@ function renderStart() {
 function begin(mode) {
   if (loadProgress() && !confirm("Start a new session and discard saved progress?")) return;
   clearProgress();
-  const questions = mode === "practice"
-    ? bank.questions.map(question => withRuntimeOptions(question, false))
-    : shuffle(bank.scorableQuestions).slice(0, Math.min(bank.mockQuestionCount, bank.scorableQuestions.length))
-      .map(question => withRuntimeOptions(question, true));
+  const questions = sessionQuestions(mode);
 
   state = {
     ...emptyState(),
@@ -153,9 +154,25 @@ function begin(mode) {
     questions,
     startedAt: Date.now()
   };
+  renderTimer();
   show("exam");
   render();
   saveProgress();
+}
+
+function sessionQuestions(mode) {
+  if (mode === "practice") {
+    return bank.questions.map(question => withRuntimeOptions(question, false));
+  }
+
+  const count = mode === "quick" ? quickQuestionCount() : Math.min(bank.mockQuestionCount, bank.scorableQuestions.length);
+  return shuffle(bank.scorableQuestions)
+    .slice(0, count)
+    .map(question => withRuntimeOptions(question, true));
+}
+
+function quickQuestionCount() {
+  return Math.min(5, bank.scorableQuestions.length);
 }
 
 function resumeProgress() {
@@ -171,6 +188,7 @@ function resumeProgress() {
     startedAt: Date.now(),
     finished: false
   };
+  renderTimer();
   show("exam");
   render();
 }
@@ -495,7 +513,7 @@ function submitExam() {
   const result = calculateResult();
   const unanswered = result.unanswered;
 
-  if (state.mode === "mock" && unanswered && !confirm(`${unanswered} questions are unanswered. Submit anyway?`)) {
+  if (["mock", "quick"].includes(state.mode) && unanswered && !confirm(`${unanswered} questions are unanswered. Submit anyway?`)) {
     return;
   }
 
@@ -556,11 +574,13 @@ function topicStats(questions) {
 }
 
 function renderResults(result) {
+  const quick = state.mode === "quick";
   els.score.textContent = `${result.percent}%`;
   els.correct.textContent = `${result.correct}/${result.total}`;
   els.incorrect.textContent = result.incorrect;
   els.unanswered.textContent = result.unanswered;
   els.review.innerHTML = "";
+  els.newTakeBtn.textContent = quick ? "New quick quiz" : "New randomized take";
 
   const strongest = result.topics.slice(0, 5);
   const weakest = [...result.topics].sort((a, b) => a.accuracy - b.accuracy || b.total - a.total).slice(0, 5);
@@ -626,7 +646,7 @@ function renderExamReview() {
   const question = reviewState.questions[reviewState.index];
   const progress = ((reviewState.index + 1) / reviewState.questions.length) * 100;
   const status = reviewStatus(question);
-  const title = reviewState.mode === "missed" ? "Missed review" : "Mock review";
+  const title = reviewTitle();
 
   els.reviewQnum.textContent = `${title} ${reviewState.index + 1} of ${reviewState.questions.length}`;
   els.reviewTopic.textContent = question.topic;
@@ -658,6 +678,12 @@ function renderExamReview() {
   }
 
   els.reviewQuestionBody.closest(".qscroll")?.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function reviewTitle() {
+  if (reviewState.mode === "missed") return "Missed review";
+  if (state.mode === "quick") return "Quick Quiz review";
+  return "Mock review";
 }
 
 function moveExamReview(delta) {
@@ -797,7 +823,7 @@ function clearProgress() {
 
 function isValidProgress(saved) {
   return saved &&
-    ["mock", "practice"].includes(saved.mode) &&
+    ["mock", "practice", "quick"].includes(saved.mode) &&
     Array.isArray(saved.questions) &&
     saved.questions.length > 0 &&
     Number.isInteger(saved.index) &&
@@ -842,7 +868,15 @@ function escapeAttribute(value) {
 }
 
 setInterval(() => {
-  if (!state.startedAt || state.finished) return;
+  renderTimer();
+}, 1000);
+
+function renderTimer() {
+  if (!state.startedAt || state.finished || state.mode === "quick") {
+    els.timer.textContent = "";
+    return;
+  }
+
   const elapsed = Math.floor(elapsedMs() / 1000);
   els.timer.textContent = `${Math.floor(elapsed / 60)}:${String(elapsed % 60).padStart(2, "0")}`;
-}, 1000);
+}

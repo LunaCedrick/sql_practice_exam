@@ -101,6 +101,10 @@
       font-variant-numeric: tabular-nums;
     }
 
+    #timer:empty {
+      display: none;
+    }
+
     .screen {
       min-height: calc(100dvh - var(--nav-h));
       padding: 18px;
@@ -168,6 +172,29 @@
       width: min(620px, 100%);
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .start .start-actions {
+      width: min(680px, 100%);
+    }
+
+    .start .start-actions .btn {
+      min-height: 48px;
+    }
+
+    .start .start-actions .primary {
+      grid-column: 1 / -1;
+    }
+
+    #quickBtn {
+      border-color: rgba(182,106,77,0.28);
+      background: #fbf2ec;
+      color: var(--accent-strong);
+    }
+
+    #quickBtn:hover {
+      border-color: rgba(182,106,77,0.48);
+      background: #f8ebe2;
     }
 
     .resume-area {
@@ -959,6 +986,7 @@
       </div>
       <div class="start-actions">
         <button id="mockBtn" class="btn primary" type="button">Start New Mock Exam</button>
+        <button id="quickBtn" class="btn soft" type="button">Start Quick Quiz</button>
         <button id="practiceBtn" class="btn soft" type="button">Start Practice Mode</button>
       </div>
       <div class="reviewer-links">
