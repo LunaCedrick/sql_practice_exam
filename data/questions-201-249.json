@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "1.0.0",
-  "title": "Oracle SQL Reviewer Question Bank 201-249",
-  "description": "Structured question bank for Practice Mode and 63-question Mock Exam generation. Official scoring follows the document-highlighted answers.",
+  "schemaVersion": "1.1.0",
+  "title": "Oracle SQL Reviewer Question Bank 201-249 (Corrected v2)",
+  "description": "Corrected bank with exact reviewer sequence, separated tables, readable SQL, detailed explanations, and neutral technical clarifications.",
   "sourceFiles": [
     "201-249.xlsx"
   ],
@@ -341,7 +341,7 @@
       "id": 206,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Sorting and Grouping",
       "stem": "Examine the DEPARTMENTS table and the compound query. Which two ORDER BY clauses can be used to sort the output?",
       "instruction": "Choose two.",
@@ -361,39 +361,40 @@
           "text": "ORDER BY DEPT_NAME;",
           "format": "sql",
           "correct": false,
-          "explanation": "This is not one of the choices marked as valid in the document."
+          "explanation": "A compound query can sort by a result-column name or alias established by the first SELECT. In the displayed text, DEPT_NAME is not consistently exposed as the first result-column alias, so this is not selected."
         },
         {
           "id": "B",
           "text": "ORDER BY DEPT_ID;",
           "format": "sql",
           "correct": true,
-          "explanation": "The document marks the department-ID output alias as valid for sorting the compound result."
+          "explanation": "The reviewer treats DEPT_ID as a valid result-column alias from the first SELECT. A final ORDER BY may refer to that alias after the complete compound query."
         },
         {
           "id": "C",
           "text": "ORDER BY 'b';",
           "format": "sql",
           "correct": false,
-          "explanation": "'b' is a constant character literal, not an output column reference for meaningful sorting."
+          "explanation": "ORDER BY 'b' sorts by the constant literal b. Every row has the same sort key, so it does not meaningfully order the compound result by an output column."
         },
         {
           "id": "D",
           "text": "ORDER BY 3;",
           "format": "sql",
           "correct": true,
-          "explanation": "A final ORDER BY can refer to a result column by its ordinal position."
+          "explanation": "ORDER BY 3 refers to the third output column by position. Positional ordering is valid in the single ORDER BY placed after the complete compound query."
         }
       ],
       "correct": [
         "B",
         "D"
       ],
-      "answerExplanation": "The document marks the department-ID output alias as valid for sorting the compound result. A final ORDER BY can refer to a result column by its ordinal position.",
-      "technicalNote": "",
+      "answerExplanation": "The reviewer treats DEPT_ID as a valid result-column alias from the first SELECT. A final ORDER BY may refer to that alias after the complete compound query. ORDER BY 3 refers to the third output column by position. Positional ordering is valid in the single ORDER BY placed after the complete compound query.",
+      "technicalNote": "The visible compound query has an inconsistent select-list transcription: the first SELECT appears to show fewer columns than the second, while the answer key refers to DEPT_ID and column position 3. The reviewer scoring B and D is preserved using the intended three-column compound result.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 206
+        "questionNumber": 206,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -601,73 +602,53 @@
       "id": 210,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Joins and Data Modeling",
-      "stem": "Examine the relationship examples below. Which option correctly matches the relationship types?",
+      "stem": "Examine the types and examples of relationship that follow:\n\n1 One-to-one\n2 One-to-many\n3 Many-to-one\n4 Many-to-many\n\na) Teacher to Student\nb) Employees to Manager\nc) Person to SSN\nd) Customers to Products\n\nWhich option indicates correctly matched relationships?",
       "instruction": "Choose one.",
       "type": "single",
-      "sections": [
-        {
-          "type": "text",
-          "title": "Relationship 1",
-          "content": "One-to-one: Teacher to Student\nA single teacher occurrence is related to a single student occurrence under the example’s stated model."
-        },
-        {
-          "type": "text",
-          "title": "Relationship 2",
-          "content": "One-to-many: Employees to Manager\nMultiple employees may be associated with one manager. Viewed from manager to employees, the relationship is one-to-many."
-        },
-        {
-          "type": "text",
-          "title": "Relationship 3",
-          "content": "Many-to-one: Person to SSN\nThe document classifies this example as many-to-one."
-        },
-        {
-          "type": "text",
-          "title": "Relationship 4",
-          "content": "Many-to-many: Customers to Products\nA customer may be associated with many products, and a product may be associated with many customers."
-        }
-      ],
+      "sections": [],
       "tables": [],
       "codeBlocks": [],
       "options": [
         {
           "id": "A",
-          "text": "1-d, 2-b, 3-a, 4-c",
+          "text": "1-d, 2-b, 3-a, and 4-c",
           "format": "text",
           "correct": false,
-          "explanation": "This does not match all examples with their listed relationship types."
+          "explanation": "This assigns Customers to Products to one-to-one and Teacher to Student to many-to-one, which does not match the reviewer’s intended mapping."
         },
         {
           "id": "B",
-          "text": "1-c, 2-d, 3-a, 4-b",
+          "text": "1-c, 2-d, 3-a, and 4-b",
           "format": "text",
           "correct": false,
-          "explanation": "This arrangement differs from the option marked in the document."
+          "explanation": "This maps Person to SSN as one-to-one and Customers to Products as one-to-many, differing from the source mapping."
         },
         {
           "id": "C",
-          "text": "1-a, 2-b, 3-c, 4-d",
+          "text": "1-a, 2-b, 3-c, and 4-d",
           "format": "text",
           "correct": false,
-          "explanation": "This does not match the document’s marked mappings."
+          "explanation": "This is a natural literal pairing of each numbered relationship with the example written on the same source line, but it is not the option highlighted by the reviewer."
         },
         {
           "id": "D",
-          "text": "1-c, 2-a, 3-b, 4-d",
+          "text": "1-c, 2-a, 3-b, and 4-d",
           "format": "text",
           "correct": true,
-          "explanation": "This is the relationship mapping marked as correct in the source document."
+          "explanation": "This is the matching sequence highlighted in the reviewer: Person-to-SSN for one-to-one, Teacher-to-Student for one-to-many, Employees-to-Manager for many-to-one, and Customers-to-Products for many-to-many."
         }
       ],
       "correct": [
         "D"
       ],
-      "answerExplanation": "This is the relationship mapping marked as correct in the source document.",
-      "technicalNote": "",
+      "answerExplanation": "This is the matching sequence highlighted in the reviewer: Person-to-SSN for one-to-one, Teacher-to-Student for one-to-many, Employees-to-Manager for many-to-one, and Customers-to-Products for many-to-many.",
+      "technicalNote": "This is a matching-type question. The source places example letters beside relationship lines, which can suggest a different literal pairing. The official highlighted mapping is D and remains the scoring key.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 210
+        "questionNumber": 210,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -726,7 +707,7 @@
       "id": 212,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Joins and Data Modeling",
       "stem": "Which two statements are true about the USING clause when joining tables?",
       "instruction": "Choose two.",
@@ -740,46 +721,47 @@
           "text": "It is used to specify an equijoin of columns that have the same name in both tables.",
           "format": "text",
           "correct": true,
-          "explanation": "USING(column_name) creates an equality comparison between same-named columns in the joined tables."
+          "explanation": "USING(column_name) creates an equality comparison between columns that have the same name in both joined row sources. The shared column is returned once in the joined result."
         },
         {
           "id": "B",
           "text": "It is used to specify an explicit join condition involving operators.",
           "format": "text",
           "correct": false,
-          "explanation": "Arbitrary conditions and operators are specified with an ON clause."
+          "explanation": "ON is used for arbitrary join conditions, including differently named columns, non-equality operators, or multiple expressions. USING is limited to same-named equijoin columns."
         },
         {
           "id": "C",
           "text": "It can never be used with natural joins.",
           "format": "text",
           "correct": false,
-          "explanation": "This statement is not highlighted as correct in the document."
+          "explanation": "NATURAL JOIN automatically chooses all same-named compatible columns, so a separate USING clause is not written with the same join specification."
         },
         {
           "id": "D",
           "text": "It can never be used with a full outer join.",
           "format": "text",
           "correct": false,
-          "explanation": "A full outer join may use USING when the joining columns have the same name."
+          "explanation": "A FULL OUTER JOIN can use USING when both tables contain the same-named join column."
         },
         {
           "id": "E",
           "text": "All column names in a USING clause must be qualified with a table name or table alias.",
           "format": "text",
           "correct": true,
-          "explanation": "This statement is highlighted as correct in the document."
+          "explanation": "The reviewer selects this statement, but columns inside USING are normally written unqualified, for example USING (department_id), not table_alias.department_id."
         }
       ],
       "correct": [
         "A",
         "E"
       ],
-      "answerExplanation": "USING(column_name) creates an equality comparison between same-named columns in the joined tables. This statement is highlighted as correct in the document.",
-      "technicalNote": "",
+      "answerExplanation": "USING(column_name) creates an equality comparison between columns that have the same name in both joined row sources. The shared column is returned once in the joined result. The reviewer selects this statement, but columns inside USING are normally written unqualified, for example USING (department_id), not table_alias.department_id.",
+      "technicalNote": "The reviewer selects A and E. In Oracle syntax, a column named inside USING is normally unqualified. The practical rule is that USING identifies same-named equijoin columns, while ON handles explicitly qualified or more complex conditions.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 212
+        "questionNumber": 212,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -969,7 +951,7 @@
       "id": 215,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Functions and Data Types",
       "stem": "Examine the ORDER_ITEMS table. Which two queries return rows where QUANTITY is a multiple of ten?",
       "instruction": "Choose two.",
@@ -1009,46 +991,47 @@
           "text": "SELECT * FROM order_items WHERE quantity = TRUNC(quantity, -1);",
           "format": "sql",
           "correct": false,
-          "explanation": "This statement is not highlighted as correct in the document."
+          "explanation": "TRUNC(quantity,-1) removes the units digit. Equality holds when the original quantity already ends in zero, so this expression is a direct test for multiples of ten."
         },
         {
           "id": "B",
           "text": "SELECT * FROM order_items WHERE quantity / 10 = TRUNC(quantity);",
           "format": "sql",
           "correct": false,
-          "explanation": "Dividing the quantity by ten and comparing it with the original truncated quantity does not test whether the quantity is divisible by ten."
+          "explanation": "For quantity 20, quantity/10 is 2 while TRUNC(quantity) is 20. The comparison uses different scales and does not test divisibility by ten."
         },
         {
           "id": "C",
           "text": "SELECT * FROM order_items WHERE FLOOR(quantity / 10) = TRUNC(quantity);",
           "format": "sql",
           "correct": true,
-          "explanation": "This statement is highlighted as correct in the document."
+          "explanation": "The reviewer highlights this expression, but FLOOR(quantity/10) is roughly one tenth of quantity and is not equal to TRUNC(quantity) for ordinary positive multiples such as 20."
         },
         {
           "id": "D",
           "text": "SELECT * FROM order_items WHERE quantity = ROUND(quantity, 1);",
           "format": "sql",
           "correct": false,
-          "explanation": "Integer quantities remain unchanged when rounded to one decimal place, even when they are not multiples of ten."
+          "explanation": "QUANTITY is an integer column. ROUND(quantity,1) leaves every integer unchanged, so this condition includes values that are not multiples of ten."
         },
         {
           "id": "E",
           "text": "SELECT * FROM order_items WHERE MOD(quantity, 10) = 0;",
           "format": "sql",
           "correct": true,
-          "explanation": "A quantity is divisible by ten when division by ten leaves a remainder of zero."
+          "explanation": "MOD(quantity,10) returns the remainder after division by ten. A remainder of zero means the quantity is a multiple of ten."
         }
       ],
       "correct": [
         "C",
         "E"
       ],
-      "answerExplanation": "This statement is highlighted as correct in the document. A quantity is divisible by ten when division by ten leaves a remainder of zero.",
-      "technicalNote": "",
+      "answerExplanation": "The reviewer highlights this expression, but FLOOR(quantity/10) is roughly one tenth of quantity and is not equal to TRUNC(quantity) for ordinary positive multiples such as 20. MOD(quantity,10) returns the remainder after division by ten. A remainder of zero means the quantity is a multiple of ten.",
+      "technicalNote": "The reviewer selects C and E. A also directly identifies integer values ending in zero, while C does not evaluate as a divisibility test for ordinary positive quantities. Scoring remains C and E, with this clarification shown after submission.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 215
+        "questionNumber": 215,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -1173,25 +1156,19 @@
       "id": 218,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Set Operators",
-      "stem": "Examine the CUSTOMERS and CUST_HISTORY tables. You need to find customers who have never changed their address. Which set operator should be used?",
+      "stem": "View the Exhibit and examine the structure of the CUSTOMERS and CUST_HISTORY tables.\n\nThe CUSTOMERS table contains only active customers.\n\nThe CUST_HISTORY table stores historical details relating to changes in the location of current customers as well as previous customers who are no longer active with the company.\n\nYou need to find customers who have never changed their address.\n\nWhich SET operator would you use to get the required output?",
       "instruction": "Choose one.",
       "type": "single",
-      "sections": [
-        {
-          "type": "text",
-          "title": "Required result",
-          "content": "Return current customers who do not appear in the address-change history."
-        }
-      ],
+      "sections": [],
       "tables": [
         {
-          "title": "CUSTOMERS table",
+          "title": "CUSTOMERS",
           "columns": [
-            "COLUMN",
-            "NULL?",
-            "DATA TYPE"
+            "Name",
+            "Null?",
+            "Type"
           ],
           "rows": [
             [
@@ -1213,20 +1190,25 @@
               "CUST_CITY",
               "",
               "VARCHAR2(20)"
-            ],
-            [
-              "COLUMN",
-              "NULL?",
-              "DATA TYPE"
-            ],
+            ]
+          ]
+        },
+        {
+          "title": "CUST_HISTORY",
+          "columns": [
+            "Name",
+            "Null?",
+            "Type"
+          ],
+          "rows": [
             [
               "CUST_ID",
-              "",
+              "NOT NULL",
               "NUMBER(4)"
             ],
             [
               "CUST_NAME",
-              "NOT NULL",
+              "",
               "VARCHAR2(20)"
             ],
             [
@@ -1277,51 +1259,26 @@
         "C"
       ],
       "answerExplanation": "MINUS returns rows from the first result that are not present in the second result.",
-      "technicalNote": "",
+      "technicalNote": "MINUS should compare compatible customer identifiers or matching customer columns from the current-customer query against the history query. The two complete tables have different structures, so SELECT * cannot be used directly for this set operation.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 218
+        "questionNumber": 218,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 219,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Joins and Data Modeling",
-      "stem": "Examine the PRODUCTS and ORDER_ITEMS tables and the query below. What happens when the statement is executed?",
+      "stem": "View the Exhibit and examine the PRODUCTS and ORDER_ITEMS tables.\n\nYou executed the following query to display PRODUCT_NAME and the number of times the product has been ordered:\n\nWhat would happen when the above statement is executed?",
       "instruction": "Choose one.",
       "type": "single",
-      "sections": [
-        {
-          "type": "text",
-          "title": "Expected output",
-          "content": "PRODUCT_NAME │ ITEM_CNT\nThe product with no order-item row is still returned with a null count."
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "Inkjet C/340 │ 2"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "CPU D300 │ 2"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "HD 5GB │ 1"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "HD 12GB │ NULL"
-        }
-      ],
+      "sections": [],
       "tables": [
         {
-          "title": "PRODUCTS table",
+          "title": "PRODUCTS",
           "columns": [
             "PRODUCT_ID",
             "PRODUCT_NAME"
@@ -1342,39 +1299,44 @@
             [
               "4",
               "HD 12GB"
-            ],
+            ]
+          ]
+        },
+        {
+          "title": "ORDER_ITEMS",
+          "columns": [
+            "ORDER_ID",
+            "PRODUCT_ID",
+            "QTY",
+            "UNIT_PRICE"
+          ],
+          "rows": [
             [
-              "ORDER_ID",
-              "PRODUCT_ID",
-              "QTY",
-              "UNIT_PRICE"
-            ],
-            [
-              "1",
+              "11",
               "1",
               "10",
               "100"
             ],
             [
-              "2",
+              "22",
               "2",
               "15",
               "120"
             ],
             [
-              "3",
+              "33",
               "3",
               "10",
               "50"
             ],
             [
-              "4",
+              "44",
               "1",
               "5",
               "110"
             ],
             [
-              "5",
+              "55",
               "2",
               "20",
               "115"
@@ -1386,7 +1348,7 @@
         {
           "title": "Query",
           "language": "sql",
-          "code": "SELECT p.product_name, i.item_cnt\nFROM (\nSELECT product_id, COUNT(*) item_cnt\n FROM order_items\nGROUP BY product_id\n) i RIGHT OUTER JOIN products p\nON i.product_id = p.product_id;"
+          "code": "SELECT p.product_name, i.item_cnt\nFROM (\n  SELECT product_id, COUNT(*) item_cnt\n  FROM order_items\n  GROUP BY product_id\n) i RIGHT OUTER JOIN products p\n  ON i.product_id = p.product_id;"
         }
       ],
       "options": [
@@ -1423,10 +1385,11 @@
         "A"
       ],
       "answerExplanation": "Inline views can be used with outer joins, the alias ITEM_CNT is available to the outer query, and grouping is allowed inside the inline view.",
-      "technicalNote": "",
+      "technicalNote": "The expected output was removed from the question body. The RIGHT OUTER JOIN preserves every product; products with no matching order-item group receive NULL for ITEM_CNT. This derivation appears only after submission.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 219
+        "questionNumber": 219,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -1553,85 +1516,70 @@
       "id": 222,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Transactions and DML",
-      "stem": "Examine the CREATE TABLE statements for the STORES and SALES tables. The DELETE statement fails with ORA-02292. Which three options ensure that the statement executes successfully?",
+      "stem": "Examine the CREATE TABLE statements for the STORES and SALES tables.\n\nYou execute the following statement.\n\nThe statement fails due to the integrity constraint error.\n\nWhich three options ensure that the statement will execute successfully?",
       "instruction": "",
       "type": "multi",
-      "sections": [
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
         {
-          "type": "text",
           "title": "STORES table",
-          "content": "CREATE TABLE stores ("
+          "language": "sql",
+          "code": "CREATE TABLE stores (\n  store_id NUMBER(4) CONSTRAINT store_id_pk PRIMARY KEY,\n  store_name VARCHAR2(12),\n  store_address VARCHAR2(20),\n  start_date DATE\n);"
         },
         {
-          "type": "text",
-          "title": "",
-          "content": "store_id NUMBER(4) CONSTRAINT store_id_pk PRIMARY KEY,\n store_name VARCHAR2(12),\n store_address VARCHAR2(20),\n start_date DATE\n);"
-        },
-        {
-          "type": "text",
           "title": "SALES table",
-          "content": "CREATE TABLE sales ("
+          "language": "sql",
+          "code": "CREATE TABLE sales (\n  sales_id NUMBER(4) CONSTRAINT sales_id_pk PRIMARY KEY,\n  item_id NUMBER(4),\n  quantity NUMBER(10),\n  sales_date DATE,\n  store_id NUMBER(4),\n  CONSTRAINT store_id_fk FOREIGN KEY (store_id)\n    REFERENCES stores(store_id)\n);"
         },
         {
-          "type": "text",
-          "title": "",
-          "content": "sales_id NUMBER(4) CONSTRAINT sales_id_pk PRIMARY KEY,\n item_id NUMBER(4),\n quantity NUMBER(10),\n sales_date DATE,\n store_id NUMBER(4),\n CONSTRAINT store_id_fk FOREIGN KEY (store_id)\n REFERENCES stores(store_id)\n);"
-        },
-        {
-          "type": "text",
           "title": "DELETE statement",
-          "content": "DELETE FROM stores"
+          "language": "sql",
+          "code": "DELETE FROM stores\nWHERE store_id = 900;"
         },
         {
-          "type": "text",
-          "title": "",
-          "content": "WHERE store_id = 900;"
-        },
-        {
-          "type": "text",
           "title": "Error",
-          "content": "ORA-02292: integrity constraint (HR.STORE_ID_FK) violated\nA child row in SALES references store 900."
+          "language": "text",
+          "code": "ORA-02292: integrity constraint (HR.STORE_ID_FK) violated"
         }
       ],
-      "tables": [],
-      "codeBlocks": [],
       "options": [
         {
           "id": "A",
           "text": "Disable the primary key in the STORES table.",
           "format": "text",
           "correct": false,
-          "explanation": "This does not properly remove the child rows that reference the parent row."
+          "explanation": "Disabling the parent primary key does not remove the child SALES rows that reference STORE_ID 900. The dependent relationship remains the reason the parent row cannot be deleted safely."
         },
         {
           "id": "B",
           "text": "Use the CASCADE keyword with the DELETE statement.",
           "format": "text",
           "correct": false,
-          "explanation": "Oracle does not support a general DELETE ... CASCADE clause in this form."
+          "explanation": "Oracle DELETE syntax does not accept a general CASCADE keyword. Cascading deletion must be defined on the foreign key with ON DELETE CASCADE."
         },
         {
           "id": "C",
           "text": "Delete the rows with STORE_ID = 900 from the SALES table and then delete the row from the STORES table.",
           "format": "sql",
           "correct": true,
-          "explanation": "Removing the dependent child rows first allows the parent row to be deleted."
+          "explanation": "Deleting the dependent SALES rows first removes the foreign-key references. The STORES row can then be deleted without violating referential integrity."
         },
         {
           "id": "D",
           "text": "Disable the foreign key in the SALES table and then delete the row.",
           "format": "text",
           "correct": true,
-          "explanation": "Oracle will not enforce the foreign-key relationship while the constraint is disabled."
+          "explanation": "Disabling STORE_ID_FK stops Oracle from checking the relationship during the delete, allowing the parent row to be removed. This can leave orphaned child rows and requires controlled use."
         },
         {
           "id": "E",
           "text": "Create the foreign key in the SALES table on SALES_ID with the ON DELETE CASCADE option.",
           "format": "sql",
           "correct": true,
-          "explanation": "This is marked as correct in the document image."
+          "explanation": "ON DELETE CASCADE on the child foreign key makes Oracle delete matching SALES rows automatically when the referenced STORES row is deleted."
         }
       ],
       "correct": [
@@ -1639,65 +1587,30 @@
         "D",
         "E"
       ],
-      "answerExplanation": "Removing the dependent child rows first allows the parent row to be deleted. Oracle will not enforce the foreign-key relationship while the constraint is disabled. This is marked as correct in the document image.",
-      "technicalNote": "",
+      "answerExplanation": "Deleting the dependent SALES rows first removes the foreign-key references. The STORES row can then be deleted without violating referential integrity. Disabling STORE_ID_FK stops Oracle from checking the relationship during the delete, allowing the parent row to be removed. This can leave orphaned child rows and requires controlled use. ON DELETE CASCADE on the child foreign key makes Oracle delete matching SALES rows automatically when the referenced STORES row is deleted.",
+      "technicalNote": "Choice E is interpreted as recreating STORE_ID_FK on SALES.STORE_ID with ON DELETE CASCADE. The screenshot wording identifies the SALES_ID column, but SALES_ID is the child primary key and does not reference STORES.STORE_ID. Scoring remains C, D, and E.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 222
+        "questionNumber": 222,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 223,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
-      "stem": "In the CUSTOMERS table, CUST_CITY contains Paris for CUST_FIRST_NAME Abigail. Evaluate the query. What is the outcome?",
+      "stem": "In the CUSTOMERS table, the CUST_CITY column contains the value 'Paris' for CUST_FIRST_NAME 'Abigail'.\n\nEvaluate the following query:\n\nWhat would be the outcome?",
       "instruction": "Choose one.",
       "type": "single",
-      "sections": [
-        {
-          "type": "text",
-          "title": "Source values",
-          "content": "CUST_FIRST_NAME = 'Abigail'"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "CUST_CITY = 'Paris'"
-        },
-        {
-          "type": "text",
-          "title": "Evaluation",
-          "content": "LENGTH('Paris') → 5"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "SUBSTR('Paris', -5, 2) → 'Pa'"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "UPPER('Pa') → 'PA'"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "Concatenation → 'Abigail PA'"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "INITCAP('Abigail PA') → 'Abigail Pa'"
-        }
-      ],
+      "sections": [],
       "tables": [],
       "codeBlocks": [
         {
           "title": "Query",
           "language": "sql",
-          "code": "SELECT INITCAP(cust_first_name || ' ' ||\nUPPER(SUBSTR(cust_city, -LENGTH(cust_city), 2)))\nFROM customers\nWHERE cust_first_name = 'Abigail';"
+          "code": "SELECT INITCAP(cust_first_name || ' ' ||\n               UPPER(SUBSTR(cust_city, -LENGTH(cust_city), 2)))\nFROM customers\nWHERE cust_first_name = 'Abigail';"
         }
       ],
       "options": [
@@ -1706,45 +1619,46 @@
           "text": "Abigail Pa",
           "format": "text",
           "correct": true,
-          "explanation": "The outer INITCAP converts the intermediate value Abigail PA to Abigail Pa."
+          "explanation": "LENGTH(Paris) is 5, so SUBSTR(Paris,-5,2) starts at the first character and returns Pa. UPPER changes it to PA, and the outer INITCAP changes the combined text to Abigail Pa."
         },
         {
           "id": "B",
           "text": "Abigail PA",
           "format": "text",
           "correct": false,
-          "explanation": "This is the value before the outer INITCAP function is applied."
+          "explanation": "Abigail PA is the intermediate value before INITCAP. INITCAP lowercases the remaining letters of each word after capitalizing the first letter."
         },
         {
           "id": "C",
           "text": "Abigail IS",
           "format": "text",
           "correct": false,
-          "explanation": "The expression extracts the first two characters of Paris, not the last two."
+          "explanation": "The negative start position is -5, which points to the first character of the five-character city. The expression does not extract the final IS."
         },
         {
           "id": "D",
           "text": "An error message",
           "format": "text",
           "correct": false,
-          "explanation": "The character functions and concatenation are valid."
+          "explanation": "LENGTH, SUBSTR, UPPER, concatenation, and INITCAP are valid in this expression, so the query does not fail."
         }
       ],
       "correct": [
         "A"
       ],
-      "answerExplanation": "The outer INITCAP converts the intermediate value Abigail PA to Abigail Pa.",
-      "technicalNote": "",
+      "answerExplanation": "LENGTH(Paris) is 5, so SUBSTR(Paris,-5,2) starts at the first character and returns Pa. UPPER changes it to PA, and the outer INITCAP changes the combined text to Abigail Pa.",
+      "technicalNote": "The step-by-step evaluation was removed from the question body and retained only in the explanations after submission.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 223
+        "questionNumber": 223,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 224,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Transactions and DML",
       "stem": "Which two statements are true regarding constraints?",
       "instruction": "",
@@ -1758,53 +1672,54 @@
           "text": "A foreign key column cannot contain null values.",
           "format": "text",
           "correct": false,
-          "explanation": "A foreign-key column may contain null values unless it also has a NOT NULL constraint."
+          "explanation": "A foreign-key column can contain NULL unless a separate NOT NULL constraint prohibits it. A NULL foreign key does not have to match a parent key value."
         },
         {
           "id": "B",
           "text": "A column with the UNIQUE constraint can contain null values.",
           "format": "text",
           "correct": true,
-          "explanation": "A unique constraint prevents duplicate non-null values but permits null values."
+          "explanation": "UNIQUE prevents duplicate non-null values. Oracle can store multiple NULL values because NULL is not treated as equal to another NULL for uniqueness enforcement."
         },
         {
           "id": "C",
           "text": "A constraint is enforced only for an INSERT operation on the table.",
           "format": "text",
           "correct": false,
-          "explanation": "Constraints may also be enforced during UPDATE and DELETE operations."
+          "explanation": "Constraints can be checked during INSERT, UPDATE, and in referential cases DELETE. Enforcement is not limited to INSERT."
         },
         {
           "id": "D",
           "text": "A constraint can be disabled even if the constraint column contains data.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not green-highlighted in the document image."
+          "explanation": "A constraint can be disabled while the table contains data. Disabling controls future enforcement; ENABLE VALIDATE can later check existing rows."
         },
         {
           "id": "E",
           "text": "All constraints can be defined at the column level and at the table level.",
           "format": "text",
           "correct": true,
-          "explanation": "This choice is green-highlighted in the document image."
+          "explanation": "The reviewer selects this statement. In standard Oracle syntax, NOT NULL is defined only at column level, while many other constraints can be defined at column or table level."
         }
       ],
       "correct": [
         "B",
         "E"
       ],
-      "answerExplanation": "A unique constraint prevents duplicate non-null values but permits null values. This choice is green-highlighted in the document image.",
-      "technicalNote": "",
+      "answerExplanation": "UNIQUE prevents duplicate non-null values. Oracle can store multiple NULL values because NULL is not treated as equal to another NULL for uniqueness enforcement. The reviewer selects this statement. In standard Oracle syntax, NOT NULL is defined only at column level, while many other constraints can be defined at column or table level.",
+      "technicalNote": "The reviewer selects B and E. NOT NULL is the important exception to the claim in E because it is a column-level constraint. D describes a valid constraint-management operation. Scoring remains B and E.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 224
+        "questionNumber": 224,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 225,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Privileges and Constraints",
       "stem": "On an Oracle 12c database, SQL*Loader is invoked to load data into the HR.EMPLOYEES table using the command below. Which two statements are true?",
       "instruction": "",
@@ -1824,46 +1739,47 @@
           "text": "It succeeds with default settings if the EMPLOYEES table belonging to HR is already defined in the database.",
           "format": "text",
           "correct": true,
-          "explanation": "This statement is green-highlighted in the document image. The TABLE parameter invokes SQL*Loader express mode."
+          "explanation": "TABLE=employees invokes SQL*Loader express mode and uses the metadata of the existing HR.EMPLOYEES table instead of requiring a user-written control file."
         },
         {
           "id": "B",
           "text": "It fails because no SQL*Loader data-file location is specified.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not green-highlighted in the document image."
+          "explanation": "Express mode uses default naming conventions for the input data file, so omitting an explicit data-file location does not by itself mean the command must fail."
         },
         {
           "id": "C",
           "text": "It fails if the HR user does not have the CREATE ANY DIRECTORY privilege.",
           "format": "text",
           "correct": true,
-          "explanation": "This statement is green-highlighted in the document image."
+          "explanation": "The reviewer associates express mode setup with directory creation privileges for the HR user. This is the selected permission-related condition."
         },
         {
           "id": "D",
           "text": "It fails because no SQL*Loader control-file location is specified.",
           "format": "text",
           "correct": false,
-          "explanation": "Express mode does not require a separately specified control file."
+          "explanation": "A separate control file is not required in express mode because SQL*Loader derives the field definitions from the target table."
         }
       ],
       "correct": [
         "A",
         "C"
       ],
-      "answerExplanation": "This statement is green-highlighted in the document image. The TABLE parameter invokes SQL*Loader express mode. This statement is green-highlighted in the document image.",
-      "technicalNote": "",
+      "answerExplanation": "TABLE=employees invokes SQL*Loader express mode and uses the metadata of the existing HR.EMPLOYEES table instead of requiring a user-written control file. The reviewer associates express mode setup with directory creation privileges for the HR user. This is the selected permission-related condition.",
+      "technicalNote": "Execution still depends on the expected input file and environment being available under express-mode conventions. The reviewer scoring remains A and C.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 225
+        "questionNumber": 225,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 226,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
       "stem": "You notice a performance change in your production Oracle 12c database. You want to know which change caused this performance difference. Which method or feature should you use?",
       "instruction": "Choose one.",
@@ -1877,45 +1793,46 @@
           "text": "Compare Period ADDM report.",
           "format": "text",
           "correct": false,
-          "explanation": "This is not the answer highlighted in the source document."
+          "explanation": "ADDM analyzes database performance for a period and can diagnose findings, but this option is not the reviewer’s selected comparison method."
         },
         {
           "id": "B",
           "text": "AWR Compare Period report.",
           "format": "text",
           "correct": true,
-          "explanation": "The AWR Compare Period report compares database performance between two periods, helping identify changes associated with a performance difference."
+          "explanation": "AWR Compare Period compares statistics from two AWR time periods, making changes in workload, configuration, or resource use visible side by side."
         },
         {
           "id": "C",
           "text": "Active Session History (ASH) report.",
           "format": "text",
           "correct": false,
-          "explanation": "An ASH report analyzes sampled active-session activity, but it is not the document’s selected method for comparing two performance periods."
+          "explanation": "ASH focuses on sampled active sessions and is useful for investigating activity within a period, not primarily for comparing two complete performance periods."
         },
         {
           "id": "D",
           "text": "Take a new snapshot and compare it with a preserved snapshot.",
           "format": "text",
           "correct": false,
-          "explanation": "This is not the answer highlighted in the source document."
+          "explanation": "Individual snapshots are the source data for AWR, but the dedicated Compare Period report performs the structured comparison required by the question."
         }
       ],
       "correct": [
         "B"
       ],
-      "answerExplanation": "The AWR Compare Period report compares database performance between two periods, helping identify changes associated with a performance difference.",
+      "answerExplanation": "AWR Compare Period compares statistics from two AWR time periods, making changes in workload, configuration, or resource use visible side by side.",
       "technicalNote": "",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 226
+        "questionNumber": 226,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 227,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
       "stem": "Which statement is true about Enterprise Manager (EM) Express in Oracle Database 12c?",
       "instruction": "Choose one.",
@@ -1929,52 +1846,53 @@
           "text": "By default, EM Express is available for a database after database creation.",
           "format": "text",
           "correct": false,
-          "explanation": "This is not the answer highlighted in the source document."
+          "explanation": "EM Express requires database configuration and an HTTPS port; availability should not be assumed solely from database creation."
         },
         {
           "id": "B",
           "text": "You can use EM Express to manage multiple databases running on the same server.",
           "format": "text",
           "correct": false,
-          "explanation": "This is not the answer highlighted in the source document."
+          "explanation": "EM Express connects to and administers one database service rather than acting as a central console for multiple databases."
         },
         {
           "id": "C",
           "text": "You can perform basic administrative tasks for pluggable databases by using the EM Express interface.",
           "format": "text",
           "correct": true,
-          "explanation": "This is the statement highlighted as correct in the document."
+          "explanation": "EM Express provides web-based access to basic monitoring and administrative functions for the connected pluggable database."
         },
         {
           "id": "D",
           "text": "You cannot start up or shut down a database instance by using EM Express.",
           "format": "text",
           "correct": false,
-          "explanation": "This is not the answer highlighted in the source document."
+          "explanation": "EM Express requires the database instance to be running, so instance startup and shutdown are not its normal management scope."
         },
         {
           "id": "E",
           "text": "You can create and configure pluggable databases by using EM Express.",
           "format": "text",
           "correct": false,
-          "explanation": "This is not the answer highlighted in the source document."
+          "explanation": "Creating and configuring pluggable databases requires broader administrative tools; EM Express is focused on basic administration of the database to which it is connected."
         }
       ],
       "correct": [
         "C"
       ],
-      "answerExplanation": "This is the statement highlighted as correct in the document.",
+      "answerExplanation": "EM Express provides web-based access to basic monitoring and administrative functions for the connected pluggable database.",
       "technicalNote": "",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 227
+        "questionNumber": 227,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 228,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Transactions and DML",
       "stem": "Which two partitioned-table maintenance operations support asynchronous Global Index Maintenance in Oracle Database 12c?",
       "instruction": "Choose two.",
@@ -1988,60 +1906,61 @@
           "text": "ALTER TABLE SPLIT PARTITION",
           "format": "sql",
           "correct": false,
-          "explanation": "This operation is not highlighted as correct in the source document."
+          "explanation": "SPLIT PARTITION redistributes rows into new partitions and is not one of the operations selected for asynchronous global-index cleanup in this question."
         },
         {
           "id": "B",
           "text": "ALTER TABLE MERGE PARTITION",
           "format": "sql",
           "correct": false,
-          "explanation": "This operation is not highlighted as correct in the source document."
+          "explanation": "MERGE PARTITION combines partitions and is not one of the two selected asynchronous-maintenance operations."
         },
         {
           "id": "C",
           "text": "ALTER TABLE TRUNCATE PARTITION",
           "format": "sql",
           "correct": true,
-          "explanation": "This operation is highlighted as supporting asynchronous Global Index Maintenance."
+          "explanation": "TRUNCATE PARTITION removes all rows from a partition. With asynchronous global index maintenance, index cleanup can be deferred rather than performed fully in the foreground operation."
         },
         {
           "id": "D",
           "text": "ALTER TABLE ADD PARTITION",
           "format": "sql",
           "correct": false,
-          "explanation": "This operation is not highlighted as correct in the source document."
+          "explanation": "ADD PARTITION introduces an empty partition and does not remove indexed row entries that require asynchronous cleanup."
         },
         {
           "id": "E",
           "text": "ALTER TABLE DROP PARTITION",
           "format": "sql",
           "correct": true,
-          "explanation": "This operation is highlighted as supporting asynchronous Global Index Maintenance."
+          "explanation": "DROP PARTITION removes a partition and its rows. Asynchronous global index maintenance can defer cleanup of affected global-index entries."
         },
         {
           "id": "F",
           "text": "ALTER TABLE MOVE PARTITION",
           "format": "sql",
           "correct": false,
-          "explanation": "This operation is not highlighted as correct in the source document."
+          "explanation": "MOVE PARTITION relocates partition data and is not one of the two operations selected here."
         }
       ],
       "correct": [
         "C",
         "E"
       ],
-      "answerExplanation": "This operation is highlighted as supporting asynchronous Global Index Maintenance. This operation is highlighted as supporting asynchronous Global Index Maintenance.",
+      "answerExplanation": "TRUNCATE PARTITION removes all rows from a partition. With asynchronous global index maintenance, index cleanup can be deferred rather than performed fully in the foreground operation. DROP PARTITION removes a partition and its rows. Asynchronous global index maintenance can defer cleanup of affected global-index entries.",
       "technicalNote": "",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 228
+        "questionNumber": 228,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 229,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Subqueries",
       "stem": "Examine the PRODUCTS and SALES tables. You issue the following query to display each product name and the number of times the product has been sold. What happens when the statement is executed?",
       "instruction": "Choose one.",
@@ -2049,11 +1968,11 @@
       "sections": [],
       "tables": [
         {
-          "title": "PRODUCTS table",
+          "title": "PRODUCTS",
           "columns": [
-            "COLUMN",
-            "NULL?",
-            "DATA TYPE"
+            "Name",
+            "Null?",
+            "Type"
           ],
           "rows": [
             [
@@ -2105,12 +2024,17 @@
               "PROD_MIN_PRICE",
               "NOT NULL",
               "NUMBER(8,2)"
-            ],
-            [
-              "COLUMN",
-              "NULL?",
-              "DATA TYPE"
-            ],
+            ]
+          ]
+        },
+        {
+          "title": "SALES",
+          "columns": [
+            "Name",
+            "Null?",
+            "Type"
+          ],
+          "rows": [
             [
               "PROD_ID",
               "NOT NULL",
@@ -2148,7 +2072,7 @@
         {
           "title": "Query",
           "language": "sql",
-          "code": "SELECT p.prod_name, i.item_cnt\nFROM (\nSELECT prod_id, COUNT(*) item_cnt\nFROM sales\nGROUP BY prod_id\n) i RIGHT OUTER JOIN products p\nON i.prod_id = p.prod_id;"
+          "code": "SELECT p.prod_name, i.item_cnt\nFROM (\n  SELECT prod_id, COUNT(*) item_cnt\n  FROM sales\n  GROUP BY prod_id\n) i RIGHT OUTER JOIN products p\n  ON i.prod_id = p.prod_id;"
         }
       ],
       "options": [
@@ -2185,10 +2109,11 @@
         "A"
       ],
       "answerExplanation": "An inline view can contain GROUP BY and participate in an outer join. The ITEM_CNT alias becomes available to the outer query.",
-      "technicalNote": "",
+      "technicalNote": "The PRODUCTS and SALES structures were separated. The inline view counts SALES rows per PROD_ID, and the RIGHT OUTER JOIN retains products with no matching sales count.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 229
+        "questionNumber": 229,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -2407,60 +2332,20 @@
       "id": 232,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
       "stem": "Examine the following statement. On which two columns will an index be created automatically?",
       "instruction": "",
       "type": "multi",
-      "sections": [
+      "sections": [],
+      "tables": [],
+      "codeBlocks": [
         {
-          "type": "text",
           "title": "Statement",
-          "content": "CREATE TABLE orders ("
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "serial_no NUMBER UNIQUE,"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "order_id NUMBER PRIMARY KEY,"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "order_date DATE NOT NULL,"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "status VARCHAR2(10)"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "CHECK (status IN ('CREDIT', 'CASH')),"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "product_id NUMBER REFERENCES products(product_id),"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "order_total NUMBER"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": ");"
+          "language": "sql",
+          "code": "CREATE TABLE orders (\n  serial_no NUMBER UNIQUE,\n  order_id NUMBER PRIMARY KEY,\n  order_date DATE NOT NULL,\n  status VARCHAR2(10) CHECK (status IN ('CREDIT', 'CASH')),\n  product_id NUMBER REFERENCES products(product_id),\n  order_total NUMBER\n);"
         }
       ],
-      "tables": [],
-      "codeBlocks": [],
       "options": [
         {
           "id": "A",
@@ -2510,10 +2395,11 @@
         "D"
       ],
       "answerExplanation": "Oracle normally creates or reuses a unique index to enforce the UNIQUE constraint. Oracle normally creates or reuses a unique index to enforce the primary-key constraint.",
-      "technicalNote": "",
+      "technicalNote": "The question asks which columns receive automatic indexes. Oracle commonly creates or reuses unique indexes for UNIQUE and PRIMARY KEY constraints; it does not automatically index a child foreign-key column.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 232
+        "questionNumber": 232,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -2714,7 +2600,7 @@
       "id": 236,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Joins and Data Modeling",
       "stem": "Examine the data in the COLORS and BRICKS tables. Which two queries return all the rows from COLORS?",
       "instruction": "Choose two.",
@@ -2722,7 +2608,7 @@
       "sections": [],
       "tables": [
         {
-          "title": "COLORS table",
+          "title": "COLORS",
           "columns": [
             "RGB_HEX_VALUE",
             "COLOR_NAME"
@@ -2739,11 +2625,16 @@
             [
               "0000FF",
               "blue"
-            ],
-            [
-              "BRICK_ID",
-              "COLOR_RGB_HEX_VALUE"
-            ],
+            ]
+          ]
+        },
+        {
+          "title": "BRICKS",
+          "columns": [
+            "BRICK_ID",
+            "COLOR_RGB_HEX_VALUE"
+          ],
+          "rows": [
             [
               "1",
               "FF0000"
@@ -2802,95 +2693,75 @@
         "C"
       ],
       "answerExplanation": "The right outer join preserves every row from COLORS, including colors without a matching brick. A full outer join preserves all rows from both tables, including every row from COLORS.",
-      "technicalNote": "",
+      "technicalNote": "The two data tables must render separately. RIGHT JOIN and FULL JOIN preserve all rows from COLORS; a filter on the nullable BRICKS side after a LEFT JOIN removes unmatched colors.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 236
+        "questionNumber": 236,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 237,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Oracle SQL",
       "stem": "HR creates the SCOTT.PRODUCTS table and then HR and SCOTT attempt statements 1–4. Which statements execute successfully?",
       "instruction": "Choose one.",
       "type": "single",
       "sections": [
         {
-          "type": "text",
+          "type": "list",
           "title": "HR privileges",
-          "content": "CREATE SESSION"
+          "items": [
+            "CREATE SESSION",
+            "CREATE ANY TABLE",
+            "UNLIMITED TABLESPACE"
+          ]
         },
         {
-          "type": "text",
-          "title": "",
-          "content": "CREATE ANY TABLE"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "UNLIMITED TABLESPACE"
-        },
-        {
-          "type": "text",
+          "type": "list",
           "title": "SCOTT privileges",
-          "content": "CREATE SESSION"
+          "items": [
+            "CREATE SESSION",
+            "CREATE TABLE",
+            "UNLIMITED TABLESPACE"
+          ]
         },
         {
           "type": "text",
-          "title": "",
-          "content": "CREATE TABLE"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "UNLIMITED TABLESPACE"
-        },
-        {
-          "type": "text",
-          "title": "Statement executed by HR",
-          "content": "CREATE TABLE scott.products (\nHR can create the table in SCOTT’s schema because HR has CREATE ANY TABLE."
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "prod_id NUMBER(2),"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": "prod_name VARCHAR2(20)"
-        },
-        {
-          "type": "text",
-          "title": "",
-          "content": ");"
-        },
-        {
-          "type": "text",
-          "title": "Statement 1, HR",
-          "content": "INSERT INTO scott.products VALUES (1, 'LAPTOP');\nFails. The document notes that HR does not receive INSERT privilege on the table merely by creating it in SCOTT’s schema."
-        },
-        {
-          "type": "text",
-          "title": "Statement 2, SCOTT",
-          "content": "SELECT * FROM products;\nExecutes. SCOTT owns the table and can query it."
-        },
-        {
-          "type": "text",
-          "title": "Statement 3, SCOTT",
-          "content": "INSERT INTO scott.products VALUES (2, 'HDD');\nExecutes. SCOTT owns the table and can insert into it."
-        },
-        {
-          "type": "text",
-          "title": "Statement 4, SCOTT",
-          "content": "CREATE SYNONYM prod FOR products;\nFails. The listed SCOTT privileges do not include CREATE SYNONYM."
+          "title": "HR successfully executes this statement",
+          "content": ""
         }
       ],
       "tables": [],
-      "codeBlocks": [],
+      "codeBlocks": [
+        {
+          "title": "Table creation by HR",
+          "language": "sql",
+          "code": "CREATE TABLE scott.products (\n  prod_id NUMBER(2),\n  prod_name VARCHAR2(20)\n);"
+        },
+        {
+          "title": "Statement 1 - HR",
+          "language": "sql",
+          "code": "INSERT INTO scott.products VALUES (1, 'LAPTOP');"
+        },
+        {
+          "title": "Statement 2 - SCOTT",
+          "language": "sql",
+          "code": "SELECT * FROM products;"
+        },
+        {
+          "title": "Statement 3 - SCOTT",
+          "language": "sql",
+          "code": "INSERT INTO scott.products VALUES (2, 'HDD');"
+        },
+        {
+          "title": "Statement 4 - SCOTT",
+          "language": "sql",
+          "code": "CREATE SYNONYM prod FOR products;"
+        }
+      ],
       "options": [
         {
           "id": "A",
@@ -2925,17 +2796,18 @@
         "D"
       ],
       "answerExplanation": "SCOTT owns the table and can select from and insert into it.",
-      "technicalNote": "",
+      "technicalNote": "Creating a table in another schema through CREATE ANY TABLE does not automatically grant HR object privileges on that table. SCOTT owns the created table and can query and insert into it; CREATE SYNONYM requires an additional system privilege.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 237
+        "questionNumber": 237,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 238,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Tables, Views, Sequences, and Synonyms",
       "stem": "Which three statements are true about privileges?",
       "instruction": "",
@@ -2949,42 +2821,42 @@
           "text": "Object privileges granted on a table automatically apply to all synonyms for that table.",
           "format": "text",
           "correct": true,
-          "explanation": "A synonym is an alternative name for its underlying object. Access through the synonym depends on privileges on that underlying object."
+          "explanation": "A synonym is only an alternate name. When SQL resolves the synonym, access is still checked against the underlying table, so existing table privileges apply through the synonym."
         },
         {
           "id": "B",
           "text": "All types of schema objects have associated object privileges.",
           "format": "text",
           "correct": false,
-          "explanation": "Not every type of schema object has grantable object privileges."
+          "explanation": "Object privileges are defined only for object types that support grantable operations. Not every schema-object type has its own object privileges."
         },
         {
           "id": "C",
           "text": "Only users with GRANT ANY PRIVILEGE can grant and revoke system privileges from other users.",
           "format": "text",
           "correct": true,
-          "explanation": "This statement is highlighted as correct in the source document."
+          "explanation": "The reviewer uses GRANT ANY PRIVILEGE as the authority for passing system privileges. A user who received a particular system privilege WITH ADMIN OPTION can also pass that specific privilege onward."
         },
         {
           "id": "D",
           "text": "Only users with the DBA role can create roles.",
           "format": "text",
           "correct": false,
-          "explanation": "Creating a role requires the appropriate system privilege, not necessarily the DBA role."
+          "explanation": "CREATE ROLE is the required system privilege. Holding the DBA role is one possible source of authority but is not the only conceptual requirement."
         },
         {
           "id": "E",
           "text": "Schema owners can grant object privileges on objects in their schema to any other user or role.",
           "format": "text",
           "correct": true,
-          "explanation": "Object owners can grant applicable privileges on their objects to users and roles."
+          "explanation": "An object owner can grant applicable privileges on owned objects to users or roles, optionally with grant authority where supported."
         },
         {
           "id": "F",
           "text": "A combination of object and system privileges can be granted to a role.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the source document."
+          "explanation": "Roles can contain system privileges, object privileges, and other roles. The reviewer does not select this statement, so the broader role-composition rule is clarified in the technical note."
         }
       ],
       "correct": [
@@ -2992,18 +2864,19 @@
         "C",
         "E"
       ],
-      "answerExplanation": "A synonym is an alternative name for its underlying object. Access through the synonym depends on privileges on that underlying object. This statement is highlighted as correct in the source document. Object owners can grant applicable privileges on their objects to users and roles.",
-      "technicalNote": "",
+      "answerExplanation": "A synonym is only an alternate name. When SQL resolves the synonym, access is still checked against the underlying table, so existing table privileges apply through the synonym. The reviewer uses GRANT ANY PRIVILEGE as the authority for passing system privileges. A user who received a particular system privilege WITH ADMIN OPTION can also pass that specific privilege onward. An object owner can grant applicable privileges on owned objects to users or roles, optionally with grant authority where supported.",
+      "technicalNote": "The reviewer selects A, C, and E. A system privilege can also be passed by a grantee who received it WITH ADMIN OPTION, and roles can contain both system and object privileges. Scoring remains A, C, and E.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 238
+        "questionNumber": 238,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 239,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Privileges and Constraints",
       "stem": "Which two statements are true about the WITH GRANT OPTION clause?",
       "instruction": "",
@@ -3017,60 +2890,61 @@
           "text": "The grantee must have the GRANT ANY OBJECT PRIVILEGE system privilege to use this option.",
           "format": "text",
           "correct": false,
-          "explanation": "A user who receives an object privilege with WITH GRANT OPTION can grant that privilege onward without needing GRANT ANY OBJECT PRIVILEGE."
+          "explanation": "WITH GRANT OPTION itself authorizes the grantee to pass the received object privilege onward; GRANT ANY OBJECT PRIVILEGE is not additionally required for that privilege."
         },
         {
           "id": "B",
           "text": "It can be used when granting privileges to roles.",
           "format": "text",
           "correct": false,
-          "explanation": "WITH GRANT OPTION cannot be used when an object privilege is granted to a role."
+          "explanation": "Object privileges granted to a role cannot include WITH GRANT OPTION. The option is used when granting directly to a user or PUBLIC."
         },
         {
           "id": "C",
           "text": "The grantee can grant the object privilege to any user in the database with this option.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the document image."
+          "explanation": "A grantee with WITH GRANT OPTION can pass the object privilege to another user or PUBLIC, subject to the scope of the received privilege."
         },
         {
           "id": "D",
           "text": "It can be used for system and object privileges.",
           "format": "text",
           "correct": true,
-          "explanation": "This statement is highlighted as correct in the source document."
+          "explanation": "The reviewer applies this wording to both privilege categories. Oracle terminology uses WITH GRANT OPTION for object privileges and WITH ADMIN OPTION for system privileges."
         },
         {
           "id": "E",
           "text": "It can be used to pass on privileges to other users by the grantee.",
           "format": "text",
           "correct": true,
-          "explanation": "A grantee receiving an object privilege with WITH GRANT OPTION can grant that privilege to other users."
+          "explanation": "WITH GRANT OPTION lets the recipient grant the same object privilege to other users or PUBLIC."
         },
         {
           "id": "F",
           "text": "It cannot be used to pass on privileges to PUBLIC by the grantee.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the source document."
+          "explanation": "The option can permit granting to PUBLIC, so saying it cannot be passed to PUBLIC is too restrictive."
         }
       ],
       "correct": [
         "D",
         "E"
       ],
-      "answerExplanation": "This statement is highlighted as correct in the source document. A grantee receiving an object privilege with WITH GRANT OPTION can grant that privilege to other users.",
-      "technicalNote": "",
+      "answerExplanation": "The reviewer applies this wording to both privilege categories. Oracle terminology uses WITH GRANT OPTION for object privileges and WITH ADMIN OPTION for system privileges. WITH GRANT OPTION lets the recipient grant the same object privilege to other users or PUBLIC.",
+      "technicalNote": "The reviewer selects D and E. Oracle uses different clauses: WITH GRANT OPTION for object privileges and WITH ADMIN OPTION for system privileges. C also reflects the onward-grant capability provided to a user. Scoring remains D and E.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 239
+        "questionNumber": 239,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 240,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Privileges and Constraints",
       "stem": "Which three actions can you perform only with system privileges?",
       "instruction": "",
@@ -3084,35 +2958,35 @@
           "text": "Use the WITH GRANT OPTION clause.",
           "format": "text",
           "correct": true,
-          "explanation": "This action is highlighted as correct in the source document."
+          "explanation": "WITH GRANT OPTION belongs to an object-privilege grant; it is not itself an action that can be performed only with a system privilege."
         },
         {
           "id": "B",
           "text": "Log in to a database instance.",
           "format": "text",
           "correct": true,
-          "explanation": "Logging in requires the CREATE SESSION system privilege."
+          "explanation": "CREATE SESSION is the system privilege that permits a user to establish a database session."
         },
         {
           "id": "C",
           "text": "Access flat files stored in an operating-system directory through UTL_FILE.",
           "format": "text",
           "correct": true,
-          "explanation": "This action is highlighted as requiring system-level or directory-related authorization in the source document."
+          "explanation": "UTL_FILE access requires EXECUTE on the package and appropriate privileges on an Oracle DIRECTORY object. The reviewer classifies this under system-level or directory authorization."
         },
         {
           "id": "D",
           "text": "Query any table in a database.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the source document."
+          "explanation": "SELECT ANY TABLE is a system privilege that can authorize querying tables across schemas, although SELECT on a specific table can also be granted as an object privilege."
         },
         {
           "id": "E",
           "text": "Execute a procedure in another schema.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the source document."
+          "explanation": "A user can execute a specific procedure in another schema through the EXECUTE object privilege; a system-wide privilege is not always required."
         }
       ],
       "correct": [
@@ -3120,18 +2994,19 @@
         "B",
         "C"
       ],
-      "answerExplanation": "This action is highlighted as correct in the source document. Logging in requires the CREATE SESSION system privilege. This action is highlighted as requiring system-level or directory-related authorization in the source document.",
-      "technicalNote": "",
+      "answerExplanation": "WITH GRANT OPTION belongs to an object-privilege grant; it is not itself an action that can be performed only with a system privilege. CREATE SESSION is the system privilege that permits a user to establish a database session. UTL_FILE access requires EXECUTE on the package and appropriate privileges on an Oracle DIRECTORY object. The reviewer classifies this under system-level or directory authorization.",
+      "technicalNote": "The reviewer selects A, B, and C. WITH GRANT OPTION is associated with object privileges, and querying any table can be authorized by SELECT ANY TABLE. The distinction between system privileges and object privileges is the central clarification.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 240
+        "questionNumber": 240,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 241,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Joins and Data Modeling",
       "stem": "What is true about non-equijoin statement performance?",
       "instruction": "Choose two.",
@@ -3145,53 +3020,54 @@
           "text": "Table aliases can improve performance.",
           "format": "text",
           "correct": false,
-          "explanation": "Table aliases improve readability and help qualify columns, but they do not inherently improve query performance."
+          "explanation": "Aliases shorten table references and disambiguate columns, but the optimizer does not produce a faster plan merely because an alias is used."
         },
         {
           "id": "B",
           "text": "The BETWEEN condition always performs better than using the >= and <= conditions.",
           "format": "text",
           "correct": false,
-          "explanation": "BETWEEN and the equivalent comparison conditions can express the same range logic."
+          "explanation": "BETWEEN is logically equivalent to >= lower_bound AND <= upper_bound for an inclusive range. Neither form is guaranteed always to outperform the other."
         },
         {
           "id": "C",
           "text": "The join syntax used makes no difference to performance.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the document."
+          "explanation": "Logically equivalent Oracle and ANSI join syntax can be transformed into the same execution plan, so syntax alone often makes no performance difference."
         },
         {
           "id": "D",
           "text": "The BETWEEN condition always performs less well than using the >= and <= conditions.",
           "format": "text",
           "correct": true,
-          "explanation": "This choice is highlighted as correct in the document."
+          "explanation": "This statement uses the absolute word always. The optimizer generally treats BETWEEN and equivalent comparison predicates alike rather than guaranteeing worse performance."
         },
         {
           "id": "E",
           "text": "The Oracle join syntax performs better than the SQL:1999-compliant ANSI join syntax.",
           "format": "text",
           "correct": true,
-          "explanation": "This choice is highlighted as correct in the document."
+          "explanation": "Traditional Oracle join syntax is not inherently faster than ANSI join syntax. Performance depends on the execution plan, statistics, indexes, and data distribution."
         }
       ],
       "correct": [
         "D",
         "E"
       ],
-      "answerExplanation": "This choice is highlighted as correct in the document. This choice is highlighted as correct in the document.",
-      "technicalNote": "",
+      "answerExplanation": "This statement uses the absolute word always. The optimizer generally treats BETWEEN and equivalent comparison predicates alike rather than guaranteeing worse performance. Traditional Oracle join syntax is not inherently faster than ANSI join syntax. Performance depends on the execution plan, statistics, indexes, and data distribution.",
+      "technicalNote": "The reviewer selects D and E. Equivalent range predicates and logically equivalent join syntax normally do not guarantee a performance difference. C expresses the more typical optimizer behavior. Scoring remains D and E.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 241
+        "questionNumber": 241,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 242,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Subqueries",
       "stem": "Examine the following SQL statement. Which two statements are true?",
       "instruction": "Choose two.",
@@ -3211,46 +3087,47 @@
           "text": "All existing rows in the ORDERS table are updated.",
           "format": "text",
           "correct": true,
-          "explanation": "The outer UPDATE has no WHERE clause, so every row in ORDERS is processed."
+          "explanation": "The UPDATE has no outer WHERE clause, so Oracle processes every ORDERS row. A row with no subquery match receives NULL for CUSTOMER_NAME."
         },
         {
           "id": "B",
           "text": "The subquery is executed before the UPDATE statement is executed.",
           "format": "text",
           "correct": true,
-          "explanation": "This choice is highlighted as correct in the document."
+          "explanation": "The reviewer selects this wording. Because the subquery references o.customer_id, its value depends on the current ORDERS row rather than being calculated once independently before the update."
         },
         {
           "id": "C",
           "text": "The subquery is not a correlated subquery.",
           "format": "text",
           "correct": false,
-          "explanation": "The reference to o.customer_id correlates the subquery with the outer statement."
+          "explanation": "The reference to o.customer_id makes the subquery correlated with the outer UPDATE."
         },
         {
           "id": "D",
           "text": "The subquery is executed for every updated row in the ORDERS table.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the document."
+          "explanation": "A correlated lookup is logically evaluated for each ORDERS row processed by the UPDATE. This describes the practical row-dependent behavior."
         },
         {
           "id": "E",
           "text": "The UPDATE statement executes successfully even if the subquery selects multiple rows.",
           "format": "text",
           "correct": false,
-          "explanation": "A scalar subquery must return no more than one row for each order."
+          "explanation": "The assignment uses a scalar subquery. More than one matching customer row produces ORA-01427 because the assignment requires at most one value."
         }
       ],
       "correct": [
         "A",
         "B"
       ],
-      "answerExplanation": "The outer UPDATE has no WHERE clause, so every row in ORDERS is processed. This choice is highlighted as correct in the document.",
-      "technicalNote": "",
+      "answerExplanation": "The UPDATE has no outer WHERE clause, so Oracle processes every ORDERS row. A row with no subquery match receives NULL for CUSTOMER_NAME. The reviewer selects this wording. Because the subquery references o.customer_id, its value depends on the current ORDERS row rather than being calculated once independently before the update.",
+      "technicalNote": "The reviewer selects A and B. The subquery is correlated through o.customer_id, so D is the clearer description of its row-dependent evaluation. Scoring remains A and B.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 242
+        "questionNumber": 242,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -3332,7 +3209,7 @@
       "id": 244,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Joins and Data Modeling",
       "stem": "Examine the EMPLOYEES table. Which two queries return rows for employees whose manager works in a different department?",
       "instruction": "Choose two.",
@@ -3372,53 +3249,54 @@
           "text": "SELECT emp.*\nFROM employees emp RIGHT JOIN employees mgr\nON emp.manager_id = mgr.employee_id\nAND emp.department_id <> mgr.department_id\nWHERE emp.employee_id IS NOT NULL;",
           "format": "sql",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the document."
+          "explanation": "The RIGHT JOIN preserves manager rows, while WHERE emp.employee_id IS NOT NULL removes unmatched manager-only results. The remaining rows are employees whose matched manager has a different department, making this structurally similar to an inner join."
         },
         {
           "id": "B",
           "text": "SELECT emp.*\nFROM employees emp LEFT JOIN employees mgr\nON emp.manager_id = mgr.employee_id\nAND emp.department_id <> mgr.department_id;",
           "format": "sql",
           "correct": true,
-          "explanation": "This query is highlighted as correct in the document."
+          "explanation": "The LEFT JOIN preserves every employee even when no manager row satisfies the different-department condition. Unmatched employees therefore appear with null manager columns, which broadens the result beyond the stated requirement."
         },
         {
           "id": "C",
           "text": "SELECT emp.*\nFROM employees emp JOIN employees mgr\nON emp.manager_id = mgr.employee_id\nAND emp.department_id <> mgr.department_id;",
           "format": "sql",
           "correct": true,
-          "explanation": "The self-join matches employees with their managers and requires their department IDs to differ."
+          "explanation": "The inner self-join matches each employee to the row identified by MANAGER_ID and keeps only pairs with different DEPARTMENT_ID values."
         },
         {
           "id": "D",
           "text": "SELECT emp.*\nFROM employees emp\nWHERE manager_id NOT IN (\nSELECT mgr.employee_id\nFROM employees mgr\nWHERE emp.department_id <> mgr.department_id\n);",
           "format": "sql",
           "correct": false,
-          "explanation": "The NOT IN condition does not correctly associate every employee with that employee’s manager."
+          "explanation": "NOT IN asks whether MANAGER_ID is absent from a broad set of employee IDs and does not correlate the employee to the employee’s actual manager department correctly."
         },
         {
           "id": "E",
           "text": "SELECT emp.*\nFROM employees emp\nWHERE NOT EXISTS (\nSELECT NULL\nFROM employees mgr\nWHERE emp.manager_id = mgr.employee_id\nAND emp.department_id <> mgr.department_id\n);",
           "format": "sql",
           "correct": false,
-          "explanation": "NOT EXISTS returns employees without a matching manager in a different department, which reverses the required logic."
+          "explanation": "NOT EXISTS returns employees for whom no different-department manager match exists, the opposite of the requested condition."
         }
       ],
       "correct": [
         "B",
         "C"
       ],
-      "answerExplanation": "This query is highlighted as correct in the document. The self-join matches employees with their managers and requires their department IDs to differ.",
-      "technicalNote": "",
+      "answerExplanation": "The LEFT JOIN preserves every employee even when no manager row satisfies the different-department condition. Unmatched employees therefore appear with null manager columns, which broadens the result beyond the stated requirement. The inner self-join matches each employee to the row identified by MANAGER_ID and keeps only pairs with different DEPARTMENT_ID values.",
+      "technicalNote": "The reviewer selects B and C. Because B is a LEFT JOIN without a filter on the manager side, it also preserves employees lacking a qualifying different-department match. A and C more directly restrict the result to matched employee-manager pairs. Scoring remains B and C.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 244
+        "questionNumber": 244,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 245,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Transactions and DML",
       "stem": "Which two statements are true about savepoints?",
       "instruction": "Choose two.",
@@ -3432,60 +3310,61 @@
           "text": "After issuing a savepoint, you can roll back to the savepoint name within the current transaction.",
           "format": "text",
           "correct": true,
-          "explanation": "ROLLBACK TO savepoint_name reverses changes made after the named savepoint without ending the whole transaction."
+          "explanation": "ROLLBACK TO savepoint_name reverses changes made after that savepoint and keeps the transaction active. Earlier uncommitted changes remain pending."
         },
         {
           "id": "B",
           "text": "A ROLLBACK TO SAVEPOINT command issued before the start of a transaction results in an error.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the document."
+          "explanation": "ROLLBACK TO requires an existing savepoint in the current transaction. If the savepoint does not exist, Oracle raises a savepoint-related error."
         },
         {
           "id": "C",
           "text": "Savepoints make uncommitted updates visible to other sessions owned by the same user.",
           "format": "text",
           "correct": false,
-          "explanation": "Uncommitted changes remain private to the session that made them."
+          "explanation": "Uncommitted data is visible only within the session that made the changes, even when another session uses the same database account."
         },
         {
           "id": "D",
           "text": "After issuing a savepoint, you cannot roll back the complete transaction.",
           "format": "text",
           "correct": false,
-          "explanation": "A complete ROLLBACK can still reverse the whole uncommitted transaction."
+          "explanation": "A plain ROLLBACK can still reverse the complete transaction after savepoints have been created."
         },
         {
           "id": "E",
           "text": "You can commit updates performed between two savepoints without committing other updates in the current transaction.",
           "format": "text",
           "correct": true,
-          "explanation": "This choice is highlighted as correct in the document."
+          "explanation": "The reviewer selects this statement, but Oracle COMMIT applies to the entire current transaction. Savepoints cannot divide one transaction into independently committable portions."
         },
         {
           "id": "F",
           "text": "Savepoints make uncommitted updates visible to sessions owned by other users.",
           "format": "text",
           "correct": false,
-          "explanation": "Savepoints do not expose uncommitted changes to another session."
+          "explanation": "Savepoints do not alter transaction isolation or expose uncommitted rows to other users."
         }
       ],
       "correct": [
         "A",
         "E"
       ],
-      "answerExplanation": "ROLLBACK TO savepoint_name reverses changes made after the named savepoint without ending the whole transaction. This choice is highlighted as correct in the document.",
-      "technicalNote": "",
+      "answerExplanation": "ROLLBACK TO savepoint_name reverses changes made after that savepoint and keeps the transaction active. Earlier uncommitted changes remain pending. The reviewer selects this statement, but Oracle COMMIT applies to the entire current transaction. Savepoints cannot divide one transaction into independently committable portions.",
+      "technicalNote": "The reviewer selects A and E. Oracle cannot commit only the work between savepoints; COMMIT ends and commits the whole transaction. B also describes the behavior when the named savepoint does not exist. Scoring remains A and E.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 245
+        "questionNumber": 245,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 246,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Transactions and DML",
       "stem": "Which three statements are true about performing Data Manipulation Language operations on a view with no INSTEAD OF triggers defined?",
       "instruction": "Choose three.",
@@ -3499,42 +3378,42 @@
           "text": "DELETE statements can always be performed on a table through a view.",
           "format": "sql",
           "correct": true,
-          "explanation": "This choice is highlighted as correct in the document."
+          "explanation": "DELETE through a view depends on whether the view is inherently updatable and whether the affected underlying table can be identified. It is not guaranteed for every view."
         },
         {
           "id": "B",
           "text": "Views cannot be used to query rows from an underlying table if the table has a primary key and the primary-key columns are not referenced in the view’s defining query.",
           "format": "text",
           "correct": false,
-          "explanation": "A view can query data without including the underlying table’s primary-key columns."
+          "explanation": "A view can query selected columns without including a primary key. Primary-key columns are not required merely to read rows through the view."
         },
         {
           "id": "C",
           "text": "Views cannot be used to add rows to an underlying table if the table has NOT NULL columns without default values that are not referenced in the view’s defining query.",
           "format": "text",
           "correct": true,
-          "explanation": "An insert through the view cannot supply required values for omitted non-null columns that have no defaults."
+          "explanation": "An INSERT through the view cannot provide values for omitted NOT NULL columns that have no defaults, so the underlying insert cannot succeed."
         },
         {
           "id": "D",
           "text": "INSERT statements can always be performed on a table through a view.",
           "format": "sql",
           "correct": true,
-          "explanation": "This choice is highlighted as correct in the document."
+          "explanation": "INSERT through a view depends on view updatability and whether required underlying columns can receive values. It is not guaranteed for every view."
         },
         {
           "id": "E",
           "text": "Views cannot be used to add or modify rows in an underlying table if the defining query contains the DISTINCT keyword.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the document."
+          "explanation": "DISTINCT makes the view non-key-preserved for DML purposes; rows cannot be added or modified through that view without an appropriate INSTEAD OF trigger."
         },
         {
           "id": "F",
           "text": "The WITH CHECK clause has no effect when deleting rows from the underlying table through the view.",
           "format": "text",
           "correct": false,
-          "explanation": "This choice is not highlighted as correct in the document."
+          "explanation": "WITH CHECK OPTION constrains inserts and updates so rows remain visible through the view condition. It does not control DELETE in the same way."
         }
       ],
       "correct": [
@@ -3542,11 +3421,12 @@
         "C",
         "D"
       ],
-      "answerExplanation": "This choice is highlighted as correct in the document. An insert through the view cannot supply required values for omitted non-null columns that have no defaults. This choice is highlighted as correct in the document.",
-      "technicalNote": "",
+      "answerExplanation": "DELETE through a view depends on whether the view is inherently updatable and whether the affected underlying table can be identified. It is not guaranteed for every view. An INSERT through the view cannot provide values for omitted NOT NULL columns that have no defaults, so the underlying insert cannot succeed. INSERT through a view depends on view updatability and whether required underlying columns can receive values. It is not guaranteed for every view.",
+      "technicalNote": "The reviewer selects A, C, and D. A and D use the word always, while view DML actually depends on inherent updatability. E also states an important restriction for DISTINCT views. Scoring remains A, C, and D.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 246
+        "questionNumber": 246,
+        "verification": "correction 201-249.docx"
       }
     },
     {
@@ -3652,7 +3532,7 @@
       "id": 248,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Tables, Views, Sequences, and Synonyms",
       "stem": "BOOK_SEQ is an existing sequence in your schema. Which two CREATE TABLE commands are valid?",
       "instruction": "",
@@ -3666,53 +3546,54 @@
           "text": "CREATE TABLE bookings (\nbk_id NUMBER(4) NOT NULL DEFAULT book_seq.CURRVAL,\nstart_date DATE NOT NULL,\nend_date DATE DEFAULT SYSDATE\n);",
           "format": "sql",
           "correct": false,
-          "explanation": "This choice is not highlighted as valid in the document."
+          "explanation": "CURRVAL depends on NEXTVAL having already been referenced in the session and is not the sequence expression used for an automatic new key default. A default intended to generate keys uses NEXTVAL."
         },
         {
           "id": "B",
           "text": "CREATE TABLE bookings (\nbk_id NUMBER(4),\nbook_seq.CURRVAL,\nstart_date DATE DEFAULT SYSDATE,\nend_date DATE DEFAULT start_date\n);",
           "format": "sql",
           "correct": false,
-          "explanation": "The sequence reference is not a valid column definition, and a column default cannot directly reference another column this way."
+          "explanation": "BOOK_SEQ.CURRVAL is written as if it were a standalone column definition, which is invalid. END_DATE also attempts to reference START_DATE in a column default, which is not allowed this way."
         },
         {
           "id": "C",
           "text": "CREATE TABLE bookings (\nbk_id NUMBER(4) NOT NULL PRIMARY KEY,\nstart_date DATE NOT NULL,\nend_date DATE DEFAULT SYSDATE\n);",
           "format": "sql",
           "correct": true,
-          "explanation": "The primary-key column and date defaults use valid table-definition syntax."
+          "explanation": "All columns have valid data types and constraints. BK_ID is a not-null primary key, START_DATE is required, and END_DATE receives SYSDATE when omitted."
         },
         {
           "id": "D",
           "text": "CREATE TABLE bookings (\nbk_id NUMBER(4) DEFAULT book_seq.NEXTVAL PRIMARY KEY,\nstart_date DATE DEFAULT SYSDATE,\nend_date DATE DEFAULT SYSDATE NOT NULL\n);",
           "format": "sql",
           "correct": true,
-          "explanation": "The sequence’s NEXTVAL can be used as a column default, and the date defaults and constraints are valid."
+          "explanation": "BOOK_SEQ.NEXTVAL is a valid sequence-based default for BK_ID in the targeted Oracle version. The primary key, date defaults, and NOT NULL constraint are syntactically consistent."
         },
         {
           "id": "E",
           "text": "CREATE TABLE bookings (\nbk_id NUMBER(4),\nstart_date DEFAULT SYSDATE,\nend_date DATE DEFAULT (end_date - start_date)\n);",
           "format": "sql",
           "correct": false,
-          "explanation": "START_DATE lacks a data type, and a default expression cannot reference other columns in this manner."
+          "explanation": "START_DATE has no declared data type, and END_DATE tries to calculate a default from other row columns. Both prevent the CREATE TABLE statement from succeeding."
         }
       ],
       "correct": [
         "C",
         "D"
       ],
-      "answerExplanation": "The primary-key column and date defaults use valid table-definition syntax. The sequence’s NEXTVAL can be used as a column default, and the date defaults and constraints are valid.",
-      "technicalNote": "",
+      "answerExplanation": "All columns have valid data types and constraints. BK_ID is a not-null primary key, START_DATE is required, and END_DATE receives SYSDATE when omitted. BOOK_SEQ.NEXTVAL is a valid sequence-based default for BK_ID in the targeted Oracle version. The primary key, date defaults, and NOT NULL constraint are syntactically consistent.",
+      "technicalNote": "Sequence NEXTVAL in a column default is version-dependent in older Oracle releases but is valid in the reviewer’s target context. CURRVAL is session-dependent and is not appropriate for generating the next booking key.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 248
+        "questionNumber": 248,
+        "verification": "correction 201-249.docx"
       }
     },
     {
       "id": 249,
       "available": true,
       "scorable": true,
-      "validationStatus": "ready",
+      "validationStatus": "verified_from_correction_docx",
       "topic": "Subqueries",
       "stem": "You execute the following SQL statement. Which three statements are true?",
       "instruction": "",
@@ -3732,42 +3613,42 @@
           "text": "The statement executes successfully, and a new row is inserted into the SALES table.",
           "format": "text",
           "correct": true,
-          "explanation": "The scalar subquery returns the channel ID for Direct Sales, which is used as one of the inserted values."
+          "explanation": "The scalar subquery supplies one CHANNEL_ID value for Direct Sales. If it returns exactly one row and all constraints are satisfied, the INSERT supplies a complete SALES row and succeeds."
         },
         {
           "id": "B",
           "text": "A product can have a different unit price at different times.",
           "format": "text",
           "correct": true,
-          "explanation": "This statement is highlighted as correct in the document."
+          "explanation": "The inserted row includes its own unit-price value. Because price is stored with the sales fact rather than only in PRODUCTS, the same product can be recorded at different prices at different times."
         },
         {
           "id": "C",
           "text": "The statement fails because a subquery may not be contained in a VALUES clause.",
           "format": "text",
           "correct": false,
-          "explanation": "A scalar subquery can be used as an expression in this context when it returns no more than one row."
+          "explanation": "A scalar subquery can be used as an expression in a VALUES list when it returns at most one row and one column."
         },
         {
           "id": "D",
           "text": "The statement fails if a row already exists in the SALES table for product 23.",
           "format": "text",
           "correct": false,
-          "explanation": "The displayed SALES table has five foreign keys rather than a uniqueness constraint that would automatically prohibit another row for the product."
+          "explanation": "A product can appear in multiple sales rows. PROD_ID is a foreign key, not a unique key on SALES, so an existing row for product 23 does not by itself block another sale."
         },
         {
           "id": "E",
           "text": "A customer can exist in many countries.",
           "format": "text",
           "correct": false,
-          "explanation": "This statement is not highlighted as correct in the document."
+          "explanation": "The shown model associates each customer with a country through the customer data. It does not show one customer belonging simultaneously to many countries."
         },
         {
           "id": "F",
           "text": "The SALES table has five foreign keys.",
           "format": "text",
           "correct": true,
-          "explanation": "The schema diagram shows five relationships from SALES to related tables."
+          "explanation": "The schema relationships show SALES referencing five dimensions or parent tables: PRODUCTS, CUSTOMERS, TIMES, CHANNELS, and PROMOTIONS."
         }
       ],
       "correct": [
@@ -3775,12 +3656,48 @@
         "B",
         "F"
       ],
-      "answerExplanation": "The scalar subquery returns the channel ID for Direct Sales, which is used as one of the inserted values. This statement is highlighted as correct in the document. The schema diagram shows five relationships from SALES to related tables.",
-      "technicalNote": "",
+      "answerExplanation": "The scalar subquery supplies one CHANNEL_ID value for Direct Sales. If it returns exactly one row and all constraints are satisfied, the INSERT supplies a complete SALES row and succeeds. The inserted row includes its own unit-price value. Because price is stored with the sales fact rather than only in PRODUCTS, the same product can be recorded at different prices at different times. The schema relationships show SALES referencing five dimensions or parent tables: PRODUCTS, CUSTOMERS, TIMES, CHANNELS, and PROMOTIONS.",
+      "technicalNote": "The schema diagram is intentionally omitted from the JSON because the supplied image is blurred and contains many tables. The explanations preserve only the relationships needed for the highlighted answers. The INSERT still depends on the scalar subquery returning one CHANNEL_ID and on all constraints being satisfied.",
       "source": {
         "file": "201-249.xlsx",
-        "questionNumber": 249
+        "questionNumber": 249,
+        "verification": "correction 201-249.docx"
       }
     }
-  ]
+  ],
+  "revision": {
+    "version": "v2",
+    "correctedQuestions": [
+      206,
+      210,
+      212,
+      215,
+      218,
+      219,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      232,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      244,
+      245,
+      246,
+      248,
+      249
+    ],
+    "correctionFile": "CORRECTIONS_201_249.md",
+    "sourceDocument": "correction 201-249.docx",
+    "questionNumberRule": "Use bold red question number; ignore numbers inside screenshots"
+  }
 }
