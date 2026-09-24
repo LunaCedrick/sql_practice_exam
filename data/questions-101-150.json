@@ -1462,44 +1462,43 @@
           "text": "SELECT customer_id AS 'CUSTOMER-ID', transaction_date AS DATE, amount + 100 'DUES' FROM transactions;",
           "format": "sql",
           "correct": false,
-          "explanation": "Single quotation marks create character literals rather than delimited identifiers. Aliases containing a hyphen should use double quotation marks."
+          "explanation": "Single quotation marks define character literals, not column aliases. Therefore, 'CUSTOMER-ID' and 'DUES' are not valid alias definitions in this SELECT list. An alias containing a hyphen or requiring an exact format must be enclosed in double quotation marks."
         },
         {
           "id": "B",
           "text": "SELECT customer_id CUSTID, transaction_date TRANS_DATE, amount + 100 DUES FROM transactions;",
           "format": "sql",
           "correct": true,
-          "explanation": "CUSTID, TRANS_DATE, and DUES are valid unquoted aliases, and AS is optional for column aliases."
+          "explanation": "CUSTID, TRANS_DATE, and DUES are valid unquoted column aliases. Oracle does not require the AS keyword when assigning an alias to a column or expression. The arithmetic expression amount + 100 is valid because AMOUNT is a NUMBER column.."
         },
         {
           "id": "C",
           "text": "SELECT customer_id AS 'CUSTOMER-ID', transaction_date AS TRANS_DATE, amount + 100 \"DUES_AMOUNT\" FROM transactions;",
           "format": "sql",
-          "correct": true,
-          "explanation": "The reviewer treats this statement as executable. TRANS_DATE and DUES_AMOUNT are valid aliases; CUSTOMER-ID is intended as a delimited alias and should normally be enclosed in double quotation marks."
+          "correct": false,
+          "explanation": "This choice is not included in the validated answer key. However, its alias syntax appears valid: double quotation marks allow CUSTOMER-ID and DUES AMOUNT to contain a hyphen and a space, while TRANS_DATE is a valid unquoted alias. See the technical note for this additional interpretation."
         },
         {
           "id": "D",
           "text": "SELECT customer_id AS \"CUSTOMER-ID\", transaction_date AS DATE, amount + 100 \"DUES\" FROM transactions;",
           "format": "sql",
           "correct": false,
-          "explanation": "CUSTOMER-ID and DUES are correctly delimited. DATE is used as an unquoted alias, so a clearer implementation would delimit it or use a nonkeyword alias."
+          "explanation": "CUSTOMER-ID is correctly enclosed in double quotation marks. However, 'DUES' uses single quotation marks, which define a character literal rather than an alias. To use DUES as the expression alias, write DUES without quotes or use \"DUES\" with double quotation marks."
         },
         {
           "id": "E",
           "text": "SELECT customer_id AS \"CUSTOMER-ID\", transaction_date AS \"DATE\", amount + 100 DUES FROM transactions;",
           "format": "sql",
           "correct": true,
-          "explanation": "Double quotes correctly delimit CUSTOMER-ID and DATE, while DUES is a valid unquoted alias."
+          "explanation": "CUSTOMER-ID and DATE are valid quoted aliases. Double quotation marks allow CUSTOMER-ID to contain a hyphen and allow DATE to be used explicitly as a case-sensitive alias. DUES is also a valid unquoted alias for the numeric expression amount + 100."
         }
       ],
       "correct": [
         "B",
-        "C",
         "E"
       ],
-      "answerExplanation": "CUSTID, TRANS_DATE, and DUES are valid unquoted aliases, and AS is optional for column aliases. The reviewer treats this statement as executable. TRANS_DATE and DUES_AMOUNT are valid aliases; CUSTOMER-ID is intended as a delimited alias and should normally be enclosed in double quotation marks. Double quotes correctly delimit CUSTOMER-ID and DATE, while DUES is a valid unquoted alias.",
-      "technicalNote": "The instruction says Choose two, while the reviewer highlights B, C, and E. Choice C appears intended to use a delimited alias for CUSTOMER-ID; Oracle normally requires double quotation marks for that alias. Preserve the reviewer scoring and source text, and display this clarification after submission.",
+      "answerExplanation": "Choices B and E execute successfully. Choice B uses valid unquoted aliases and demonstrates that AS is optional for column aliases. Choice E correctly uses double quotation marks for CUSTOMER-ID and DATE, while DUES is a valid unquoted alias. Choices A and D  incorrectly use single quotation marks for aliases.",
+      "technicalNote": "The validated reviewer answer is B and E, and these choices must be used for scoring. Choice C also appears syntactically valid in the displayed screenshot because CUSTOMER-ID and DUES AMOUNT are enclosed in double quotation marks, while TRANS_DATE is a valid unquoted alias. Therefore, Choice C may also execute successfully in Oracle SQL. Keep B and E as the official answers, but display this clarification after submission.",
       "source": {
         "file": "101-150.xlsx",
         "questionNumber": 118,
