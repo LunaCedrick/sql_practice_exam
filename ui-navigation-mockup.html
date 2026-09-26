@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Question Navigation Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --paper: #fffdf8;
+      --soft: #fbf8f1;
+      --ink: #1f2933;
+      --muted: #64717f;
+      --line: #e5ded2;
+      --brand: #27475e;
+      --brand-soft: #edf5f6;
+      --accent: #b66a4d;
+      --ok: #28734d;
+      --ok-soft: #edf8ef;
+      --bad: #a43d35;
+      --bad-soft: #fbefed;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, rgba(39,71,94,.05), transparent 42%), var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: Fraunces, Georgia, serif; letter-spacing: 0; }
+    .page { width: min(1100px, 100%); margin: 0 auto; padding: 38px 22px 56px; }
+    .intro { margin-bottom: 24px; }
+    .eyebrow { margin: 0 0 8px; color: var(--accent); font-size: .76rem; font-weight: 700; text-transform: uppercase; }
+    h1 { margin: 0; color: var(--brand); font-size: 2rem; }
+    .intro p { margin: 8px 0 0; color: var(--muted); line-height: 1.6; }
+    .concepts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+    .concept { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,253,248,.92); box-shadow: 0 12px 28px rgba(50,42,31,.07); }
+    .concept-head { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); }
+    .concept-head h2 { margin: 0; color: var(--brand); font-size: 1.24rem; }
+    .concept-head p { margin: 5px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+    .exam { padding: 16px 20px 20px; }
+    .exam-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; color: var(--muted); font-size: .8rem; }
+    .exam-top strong { color: var(--brand); font-size: .92rem; }
+    .progress { height: 5px; margin-bottom: 17px; overflow: hidden; border-radius: 99px; background: #e9e5dc; }
+    .progress span { display: block; width: 24%; height: 100%; border-radius: inherit; background: var(--accent); }
+    .question { min-height: 110px; }
+    .question h3 { margin: 0 0 8px; color: var(--brand); font-size: 1.05rem; }
+    .question p { margin: 0; font-size: .9rem; line-height: 1.6; }
+    code { padding: 2px 5px; border-radius: 4px; background: #f0ede6; color: #364954; font-size: .88em; }
+    .choices { display: grid; gap: 7px; margin: 12px 0 18px; }
+    .choice { padding: 8px 10px; border: 1px solid var(--line); border-radius: 7px; color: #46515a; font-size: .8rem; }
+    .choice.selected { border-color: #b7d3c1; background: var(--ok-soft); color: var(--ok); }
+    .mock-actions { display: flex; justify-content: space-between; padding-top: 13px; border-top: 1px solid var(--line); }
+    .action { padding: 8px 11px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); color: var(--ink); font-size: .78rem; font-weight: 600; }
+    .action.next { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .navigator { margin-top: 15px; padding: 13px; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); }
+    .navigator-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .progress-copy { min-width: 0; }
+    .progress-copy strong { display: block; color: var(--brand); font-size: .85rem; }
+    .progress-copy span { color: var(--muted); font-size: .74rem; }
+    .toggle, .range {
+      min-height: 34px; border: 1px solid #d7e2e2; border-radius: 7px; background: var(--paper);
+      color: var(--brand); cursor: pointer; font: inherit; font-size: .76rem; font-weight: 700;
+    }
+    .toggle { padding: 0 10px; white-space: nowrap; }
+    .toggle:hover, .range:hover { background: var(--brand-soft); }
+    .number-list { display: none; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; margin-top: 12px; }
+    .navigator.open .number-list { display: grid; }
+    .number, .range-number {
+      aspect-ratio: 1; display: grid; place-items: center; min-width: 0; padding: 0;
+      border: 1px solid var(--line); border-radius: 6px; background: var(--paper);
+      color: #52606a; cursor: pointer; font: inherit; font-size: .72rem; font-weight: 700;
+    }
+    .number.done, .range-number.done { border-color: #cce3d2; background: var(--ok-soft); color: var(--ok); }
+    .number.wrong, .range-number.wrong { border-color: #e9c9c4; background: var(--bad-soft); color: var(--bad); }
+    .number.current, .range-number.current { outline: 2px solid var(--brand); outline-offset: 1px; color: var(--brand); }
+    .legend { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0 0; color: var(--muted); font-size: .68rem; }
+    .legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #d3d0c8; }
+    .dot.done { background: var(--ok); }
+    .dot.wrong { background: var(--bad); }
+    .ranges { display: grid; gap: 7px; margin-top: 11px; }
+    .range-row { overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); }
+    .range { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 10px; border: 0; border-radius: 0; text-align: left; }
+    .range small { color: var(--muted); font-size: .68rem; font-weight: 500; }
+    .range-content { display: none; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 5px; padding: 9px; border-top: 1px solid var(--line); }
+    .range-row.open .range-content { display: grid; }
+    .range-number { font-size: .68rem; }
+    .range-row.active-range .range { color: var(--accent); }
+    .note { margin: 10px 0 0; color: var(--muted); font-size: .72rem; line-height: 1.5; }
+    .question-picker {
+      width: min(460px, calc(100% - 28px)); max-height: min(620px, calc(100% - 32px));
+      padding: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--paper);
+      color: var(--ink); box-shadow: 0 24px 80px rgba(31,41,51,.24);
+    }
+    .question-picker::backdrop { background: rgba(25,37,45,.42); backdrop-filter: blur(2px); }
+    .picker-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 19px 20px 15px; border-bottom: 1px solid var(--line); }
+    .picker-head h2 { margin: 0; color: var(--brand); font-size: 1.3rem; }
+    .picker-head p { margin: 5px 0 0; color: var(--muted); font-size: .78rem; }
+    .close-picker { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); color: var(--ink); cursor: pointer; font-size: 1.1rem; }
+    .picker-body { padding: 15px 20px 18px; overflow: auto; }
+    .picker-status { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-bottom: 12px; color: var(--muted); font-size: .72rem; }
+    .picker-status strong { color: var(--brand); }
+    .picker-list { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 7px; }
+    .picker-list .number { font-size: .8rem; }
+    .picker-foot { margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--line); }
+    button:focus-visible { outline: 3px solid rgba(182,106,77,.35); outline-offset: 2px; }
+    @media (max-width: 760px) {
+      .page { padding: 26px 14px 36px; }
+      .concepts { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      .exam { padding: 14px; }
+      .concept-head { padding-inline: 15px; }
+      .number-list { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .range-content { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+      .legend { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="intro">
+      <p class="eyebrow">Navigation concepts</p>
+      <h1>Quieter ways to move through questions</h1>
+      <p>Sample exam screens with the same progress and answer states. Open the controls to try each pattern.</p>
+    </div>
+    <div class="concepts">
+      <section class="concept" aria-labelledby="concept-two">
+        <div class="concept-head">
+          <h2 id="concept-two">2. Expandable question list</h2>
+          <p>Progress stays compact; open the list when you need to jump.</p>
+        </div>
+        <div class="exam">
+          <div class="exam-top"><strong>Practice Exam</strong><span>12 of 50</span></div>
+          <div class="progress"><span></span></div>
+          <div class="question">
+            <h3>Question 12</h3>
+            <p>Which clause filters grouped rows after aggregate calculations?</p>
+          </div>
+          <div class="choices">
+            <div class="choice">A &nbsp; WHERE</div><div class="choice selected">B &nbsp; HAVING</div><div class="choice">C &nbsp; ORDER BY</div>
+          </div>
+          <div class="mock-actions"><button class="action">Previous</button><button class="action next">Next</button></div>
+          <div class="navigator" id="expandable-nav">
+            <div class="navigator-top">
+              <div class="progress-copy"><strong>12 of 50 questions</strong><span>8 answered | 1 flagged</span></div>
+              <button class="toggle" aria-expanded="false" aria-controls="expandable-list">Browse questions <span aria-hidden="true">v</span></button>
+            </div>
+            <div class="number-list" id="expandable-list" aria-label="Question list"></div>
+            <div class="legend"><span><i class="dot done"></i>Answered</span><span><i class="dot wrong"></i>Incorrect</span><span><i class="dot"></i>Unanswered</span></div>
+          </div>
+          <p class="note">Best when you usually move in order and only occasionally need to jump around.</p>
+        </div>
+      </section>
+
+      <section class="concept" aria-labelledby="concept-three">
+        <div class="concept-head">
+          <h2 id="concept-three">3. Questions grouped by range</h2>
+          <p>Choose a range first, then jump to a question within it.</p>
+        </div>
+        <div class="exam">
+          <div class="exam-top"><strong>Practice Exam</strong><span>12 of 50</span></div>
+          <div class="progress"><span></span></div>
+          <div class="question">
+            <h3>Question 12</h3>
+            <p>Which clause filters grouped rows after aggregate calculations?</p>
+          </div>
+          <div class="choices">
+            <div class="choice">A &nbsp; WHERE</div><div class="choice selected">B &nbsp; HAVING</div><div class="choice">C &nbsp; ORDER BY</div>
+          </div>
+          <div class="mock-actions"><button class="action">Previous</button><button class="action next">Next</button></div>
+          <div class="navigator">
+            <div class="navigator-top"><div class="progress-copy"><strong>12 of 50 questions</strong><span>Choose a range to browse</span></div></div>
+            <div class="ranges" id="range-list"></div>
+            <div class="legend"><span><i class="dot done"></i>Answered</span><span><i class="dot wrong"></i>Incorrect</span><span><i class="dot"></i>Unanswered</span></div>
+          </div>
+          <p class="note">Best for longer exams where a full list still feels like too much at once.</p>
+        </div>
+      </section>
+
+      <section class="concept" aria-labelledby="concept-popup">
+        <div class="concept-head">
+          <h2 id="concept-popup">2. Popup question list</h2>
+          <p>Keep the exam uncluttered and open a focused picker only when needed.</p>
+        </div>
+        <div class="exam">
+          <div class="exam-top"><strong>Practice Exam</strong><span>12 of 50</span></div>
+          <div class="progress"><span></span></div>
+          <div class="question">
+            <h3>Question 12</h3>
+            <p>Which clause filters grouped rows after aggregate calculations?</p>
+          </div>
+          <div class="choices">
+            <div class="choice">A &nbsp; WHERE</div><div class="choice selected">B &nbsp; HAVING</div><div class="choice">C &nbsp; ORDER BY</div>
+          </div>
+          <div class="mock-actions"><button class="action">Previous</button><button class="action next">Next</button></div>
+          <div class="navigator">
+            <div class="navigator-top">
+              <div class="progress-copy"><strong>12 of 50 questions</strong><span>8 answered | 1 flagged</span></div>
+              <button class="toggle" id="open-picker" type="button">Question list</button>
+            </div>
+          </div>
+          <p class="note">Select Question list to preview the popup. It closes as soon as a question is chosen.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+  <dialog class="question-picker" id="question-picker" aria-labelledby="picker-title">
+    <div class="picker-head">
+      <div><h2 id="picker-title">Go to question</h2><p>12 of 50 questions</p></div>
+      <button class="close-picker" type="button" aria-label="Close question list">x</button>
+    </div>
+    <div class="picker-body">
+      <div class="picker-status"><span><strong>8</strong> answered</span><span><strong>1</strong> incorrect</span><span><strong>38</strong> unanswered</span></div>
+      <div class="picker-list" id="picker-list" aria-label="All questions"></div>
+      <div class="picker-foot"><div class="legend"><span><i class="dot done"></i>Answered</span><span><i class="dot wrong"></i>Incorrect</span><span><i class="dot"></i>Unanswered</span></div></div>
+    </div>
+  </dialog>
+  <script>
+    const answered = new Set([1, 2, 3, 5, 7, 8, 10, 12]);
+    const incorrect = new Set([5]);
+    const currentQuestion = 12;
+
+    function makeQuestionButton(number, className) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = className;
+      button.textContent = number;
+      button.setAttribute("aria-label", `Question ${number}${incorrect.has(number) ? ", incorrect" : answered.has(number) ? ", answered" : ", unanswered"}`);
+      if (answered.has(number)) button.classList.add(incorrect.has(number) ? "wrong" : "done");
+      if (number === currentQuestion) {
+        button.classList.add("current");
+        button.setAttribute("aria-current", "step");
+      }
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".number.current, .range-number.current").forEach(item => {
+          item.classList.remove("current");
+          item.removeAttribute("aria-current");
+        });
+        button.classList.add("current");
+        button.setAttribute("aria-current", "step");
+      });
+      return button;
+    }
+
+    const expandableList = document.getElementById("expandable-list");
+    for (let n = 1; n <= 20; n += 1) expandableList.append(makeQuestionButton(n, "number"));
+
+    const toggle = document.querySelector(".toggle");
+    toggle.addEventListener("click", () => {
+      const nav = document.getElementById("expandable-nav");
+      const open = nav.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.innerHTML = open ? 'Hide questions <span aria-hidden="true">^</span>' : 'Browse questions <span aria-hidden="true">v</span>';
+    });
+
+    const ranges = document.getElementById("range-list");
+    for (let start = 1; start <= 50; start += 10) {
+      const end = Math.min(start + 9, 50);
+      const row = document.createElement("div");
+      row.className = `range-row${currentQuestion >= start && currentQuestion <= end ? " active-range open" : ""}`;
+      const trigger = document.createElement("button");
+      trigger.type = "button";
+      trigger.className = "range";
+      trigger.setAttribute("aria-expanded", String(row.classList.contains("open")));
+      trigger.innerHTML = `<span>Questions ${start}-${end}</span><small>${Array.from({length: end - start + 1}, (_, i) => start + i).filter(n => answered.has(n)).length} answered &nbsp;v</small>`;
+      const content = document.createElement("div");
+      content.className = "range-content";
+      content.setAttribute("aria-label", `Questions ${start} to ${end}`);
+      for (let n = start; n <= end; n += 1) content.append(makeQuestionButton(n, "range-number"));
+      trigger.addEventListener("click", () => {
+        const open = row.classList.toggle("open");
+        trigger.setAttribute("aria-expanded", String(open));
+      });
+      row.append(trigger, content);
+      ranges.append(row);
+    }
+
+    const picker = document.getElementById("question-picker");
+    const pickerList = document.getElementById("picker-list");
+    for (let n = 1; n <= 50; n += 1) pickerList.append(makeQuestionButton(n, "number"));
+    document.getElementById("open-picker").addEventListener("click", () => picker.showModal());
+    document.querySelector(".close-picker").addEventListener("click", () => picker.close());
+    pickerList.addEventListener("click", event => {
+      if (event.target.closest("button")) picker.close();
+    });
+    picker.addEventListener("click", event => {
+      if (event.target === picker) picker.close();
+    });
+  </script>
+</body>
+</html>

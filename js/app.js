@@ -23,8 +23,15 @@ const els = {
   questionBody: document.getElementById("questionBody"),
   options: document.getElementById("options"),
   feedback: document.getElementById("feedback"),
-  numbers: document.getElementById("numbers"),
-  summary: document.getElementById("summary"),
+  openNavigator: document.getElementById("openNavigator"),
+  openReviewNavigator: document.getElementById("openReviewNavigator"),
+  questionNavigator: document.getElementById("questionNavigator"),
+  navigatorTitle: document.getElementById("navigatorTitle"),
+  navigatorSubtitle: document.getElementById("navigatorSubtitle"),
+  navigatorStatus: document.getElementById("navigatorStatus"),
+  navigatorNumbers: document.getElementById("navigatorNumbers"),
+  navigatorLegend: document.getElementById("navigatorLegend"),
+  closeNavigator: document.getElementById("closeNavigator"),
   prevBtn: document.getElementById("prevBtn"),
   saveExitBtn: document.getElementById("saveExitBtn"),
   flagBtn: document.getElementById("flagBtn"),
@@ -50,8 +57,6 @@ const els = {
   reviewQuestionBody: document.getElementById("reviewQuestionBody"),
   reviewOptions: document.getElementById("reviewOptions"),
   reviewFeedback: document.getElementById("reviewFeedback"),
-  reviewNumbers: document.getElementById("reviewNumbers"),
-  reviewSummary: document.getElementById("reviewSummary"),
   reviewPrevBtn: document.getElementById("reviewPrevBtn"),
   reviewBackBtn: document.getElementById("reviewBackBtn"),
   reviewNextBtn: document.getElementById("reviewNextBtn")
@@ -60,6 +65,7 @@ const els = {
 let bank = null;
 let state = emptyState();
 let reviewState = emptyReviewState();
+let navigatorContext = "exam";
 
 init();
 
@@ -86,6 +92,13 @@ function bindEvents() {
   els.flagBtn.addEventListener("click", toggleFlag);
   els.nextBtn.addEventListener("click", nextAction);
   els.submitBtn.addEventListener("click", submitExam);
+  els.openNavigator.addEventListener("click", () => openQuestionNavigator("exam"));
+  els.openReviewNavigator.addEventListener("click", () => openQuestionNavigator("review"));
+  els.closeNavigator.addEventListener("click", () => els.questionNavigator.close());
+  els.navigatorNumbers.addEventListener("click", selectNavigatorQuestion);
+  els.questionNavigator.addEventListener("click", event => {
+    if (event.target === els.questionNavigator) els.questionNavigator.close();
+  });
   els.newTakeBtn.addEventListener("click", () => begin(state.mode === "quick" ? "quick" : "mock"));
   els.reviewAllBtn.addEventListener("click", () => startExamReview("all"));
   els.reviewMissedBtn.addEventListener("click", () => startExamReview("missed"));
@@ -226,8 +239,6 @@ function render() {
   renderQuestionBody(question);
   renderOptions(question);
   renderFeedback(question);
-  renderNumbers();
-  renderSummary();
 
   els.prevBtn.disabled = state.index === 0;
   els.flagBtn.disabled = !question.available;
@@ -426,43 +437,105 @@ function technicalNoteHtml(question) {
     : "";
 }
 
-function renderNumbers() {
-  els.numbers.innerHTML = state.questions.map((question, index) => {
-    const answered = (state.answers[question.id] || []).length > 0;
-    const practiceStatus = practiceNavStatus(question);
-    const classes = [
-      "num",
-      index === state.index ? "current" : "",
-      answered ? "answered" : "",
-      practiceStatus,
-      !question.available ? "unavailable" : "",
-      state.flags[question.id] ? "flagged" : ""
-    ].filter(Boolean).join(" ");
-
-    return `<button class="${classes}" type="button" data-index="${index}">${question.id}</button>`;
-  }).join("");
-
-  els.numbers.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", () => {
-      state.index = Number(button.dataset.index);
-      render();
-      saveProgress();
-    });
-  });
-
-  els.numbers.querySelector(".current")?.scrollIntoView({ block: "nearest", inline: "nearest" });
-}
-
 function practiceNavStatus(question) {
   if (state.mode !== "practice" || !question.available || !state.confirmed[question.id]) return "";
   return sameSet(state.answers[question.id] || [], question.correct) ? "correct" : "incorrect";
 }
 
-function renderSummary() {
-  const answered = state.questions.filter(question => (state.answers[question.id] || []).length).length;
-  const flagged = Object.values(state.flags).filter(Boolean).length;
-  const unavailable = state.questions.filter(question => !question.available).length;
-  els.summary.textContent = `Answered ${answered}/${state.questions.length} - Flagged ${flagged} - Unavailable ${unavailable}`;
+function openQuestionNavigator(context) {
+  navigatorContext = context;
+  renderQuestionNavigator();
+  els.questionNavigator.showModal();
+}
+
+function renderQuestionNavigator() {
+  const reviewing = navigatorContext === "review";
+  const questions = reviewing ? reviewState.questions : state.questions;
+  const currentIndex = reviewing ? reviewState.index : state.index;
+  const current = questions[currentIndex];
+
+  els.navigatorTitle.textContent = reviewing ? "Browse review questions" : "Go to question";
+  els.navigatorSubtitle.textContent = reviewing
+    ? `${reviewTitle()} - ${currentIndex + 1} of ${questions.length}`
+    : `Question ${current.id} - ${currentIndex + 1} of ${questions.length}`;
+
+  let answered = 0;
+  let correct = 0;
+  let incorrect = 0;
+  let unanswered = 0;
+  let flagged = 0;
+  let unavailable = 0;
+
+  els.navigatorNumbers.replaceChildren();
+  questions.forEach((question, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "num";
+    button.dataset.index = index;
+    button.textContent = reviewing ? state.questions.indexOf(question) + 1 : question.id;
+
+    if (index === currentIndex) {
+      button.classList.add("current");
+      button.setAttribute("aria-current", "step");
+    }
+
+    let statusLabel = "unanswered";
+    if (reviewing) {
+      const status = reviewStatus(question);
+      button.classList.add(status);
+      statusLabel = status;
+      if (status === "correct") correct += 1;
+      else if (status === "incorrect") incorrect += 1;
+      else unanswered += 1;
+    } else {
+      const hasAnswer = (state.answers[question.id] || []).length > 0;
+      const practiceStatus = practiceNavStatus(question);
+      if (hasAnswer) {
+        answered += 1;
+        button.classList.add("answered");
+        statusLabel = "answered";
+      }
+      if (practiceStatus) {
+        button.classList.add(practiceStatus);
+        statusLabel = practiceStatus;
+      }
+      if (state.flags[question.id]) {
+        button.classList.add("flagged");
+        flagged += 1;
+      }
+      if (!question.available) {
+        button.classList.add("unavailable");
+        unavailable += 1;
+        statusLabel = "unavailable";
+      }
+    }
+
+    button.setAttribute("aria-label", `Question ${button.textContent}, ${statusLabel}`);
+    els.navigatorNumbers.append(button);
+  });
+
+  if (reviewing) {
+    els.navigatorStatus.innerHTML = `<span><strong>${correct}</strong> correct</span><span><strong>${incorrect}</strong> incorrect</span><span><strong>${unanswered}</strong> unanswered</span>`;
+    els.navigatorLegend.innerHTML = '<span><i class="navigator-dot answered"></i>Correct</span><span><i class="navigator-dot incorrect"></i>Incorrect</span><span><i class="navigator-dot"></i>Unanswered</span>';
+  } else {
+    els.navigatorStatus.innerHTML = `<span><strong>${answered}</strong> answered</span><span><strong>${flagged}</strong> flagged</span>${unavailable ? `<span><strong>${unavailable}</strong> unavailable</span>` : ""}`;
+    els.navigatorLegend.innerHTML = `<span><i class="navigator-dot answered"></i>${state.mode === "practice" ? "Correct" : "Answered"}</span>${state.mode === "practice" ? '<span><i class="navigator-dot incorrect"></i>Incorrect</span>' : ""}<span><i class="navigator-dot flagged"></i>Flagged</span><span><i class="navigator-dot"></i>Unanswered</span>`;
+  }
+}
+
+function selectNavigatorQuestion(event) {
+  const button = event.target.closest("button[data-index]");
+  if (!button) return;
+
+  if (navigatorContext === "review") {
+    reviewState.index = Number(button.dataset.index);
+    renderExamReview();
+  } else {
+    state.index = Number(button.dataset.index);
+    render();
+    saveProgress();
+  }
+  els.questionNavigator.close();
 }
 
 function nextText(question) {
@@ -658,8 +731,6 @@ function renderExamReview() {
     ${reviewAnswerSummary(question)}
     ${feedbackHtml(question)}
   `;
-  renderReviewNumbers();
-  renderReviewSummary();
 
   els.reviewPrevBtn.disabled = reviewState.index === 0;
   els.reviewNextBtn.disabled = reviewState.index === reviewState.questions.length - 1;
@@ -689,35 +760,6 @@ function reviewTitle() {
 function moveExamReview(delta) {
   reviewState.index = Math.max(0, Math.min(reviewState.questions.length - 1, reviewState.index + delta));
   renderExamReview();
-}
-
-function renderReviewNumbers() {
-  els.reviewNumbers.innerHTML = reviewState.questions.map((question, index) => {
-    const examIndex = state.questions.indexOf(question);
-    const classes = [
-      "num",
-      index === reviewState.index ? "current" : "",
-      reviewStatus(question)
-    ].filter(Boolean).join(" ");
-
-    return `<button class="${classes}" type="button" data-index="${index}">${examIndex + 1}</button>`;
-  }).join("");
-
-  els.reviewNumbers.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", () => {
-      reviewState.index = Number(button.dataset.index);
-      renderExamReview();
-    });
-  });
-
-  els.reviewNumbers.querySelector(".current")?.scrollIntoView({ block: "nearest", inline: "nearest" });
-}
-
-function renderReviewSummary() {
-  const correct = reviewState.questions.filter(question => reviewStatus(question) === "correct").length;
-  const incorrect = reviewState.questions.filter(question => reviewStatus(question) === "incorrect").length;
-  const unanswered = reviewState.questions.filter(question => reviewStatus(question) === "unanswered").length;
-  els.reviewSummary.textContent = `Correct ${correct} - Incorrect ${incorrect} - Unanswered ${unanswered}`;
 }
 
 function missedQuestions() {

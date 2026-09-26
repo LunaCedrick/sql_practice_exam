@@ -268,7 +268,7 @@
       height: calc(100dvh - var(--nav-h) - 36px);
       min-height: 0;
       display: grid;
-      grid-template-columns: minmax(0,1fr) 300px;
+      grid-template-columns: minmax(0,1fr);
       gap: 16px;
       overflow: hidden;
     }
@@ -285,6 +285,10 @@
       border-bottom: 1px solid var(--line);
       background: linear-gradient(180deg, rgba(251,248,241,0.96), rgba(255,253,248,0.9));
     }
+
+    .qhead-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+    .qhead-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 8px; }
+    .qhead-actions .btn { min-height: 40px; padding: 8px 12px; }
 
     .meta {
       display: flex;
@@ -574,43 +578,24 @@
       gap: 10px;
     }
 
-    .side {
-      height: 100%;
-      min-height: 0;
-      display: grid;
-      grid-template-rows: auto minmax(0,1fr) auto;
-      padding: 14px;
-      overflow: hidden;
-    }
-
-    .side h2 {
-      margin: 2px 0 12px;
-      color: var(--brand);
-      font-size: 1.15rem;
-    }
-
-    .nav-scroll {
-      min-height: 0;
-      overflow: auto;
-      padding-right: 4px;
-      overscroll-behavior: contain;
-    }
-
     .numbers {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0,1fr));
-      gap: 8px;
+      grid-template-columns: repeat(8, minmax(0,1fr));
+      gap: 7px;
     }
 
     .num {
       display: grid;
       place-items: center;
-      min-height: 42px;
-      border-radius: 10px;
+      aspect-ratio: 1;
+      min-width: 0;
+      min-height: 38px;
+      border-radius: 8px;
       border: 1px solid var(--line);
       background: var(--card-soft);
       color: var(--ink);
       cursor: pointer;
+      font: inherit;
       font-weight: 700;
       transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
     }
@@ -624,6 +609,8 @@
       background: var(--brand);
       border-color: var(--brand);
       color: #fff;
+      outline: 2px solid var(--brand);
+      outline-offset: 1px;
     }
 
     .num.answered {
@@ -664,18 +651,57 @@
       box-shadow: inset 0 -4px var(--accent);
     }
 
-    .sidefoot {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--line);
+    .question-navigator {
+      width: min(500px, calc(100vw - 32px));
+      max-width: none;
+      max-height: min(720px, calc(100dvh - 32px));
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      color: var(--ink);
+      box-shadow: 0 24px 80px rgba(31,41,51,.24);
     }
 
-    .summary {
-      margin: 0 0 12px;
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 0.92rem;
+    .question-navigator::backdrop { background: rgba(25,37,45,.46); backdrop-filter: blur(2px); }
+
+    .navigator-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--line);
     }
+
+    .navigator-head h2 { margin: 0; color: var(--brand); font-size: 1.3rem; }
+    .navigator-head p { margin: 5px 0 0; color: var(--muted); font-size: .82rem; }
+
+    .navigator-close {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 auto;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .navigator-body { max-height: calc(min(720px, 100dvh - 32px) - 70px); padding: 14px 20px 18px; overflow: auto; }
+    .navigator-status { display: flex; flex-wrap: wrap; gap: 7px 15px; margin: 0 0 13px; color: var(--muted); font-size: .78rem; }
+    .navigator-status strong { color: var(--brand); }
+    .navigator-legend { display: flex; flex-wrap: wrap; gap: 8px 15px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: .75rem; }
+    .navigator-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .navigator-dot { width: 9px; height: 9px; border-radius: 50%; background: #b9b8b1; }
+    .navigator-dot.answered { background: var(--ok); }
+    .navigator-dot.incorrect { background: var(--bad); }
+    .navigator-dot.flagged { background: var(--accent); }
 
     .results {
       display: grid;
@@ -786,44 +812,6 @@
         overflow: visible;
       }
 
-      .side {
-        height: auto;
-        display: grid;
-        grid-template-columns: minmax(0,1fr) auto;
-        grid-template-rows: auto;
-        gap: 10px;
-        align-items: center;
-        overflow: visible;
-      }
-
-      .side h2,
-      .summary {
-        display: none;
-      }
-
-      .nav-scroll {
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 2px;
-      }
-
-      .numbers {
-        display: flex;
-        width: max-content;
-        gap: 6px;
-      }
-
-      .num {
-        width: 38px;
-        min-height: 38px;
-        flex: 0 0 38px;
-      }
-
-      .sidefoot {
-        margin: 0;
-        padding: 0;
-        border: 0;
-      }
     }
 
     @media (max-width: 640px) {
@@ -952,6 +940,17 @@
       .topic-grid {
         grid-template-columns: 1fr;
       }
+
+      .qhead { padding: 12px; }
+      .qhead-top { align-items: flex-start; flex-direction: column; gap: 10px; }
+      .qhead-actions { width: 100%; }
+      .qhead-actions .btn { width: auto; flex: 1 1 auto; min-height: 40px; padding: 8px 10px; font-size: .84rem; }
+
+      .question-navigator { width: calc(100vw - 20px); max-height: min(78dvh, 680px); border-radius: 12px; }
+      .navigator-head { padding: 15px 15px 12px; }
+      .navigator-body { max-height: calc(min(78dvh, 680px) - 64px); padding: 12px 14px 15px; }
+      .numbers { grid-template-columns: repeat(6, minmax(0,1fr)); gap: 6px; }
+      .num { min-height: 36px; border-radius: 7px; font-size: .88rem; }
     }
   </style>
 </head>
@@ -1000,10 +999,16 @@
     <div class="layout">
       <main class="panel question-panel">
         <div class="qhead">
-          <div class="meta">
-            <span id="qnum" class="chip"></span>
-            <span id="topic" class="chip"></span>
-            <span id="kind" class="chip"></span>
+          <div class="qhead-top">
+            <div class="meta">
+              <span id="qnum" class="chip"></span>
+              <span id="topic" class="chip"></span>
+              <span id="kind" class="chip"></span>
+            </div>
+            <div class="qhead-actions">
+              <button id="openNavigator" class="btn soft" type="button">Question list</button>
+              <button id="submitBtn" class="btn danger" type="button">Submit</button>
+            </div>
           </div>
           <div class="progress"><i id="bar"></i></div>
         </div>
@@ -1024,16 +1029,6 @@
         </div>
       </main>
 
-      <aside class="panel side">
-        <h2>Questions</h2>
-        <div class="nav-scroll">
-          <div id="numbers" class="numbers"></div>
-        </div>
-        <div class="sidefoot">
-          <p id="summary" class="summary"></p>
-          <button id="submitBtn" class="btn danger" type="button" data-mobile-label="Submit">Submit</button>
-        </div>
-      </aside>
     </div>
   </section>
 
@@ -1061,10 +1056,15 @@
     <div class="layout">
       <main class="panel question-panel">
         <div class="qhead">
-          <div class="meta">
-            <span id="reviewQnum" class="chip"></span>
-            <span id="reviewTopic" class="chip"></span>
-            <span id="reviewKind" class="chip"></span>
+          <div class="qhead-top">
+            <div class="meta">
+              <span id="reviewQnum" class="chip"></span>
+              <span id="reviewTopic" class="chip"></span>
+              <span id="reviewKind" class="chip"></span>
+            </div>
+            <div class="qhead-actions">
+              <button id="openReviewNavigator" class="btn soft" type="button">Question list</button>
+            </div>
           </div>
           <div class="progress"><i id="reviewBar"></i></div>
         </div>
@@ -1084,17 +1084,23 @@
         </div>
       </main>
 
-      <aside class="panel side">
-        <h2>Review</h2>
-        <div class="nav-scroll">
-          <div id="reviewNumbers" class="numbers"></div>
-        </div>
-        <div class="sidefoot">
-          <p id="reviewSummary" class="summary"></p>
-        </div>
-      </aside>
     </div>
   </section>
+
+  <dialog id="questionNavigator" class="question-navigator" aria-labelledby="navigatorTitle">
+    <div class="navigator-head">
+      <div>
+        <h2 id="navigatorTitle">Go to question</h2>
+        <p id="navigatorSubtitle"></p>
+      </div>
+      <button id="closeNavigator" class="navigator-close" type="button" aria-label="Close question list">&times;</button>
+    </div>
+    <div class="navigator-body">
+      <p id="navigatorStatus" class="navigator-status"></p>
+      <div id="navigatorNumbers" class="numbers" aria-label="All questions"></div>
+      <div id="navigatorLegend" class="navigator-legend"></div>
+    </div>
+  </dialog>
 
   <script type="module" src="./js/app.js"></script>
 </body>
