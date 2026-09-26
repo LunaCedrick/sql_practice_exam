@@ -1,6 +1,7 @@
 import { loadQuestionBank } from "./questionBank.js";
 
 const SAVE_KEY = "sql-practice-progress-v1";
+const FLAG_KEY = "sql-practice-flags-v1";
 
 const els = {
   loading: document.getElementById("loading"),
@@ -157,7 +158,10 @@ function renderStart() {
 }
 
 function begin(mode) {
-  if (loadProgress() && !confirm("Start a new session and discard saved progress?")) return;
+  const saved = loadProgress();
+  if (saved && !confirm("Start a new session and discard saved progress?")) return;
+  const flags = { ...(saved?.flags || {}), ...loadFlags() };
+  localStorage.setItem(FLAG_KEY, JSON.stringify(flags));
   clearProgress();
   const questions = sessionQuestions(mode);
 
@@ -165,6 +169,7 @@ function begin(mode) {
     ...emptyState(),
     mode,
     questions,
+    flags,
     startedAt: Date.now()
   };
   renderTimer();
@@ -198,9 +203,11 @@ function resumeProgress() {
   state = {
     ...emptyState(),
     ...saved,
+    flags: { ...(saved.flags || {}), ...loadFlags() },
     startedAt: Date.now(),
     finished: false
   };
+  saveFlags();
   renderTimer();
   show("exam");
   render();
@@ -242,6 +249,8 @@ function render() {
 
   els.prevBtn.disabled = state.index === 0;
   els.flagBtn.disabled = !question.available;
+  els.flagBtn.textContent = state.flags[question.id] ? "Unflag question" : "Flag question";
+  els.flagBtn.setAttribute("aria-pressed", String(Boolean(state.flags[question.id])));
   const nextLabel = nextText(question);
   els.nextBtn.textContent = nextLabel;
   els.nextBtn.dataset.mobileLabel = nextLabel;
@@ -578,6 +587,7 @@ function isLastQuestion() {
 function toggleFlag() {
   const question = currentQuestion();
   state.flags[question.id] = !state.flags[question.id];
+  saveFlags();
   render();
   saveProgress();
 }
@@ -861,6 +871,19 @@ function loadProgress() {
 
 function clearProgress() {
   localStorage.removeItem(SAVE_KEY);
+}
+
+function loadFlags() {
+  try {
+    const flags = JSON.parse(localStorage.getItem(FLAG_KEY) || "{}");
+    return flags && typeof flags === "object" && !Array.isArray(flags) ? flags : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveFlags() {
+  localStorage.setItem(FLAG_KEY, JSON.stringify(state.flags));
 }
 
 function isValidProgress(saved) {
