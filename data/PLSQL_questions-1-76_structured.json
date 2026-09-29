@@ -363,10 +363,10 @@
       "options": [
         {
           "id": "A",
-          "text": "CONNECT ora2/ora2@pdb1\nSET SERVEROUTPUT ON\nDECLARE\n  x NUMBER := 5;\nBEGIN\n  proc1(x);\nEND;\n/",
+                        "text": "CONNECT ora2/ora2@pdb1\nSET SERVEROUTPUT ON\nDECLARE\n  x NUMBER := 5;\nBEGIN\n  ora1.proc1(x);\nEND;\n/",
           "format": "sql",
           "correct": true,
-          "explanation": "The highlighted script calls the procedure as a PL/SQL statement and supplies writable variable x for its OUT NUMBER parameter. ora2 has EXECUTE on proc1, so the block can execute. The procedure prints v1 * 10; since an OUT parameter has no incoming value unless initialized inside the procedure, the expression is NULL, but that does not make the call invalid."
+                        "explanation": "The script connects as ora2 and calls the procedure owned by ora1 using `ora1.proc1(x)`. This matches the procedure's owner in the setup and passes writable variable x for its OUT NUMBER parameter. An OUT parameter does not receive x's initial value of 5, so the procedure's `v1 * 10` expression does not print 50; this does not make the procedure call invalid."
         },
         {
           "id": "B",
@@ -393,9 +393,9 @@
       "correct": [
         "A"
       ],
-      "answerExplanation": "The highlighted script calls the procedure as a PL/SQL statement and supplies writable variable x for its OUT NUMBER parameter. ora2 has EXECUTE on proc1, so the block can execute. The procedure prints v1 * 10; since an OUT parameter has no incoming value unless initialized inside the procedure, the expression is NULL, but that does not make the call invalid.",
-      "technicalNote": "Choice A calls proc1(x), which is valid for an OUT parameter because x is a writable variable. However, the procedure reads v1 without assigning it first: the OUT parameter does not receive x's initial value of 5, so v1 * 10 evaluates to NULL. This affects the displayed output, not whether choice A executes.",
-      "feedback": "The setup creates proc1 as a PROCEDURE with one OUT NUMBER parameter and grants ora2 permission to execute it. The highlighted script declares a variable x and passes it with proc1(x), which is the correct form for a PL/SQL procedure call. OUT means the procedure is expected to assign a value; it does not receive the initial value 5 from x.",
+      "answerExplanation": "Choice A is the reviewer-highlighted script. It connects as ora2, uses the granted EXECUTE privilege to call `ora1.proc1(x)`, and supplies a writable variable for the OUT parameter. The procedure does not assign v1 before reading it, so its multiplication uses NULL; the question asks which script executes successfully, not which prints 50.",
+      "technicalNote": "Choice A's `ora1.proc1(x)` is schema-qualified, matching the procedure created by ora1 and the EXECUTE grant to ora2. The OUT parameter does not receive x's initial value of 5, and the procedure does not assign v1 before evaluating `v1 * 10`; this affects output, not the source-highlighted choice's validity as a procedure call.",
+      "feedback": "First, ora1 creates `proc1(v1 OUT NUMBER)` and grants ora2 permission to execute it. Choice A connects as ora2, declares x, and calls `ora1.proc1(x)`. The `ora1.` prefix identifies the procedure's owner; `x` is a writable actual argument for OUT. The OUT parameter is not initialized from x's value of 5, so `v1 * 10` uses NULL. The highlighted choice does not contain a later `DBMS_OUTPUT.PUT_LINE(x)` call.",
       "source": {
         "file": "PLSQL_Reviewer_Questions_1-10_Technical_Notes_Revised.xlsx",
         "questionNumber": 6
@@ -4418,10 +4418,10 @@
         },
         {
           "id": "D",
-          "text": "DECLARE\n  CURSOR c_products IS\n    SELECT pdt_name FROM products;\n  TYPE c_pdt IS TABLE OF products.pdt_name%TYPE INDEX BY binary_integer;\n  product_list c_pdt;\nBEGIN\n  FOR product_list IN c_products LOOP\n    DBMS_OUTPUT.PUT_LINE(product_list(1));\n  END;\nEND;",
+                        "text": "DECLARE\n  CURSOR c_products IS\n    SELECT pdt_name FROM products;\n  TYPE c_list IS TABLE OF products.pdt_name%TYPE INDEX BY BINARY_INTEGER;\n  product_list c_list;\nBEGIN\n  product_list(1) := 'wheat';\n  DBMS_OUTPUT.PUT_LINE(product_list(1));\nEND;\n/",
           "format": "sql",
           "correct": true,
-          "explanation": "The reviewer highlights D, but the loop variable is a record, not an array; product_list(1) is invalid."
+                        "explanation": "`product_list` is an associative array indexed by integers. The assignment `product_list(1) := 'wheat'` creates element 1, and `DBMS_OUTPUT.PUT_LINE(product_list(1))` reads and prints that value. The declared cursor is unused; it does not turn `product_list` into a cursor-loop record."
         },
         {
           "id": "E",
@@ -4435,9 +4435,9 @@
         "C",
         "D"
       ],
-      "answerExplanation": "The default record expression supplies the argument in Oracle versions supporting qualified expressions. The reviewer highlights D, but the loop variable is a record, not an array; product_list(1) is invalid.",
-      "technicalNote": "Highlighted D indexes the cursor row record as an array, which is invalid. C depends on Oracle version support for record qualified expressions.",
-      "feedback": "Nested tables and varrays require initialization. A cursor FOR loop creates a row record that hides an outer variable with the same name.",
+      "answerExplanation": "The reviewer highlights C and D. In C, the procedure receives the record value supplied by its default expression, subject to Oracle-version support for that record syntax. In D, an integer-indexed associative array is declared; assigning `'wheat'` to element 1 and then reading element 1 prints `wheat`. D does not contain a cursor FOR loop.",
+      "technicalNote": "Choice C's default record expression may depend on the Oracle release's support for qualified record expressions. Choice D does not have the cursor-record indexing problem described in the previous JSON: the corrected reviewer code indexes an associative array, not a cursor FOR-loop record.",
+      "feedback": "Compare the collection types before following the executable lines. A nested table or varray declared without a constructor is uninitialized. An associative array declared with `INDEX BY BINARY_INTEGER` can gain an element when code assigns a value at a key. In choice D, `product_list(1) := 'wheat'` creates element 1 and the next line prints it. The cursor declaration is not used.",
       "source": {
         "file": "PLSQL_Reviewer_Questions_61-70 4.xlsx",
         "questionNumber": 65
@@ -4998,36 +4998,36 @@
           "text": "Category",
           "format": "text",
           "correct": true,
-          "explanation": "This is the reviewer-highlighted answer. The screenshot does not identify the application or product whose audit-trail dimensions are being tested."
+                        "explanation": "Category is the reviewer-highlighted answer to this application's audit-trail setting. A dimension is a way an application organizes data; here the question asks which dimension can be selected when activating its data audit trail. Because the application is not identified, the screenshot does not provide a product rule that explains why Category is eligible."
         },
         {
           "id": "B",
           "text": "Account",
           "format": "text",
           "correct": false,
-          "explanation": "This option is not highlighted. Without the application or product named, its status as an audit dimension cannot be established from the question alone."
+                        "explanation": "Account is not the highlighted answer. Account may be a data dimension in an application, but merely being a dimension does not establish that this unnamed application's audit trail can be activated for it. The question provides no product-specific rule to prove that comparison."
         },
         {
           "id": "C",
           "text": "Time",
           "format": "text",
           "correct": false,
-          "explanation": "This option is not highlighted. An audit event may have a timestamp, but that does not establish that Time is an activation dimension in the unspecified application."
+                        "explanation": "Time is not the highlighted answer. A change can have a timestamp, but the time of an audit event is different from a dimension on which an application lets you activate auditing. The screenshot does not identify the application's available settings."
         },
         {
           "id": "D",
           "text": "Entity",
           "format": "text",
           "correct": false,
-          "explanation": "This option is not highlighted. Whether Entity is a configurable dimension depends on the unspecified application."
+                        "explanation": "Entity is not the highlighted answer. Entity can identify a member of an application's data model, but the screenshot does not show whether that application permits audit activation for Entity. Do not treat the reviewer verdict as a universal rule for every product."
         }
       ],
       "correct": [
         "A"
       ],
-      "answerExplanation": "This is the reviewer-highlighted answer. The screenshot does not identify the application or product whose audit-trail dimensions are being tested.",
-      "technicalNote": "The stem does not identify the Application or audit-trail product. Category is the highlighted answer, but its product-specific technical meaning cannot be confirmed from the screenshot alone.",
-      "feedback": "The question asks for a product-specific setting called a data audit trail dimension. The source gives the reviewer answer but does not name the application, so do not generalize the choice as a PL/SQL or Oracle Database rule.",
+      "answerExplanation": "The reviewer highlights A, Category. This is a question about an application's audit configuration, not a general PL/SQL syntax rule. The application is unnamed, so the source key supports scoring A but does not independently establish a product-wide rule excluding Account, Time, or Entity.",
+      "technicalNote": "The question does not name the application or provide its audit-configuration documentation. Category is the reviewer-highlighted answer; the screenshot alone does not establish why that product permits Category rather than Account, Time, or Entity.",
+      "feedback": "An audit trail records changes to data. A dimension is a category used to organize that data, while an audit-activation setting determines which changes the application records. The reviewer identifies Category as the setting tested here. Because the application is not named, learn the source answer without generalizing it to all Oracle products.",
       "source": {
         "file": "PLSQL_Reviewer_Questions_71-76 1.xlsx",
         "questionNumber": 75
