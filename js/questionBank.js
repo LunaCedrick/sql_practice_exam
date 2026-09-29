@@ -1,4 +1,4 @@
-const QUESTION_FILES = [
+const SQL_QUESTION_FILES = [
   "./data/questions-1-50.json",
   "./data/questions-51-100.json",
   "./data/questions-101-150.json",
@@ -6,8 +6,10 @@ const QUESTION_FILES = [
   "./data/questions-201-249.json"
 ];
 
-export async function loadQuestionBank() {
-  const files = await Promise.all(QUESTION_FILES.map(loadFile));
+const PLSQL_QUESTION_FILES = ["./data/PLSQL_questions-1-76_structured.json"];
+
+export async function loadQuestionBank(reviewer = "sql") {
+  const files = await Promise.all((reviewer === "plsql" ? PLSQL_QUESTION_FILES : SQL_QUESTION_FILES).map(loadFile));
   const questions = files
     .flatMap(file => file.questions.map(question => normalizeQuestion(question)))
     .sort((a, b) => a.id - b.id);
@@ -23,6 +25,8 @@ export async function loadQuestionBank() {
     throw new Error(`Duplicate question IDs found: ${duplicates.join(", ")}`);
   }
 
+  if (reviewer === "plsql") validatePlsqlQuestions(questions);
+
   const mockQuestionCount = Number(
     files.find(file => file.settings?.mockQuestionCount)?.settings.mockQuestionCount
   );
@@ -35,6 +39,28 @@ export async function loadQuestionBank() {
     unavailableQuestions: questions.filter(question => !question.available),
     mockQuestionCount: Number.isFinite(mockQuestionCount) ? mockQuestionCount : Math.min(questions.length, 1)
   };
+}
+
+function validatePlsqlQuestions(questions) {
+  const expectedIds = Array.from({ length: 76 }, (_, index) => index + 1);
+  if (questions.length !== expectedIds.length || questions.some((question, index) => question.id !== expectedIds[index])) {
+    throw new Error("The PL/SQL question bank must contain unique question IDs 1–76.");
+  }
+
+  for (const question of questions) {
+    const optionIds = question.options.map(option => option.id);
+    if (new Set(optionIds).size !== optionIds.length) {
+      throw new Error(`PL/SQL question ${question.id} has duplicate option IDs.`);
+    }
+    const correctIds = question.correct;
+    if (new Set(correctIds).size !== correctIds.length || correctIds.some(id => !optionIds.includes(id))) {
+      throw new Error(`PL/SQL question ${question.id} has an invalid correct answer list.`);
+    }
+    const flaggedCorrectIds = question.options.filter(option => option.correct).map(option => option.id);
+    if (correctIds.length !== flaggedCorrectIds.length || correctIds.some(id => !flaggedCorrectIds.includes(id))) {
+      throw new Error(`PL/SQL question ${question.id} has inconsistent correct answer flags.`);
+    }
+  }
 }
 
 async function loadFile(url) {

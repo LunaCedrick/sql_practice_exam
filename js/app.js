@@ -1,7 +1,7 @@
 import { loadQuestionBank } from "./questionBank.js";
 
-const SAVE_KEY = "sql-practice-progress-v1";
-const FLAG_KEY = "sql-practice-flags-v1";
+const SAVE_KEYS = { sql: "sql-practice-progress-v1", plsql: "plsql-practice-progress-v1" };
+const FLAG_KEYS = { sql: "sql-practice-flags-v1", plsql: "plsql-practice-flags-v1" };
 
 const els = {
   loading: document.getElementById("loading"),
@@ -12,12 +12,18 @@ const els = {
   results: document.getElementById("results"),
   examReview: document.getElementById("examReview"),
   startTitle: document.getElementById("startTitle"),
+  appTitle: document.getElementById("appTitle"),
+  reviewerPicker: document.getElementById("reviewerPicker"),
+  pickerTitle: document.getElementById("pickerTitle"),
+  pickerDescription: document.getElementById("pickerDescription"),
+  cancelPicker: document.getElementById("cancelPicker"),
   startDetails: document.getElementById("startDetails"),
   resumeArea: document.getElementById("resumeArea"),
   resumeBtn: document.getElementById("resumeBtn"),
   discardSaveBtn: document.getElementById("discardSaveBtn"),
   timer: document.getElementById("timer"),
   qnum: document.getElementById("qnum"),
+  sourceQuestion: document.getElementById("sourceQuestion"),
   topic: document.getElementById("topic"),
   kind: document.getElementById("kind"),
   bar: document.getElementById("bar"),
@@ -52,6 +58,7 @@ const els = {
   backStartBtn: document.getElementById("backStartBtn"),
   review: document.getElementById("review"),
   reviewQnum: document.getElementById("reviewQnum"),
+  reviewSourceQuestion: document.getElementById("reviewSourceQuestion"),
   reviewTopic: document.getElementById("reviewTopic"),
   reviewKind: document.getElementById("reviewKind"),
   reviewBar: document.getElementById("reviewBar"),
@@ -64,6 +71,8 @@ const els = {
 };
 
 let bank = null;
+let reviewer = "sql";
+let pendingMode = "";
 let state = emptyState();
 let reviewState = emptyReviewState();
 let navigatorContext = "exam";
@@ -73,7 +82,8 @@ init();
 async function init() {
   bindEvents();
   try {
-    bank = await loadQuestionBank();
+    const [sqlBank, plsqlBank] = await Promise.all([loadQuestionBank("sql"), loadQuestionBank("plsql")]);
+    bank = { sql: sqlBank, plsql: plsqlBank };
     renderStart();
     show("start");
   } catch (error) {
@@ -83,9 +93,18 @@ async function init() {
 }
 
 function bindEvents() {
-  els.mockBtn.addEventListener("click", () => begin("mock"));
-  els.quickBtn.addEventListener("click", () => begin("quick"));
-  els.practiceBtn.addEventListener("click", () => begin("practice"));
+  els.mockBtn.addEventListener("click", () => openReviewerPicker("mock"));
+  els.quickBtn.addEventListener("click", () => openReviewerPicker("quick"));
+  els.practiceBtn.addEventListener("click", () => openReviewerPicker("practice"));
+  els.cancelPicker.addEventListener("click", () => els.reviewerPicker.close());
+  els.reviewerPicker.querySelectorAll("[data-reviewer]").forEach(button => {
+    button.addEventListener("click", () => {
+      reviewer = button.dataset.reviewer;
+      renderStart();
+      els.reviewerPicker.close();
+      begin(pendingMode);
+    });
+  });
   els.resumeBtn.addEventListener("click", resumeProgress);
   els.discardSaveBtn.addEventListener("click", discardSavedProgress);
   els.prevBtn.addEventListener("click", () => move(-1));
@@ -128,6 +147,7 @@ function emptyReviewState() {
 
 function emptyState() {
   return {
+    reviewer: "sql",
     mode: "",
     questions: [],
     index: 0,
@@ -142,14 +162,18 @@ function emptyState() {
 }
 
 function renderStart() {
-  const total = bank.questions.length;
-  const available = bank.availableQuestions.length;
-  const unavailable = bank.unavailableQuestions.length;
-  const mockCount = Math.min(bank.mockQuestionCount, bank.scorableQuestions.length);
+  const currentBank = bank[reviewer];
+  const total = currentBank.questions.length;
+  const available = currentBank.availableQuestions.length;
+  const unavailable = currentBank.unavailableQuestions.length;
+  const mockCount = Math.min(currentBank.mockQuestionCount, currentBank.scorableQuestions.length);
   const quickCount = quickQuestionCount();
 
-  els.startTitle.textContent = `${total} Question Reviewer`;
+  els.startTitle.textContent = reviewer === "plsql" ? "Oracle PL/SQL Reviewer" : "Oracle SQL Reviewer";
+  els.appTitle.textContent = reviewer === "plsql" ? "Oracle PL/SQL Reviewer" : "Oracle SQL Reviewer";
+  document.title = els.appTitle.textContent;
   els.startDetails.textContent =
+    `${total} questions. ` +
     `Practice mode gives feedback each time you answer a question. ` +
     `Mock exam randomly selects ${mockCount} scorable questions from ${available} available questions. ` +
     `Quick Quiz randomly selects ${quickCount} scorable questions with results shown at the end. ` +
@@ -157,16 +181,25 @@ function renderStart() {
   updateResumeControls();
 }
 
+function openReviewerPicker(mode) {
+  pendingMode = mode;
+  const labels = { mock: "Mock Exam", quick: "Quick Quiz", practice: "Practice" };
+  els.pickerTitle.textContent = `Choose a reviewer for ${labels[mode]}`;
+  els.pickerDescription.textContent = mode === "mock" ? `PL/SQL Mock Exam contains up to ${Math.min(bank.plsql.mockQuestionCount, bank.plsql.scorableQuestions.length)} random questions.` : "Choose which question bank to use.";
+  els.reviewerPicker.showModal();
+}
+
 function begin(mode) {
-  const saved = loadProgress();
+  const saved = loadProgress(reviewer);
   if (saved && !confirm("Start a new session and discard saved progress?")) return;
-  const flags = { ...(saved?.flags || {}), ...loadFlags() };
-  localStorage.setItem(FLAG_KEY, JSON.stringify(flags));
+  const flags = { ...(saved?.flags || {}), ...loadFlags(reviewer) };
+  localStorage.setItem(FLAG_KEYS[reviewer], JSON.stringify(flags));
   clearProgress();
   const questions = sessionQuestions(mode);
 
   state = {
     ...emptyState(),
+    reviewer,
     mode,
     questions,
     flags,
@@ -179,34 +212,45 @@ function begin(mode) {
 }
 
 function sessionQuestions(mode) {
+  const currentBank = bank[reviewer];
   if (mode === "practice") {
-    return bank.questions.map(question => withRuntimeOptions(question, false));
+    return currentBank.questions.map(question => withRuntimeOptions(question, false));
   }
 
-  const count = mode === "quick" ? quickQuestionCount() : Math.min(bank.mockQuestionCount, bank.scorableQuestions.length);
-  return shuffle(bank.scorableQuestions)
+  const count = mode === "quick" ? quickQuestionCount() : Math.min(currentBank.mockQuestionCount, currentBank.scorableQuestions.length);
+  return shuffle(currentBank.scorableQuestions)
     .slice(0, count)
     .map(question => withRuntimeOptions(question, true));
 }
 
 function quickQuestionCount() {
-  return Math.min(5, bank.scorableQuestions.length);
+  return Math.min(5, bank[reviewer].scorableQuestions.length);
 }
 
 function resumeProgress() {
-  const saved = loadProgress();
+  const sqlSaved = loadProgress("sql");
+  const plsqlSaved = loadProgress("plsql");
+  const saved = plsqlSaved || sqlSaved;
   if (!saved) {
     updateResumeControls();
     return;
   }
 
+  reviewer = saved.reviewer || (plsqlSaved ? "plsql" : "sql");
+  els.appTitle.textContent = reviewer === "plsql" ? "Oracle PL/SQL Reviewer" : "Oracle SQL Reviewer";
+  document.title = els.appTitle.textContent;
   state = {
     ...emptyState(),
     ...saved,
-    flags: { ...(saved.flags || {}), ...loadFlags() },
+    flags: { ...(saved.flags || {}), ...loadFlags(reviewer) },
     startedAt: Date.now(),
     finished: false
   };
+  state.reviewer = reviewer;
+  state.questions = state.questions.map(question => ({
+    ...question,
+    runtimeOptions: Array.isArray(question.runtimeOptions) ? question.runtimeOptions : [...question.options]
+  }));
   saveFlags();
   renderTimer();
   show("exam");
@@ -223,7 +267,8 @@ function saveAndExit() {
 
 function discardSavedProgress() {
   if (!confirm("Discard saved progress?")) return;
-  clearProgress();
+  clearProgress("sql");
+  clearProgress("plsql");
   updateResumeControls();
 }
 
@@ -238,7 +283,11 @@ function render() {
   const question = currentQuestion();
   const progress = ((state.index + 1) / state.questions.length) * 100;
 
-  els.qnum.textContent = `Question ${question.id} (${state.index + 1} of ${state.questions.length})`;
+  els.qnum.textContent = reviewer === "plsql"
+    ? `Question ${state.index + 1} of ${state.questions.length}`
+    : `Question ${question.id} (${state.index + 1} of ${state.questions.length})`;
+  els.sourceQuestion.textContent = `Source question ${question.id}`;
+  els.sourceQuestion.classList.toggle("hidden", reviewer !== "plsql");
   els.topic.textContent = question.topic;
   els.kind.textContent = kindText(question);
   els.bar.style.width = `${progress}%`;
@@ -294,7 +343,7 @@ function questionBodyHtml(question) {
 
 function renderSection(section) {
   if (typeof section === "string") {
-    return `<div class="content-section">${escapeHtml(section)}</div>`;
+    return `<div class="content-section section-text">${escapeHtml(section)}</div>`;
   }
 
   if (section.type === "sql-sequence") {
@@ -307,7 +356,7 @@ function renderSection(section) {
 
   const title = section.title ? `<p class="table-title">${escapeHtml(section.title)}</p>` : "";
   const text = section.text || section.content || "";
-  return `<div class="content-section">${title}${escapeHtml(text)}</div>`;
+  return `<div class="content-section section-text">${title}${escapeHtml(text)}</div>`;
 }
 
 function renderListSection(section) {
@@ -355,8 +404,10 @@ function renderTable(table) {
 }
 
 function cellValue(row, column, index) {
-  if (Array.isArray(row)) return row[index] ?? "";
-  return row?.[column] ?? "";
+  const value = Array.isArray(row)
+    ? (index < row.length ? row[index] : "")
+    : (row && Object.hasOwn(row, column) ? row[column] : "");
+  return value === null ? "NULL" : value;
 }
 
 function renderCodeBlock(block) {
@@ -421,6 +472,7 @@ function renderFeedback(question) {
 function feedbackHtml(question) {
   const chosen = state.answers[question.id] || [];
   const ok = sameSet(chosen, question.correct);
+  const status = chosen.length ? (ok ? "correct" : "incorrect") : "unanswered";
   const official = question.correct.join(", ");
   const choiceReviews = question.runtimeOptions.map(option => `
     <div class="choice-review">
@@ -428,16 +480,24 @@ function feedbackHtml(question) {
       <div>${escapeHtml(option.explanation || "No choice explanation supplied.")}</div>
     </div>
   `).join("");
+  const walkthroughHeading = isCodeBasedQuestion(question) ? "How to read the code" : "How to read the concept";
 
   return `
-    <div class="feedback ${ok ? "correct" : "incorrect"}">
-      <h3 class="${ok ? "good" : "bad"}">${ok ? "Correct" : "Incorrect"}</h3>
+    <div class="feedback ${status}">
+      <h3 class="${status === "correct" ? "good" : status === "incorrect" ? "bad" : ""}">${status === "unanswered" ? "Unanswered" : status === "correct" ? "Correct" : "Incorrect"}</h3>
       <p><strong>Official answer(s):</strong> ${escapeHtml(official)}</p>
+      ${reviewer === "plsql" && question.feedback ? `<p><strong>${walkthroughHeading}:</strong> ${escapeHtml(question.feedback)}</p>` : ""}
       ${choiceReviews}
       ${question.answerExplanation ? `<p><strong>Overall explanation:</strong> ${escapeHtml(question.answerExplanation)}</p>` : ""}
       ${technicalNoteHtml(question)}
     </div>
   `;
+}
+
+function isCodeBasedQuestion(question) {
+  return question.codeBlocks.length > 0 ||
+    question.sections.some(section => section?.type === "sql-sequence") ||
+    question.options.some(option => option.format === "sql");
 }
 
 function technicalNoteHtml(question) {
@@ -641,19 +701,19 @@ function topicStats(questions) {
   const stats = new Map();
   for (const question of questions) {
     if (!stats.has(question.topic)) {
-      stats.set(question.topic, { topic: question.topic, total: 0, correct: 0, incorrect: 0, unanswered: 0 });
+      stats.set(question.topic, { topic: question.topic, total: 0, answered: 0, correct: 0, incorrect: 0, unanswered: 0 });
     }
     const row = stats.get(question.topic);
     const answer = state.answers[question.id] || [];
     row.total++;
     if (!answer.length) row.unanswered++;
-    else if (sameSet(answer, question.correct)) row.correct++;
-    else row.incorrect++;
+    else if (sameSet(answer, question.correct)) { row.correct++; row.answered++; }
+    else { row.incorrect++; row.answered++; }
   }
 
   return [...stats.values()]
-    .map(row => ({ ...row, accuracy: row.total ? Math.round((row.correct / row.total) * 100) : 0 }))
-    .sort((a, b) => b.accuracy - a.accuracy || b.total - a.total || a.topic.localeCompare(b.topic));
+    .map(row => ({ ...row, accuracy: row.answered ? Math.round((row.correct / row.answered) * 100) : null }))
+    .sort((a, b) => (b.accuracy ?? -1) - (a.accuracy ?? -1) || b.total - a.total || a.topic.localeCompare(b.topic));
 }
 
 function renderResults(result) {
@@ -665,8 +725,9 @@ function renderResults(result) {
   els.review.innerHTML = "";
   els.newTakeBtn.textContent = quick ? "New quick quiz" : "New randomized take";
 
-  const strongest = result.topics.slice(0, 5);
-  const weakest = [...result.topics].sort((a, b) => a.accuracy - b.accuracy || b.total - a.total).slice(0, 5);
+  const scoredTopics = result.topics.filter(row => row.answered > 0);
+  const strongest = [...scoredTopics].sort((a, b) => b.accuracy - a.accuracy || b.answered - a.answered).slice(0, 5);
+  const weakest = [...scoredTopics].sort((a, b) => a.accuracy - b.accuracy || b.answered - a.answered).slice(0, 5);
 
   els.analytics.innerHTML = `
     <div class="topic-grid">
@@ -674,9 +735,10 @@ function renderResults(result) {
       ${topicCard("Weakest topics", weakest)}
     </div>
     <h2>Accuracy by topic</h2>
+    <p>Topic accuracy is based on answered questions; unanswered questions are shown separately.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Topic</th><th>Correct</th><th>Incorrect</th><th>Unanswered</th><th>Total attempts</th><th>Accuracy</th></tr></thead>
+        <thead><tr><th>Topic</th><th>Correct</th><th>Incorrect</th><th>Unanswered</th><th>Questions in attempt</th><th>Accuracy</th></tr></thead>
         <tbody>
           ${result.topics.map(row => `
             <tr>
@@ -685,7 +747,7 @@ function renderResults(result) {
               <td>${row.incorrect}</td>
               <td>${row.unanswered}</td>
               <td>${row.total}</td>
-              <td>${row.accuracy}%</td>
+              <td>${row.answered ? `${row.accuracy}% (${row.correct}/${row.answered} answered)` : "— (0 answered)"}</td>
             </tr>
           `).join("")}
         </tbody>
@@ -701,7 +763,7 @@ function topicCard(title, rows) {
       ${rows.length ? rows.map(row => `
         <div class="topic-row">
           <span>${escapeHtml(row.topic)}</span>
-          <strong>${row.accuracy}% (${row.correct}/${row.total})</strong>
+          <strong>${row.accuracy}% (${row.correct}/${row.answered} answered)</strong>
         </div>
       `).join("") : "<p>No scored topics yet.</p>"}
     </div>
@@ -731,7 +793,11 @@ function renderExamReview() {
   const status = reviewStatus(question);
   const title = reviewTitle();
 
-  els.reviewQnum.textContent = `${title} ${reviewState.index + 1} of ${reviewState.questions.length}`;
+  els.reviewQnum.textContent = reviewer === "plsql"
+    ? `Question ${reviewState.index + 1} of ${reviewState.questions.length}`
+    : `${title} ${reviewState.index + 1} of ${reviewState.questions.length}`;
+  els.reviewSourceQuestion.textContent = `Source question ${question.id}`;
+  els.reviewSourceQuestion.classList.toggle("hidden", reviewer !== "plsql");
   els.reviewTopic.textContent = question.topic;
   els.reviewKind.textContent = `${reviewStatusLabel(question)} - Question ${question.id}`;
   els.reviewBar.style.width = `${progress}%`;
@@ -840,8 +906,9 @@ function show(screen) {
 }
 
 function updateResumeControls() {
-  const saved = loadProgress();
+  const saved = loadProgress("plsql") || loadProgress("sql");
   els.resumeArea.classList.toggle("hidden", !saved);
+  els.resumeBtn.textContent = saved?.reviewer === "plsql" ? "Resume PL/SQL Progress" : "Resume SQL Progress";
 }
 
 function saveProgress() {
@@ -852,30 +919,30 @@ function saveProgress() {
     startedAt: 0,
     lastResult: null
   };
-  localStorage.setItem(SAVE_KEY, JSON.stringify(checkpoint));
+  localStorage.setItem(SAVE_KEYS[reviewer], JSON.stringify(checkpoint));
 }
 
-function loadProgress() {
+function loadProgress(forReviewer = reviewer) {
   try {
-    const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null");
+    const saved = JSON.parse(localStorage.getItem(SAVE_KEYS[forReviewer]) || "null");
     if (!isValidProgress(saved)) {
-      clearProgress();
+      clearProgress(forReviewer);
       return null;
     }
     return saved;
   } catch {
-    clearProgress();
+    clearProgress(forReviewer);
     return null;
   }
 }
 
-function clearProgress() {
-  localStorage.removeItem(SAVE_KEY);
+function clearProgress(forReviewer = reviewer) {
+  localStorage.removeItem(SAVE_KEYS[forReviewer]);
 }
 
-function loadFlags() {
+function loadFlags(forReviewer = reviewer) {
   try {
-    const flags = JSON.parse(localStorage.getItem(FLAG_KEY) || "{}");
+    const flags = JSON.parse(localStorage.getItem(FLAG_KEYS[forReviewer]) || "{}");
     return flags && typeof flags === "object" && !Array.isArray(flags) ? flags : {};
   } catch {
     return {};
@@ -883,7 +950,7 @@ function loadFlags() {
 }
 
 function saveFlags() {
-  localStorage.setItem(FLAG_KEY, JSON.stringify(state.flags));
+  localStorage.setItem(FLAG_KEYS[reviewer], JSON.stringify(state.flags));
 }
 
 function isValidProgress(saved) {
